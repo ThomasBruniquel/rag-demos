@@ -1,0 +1,65 @@
+---
+title: Veille scientifique
+tagline: Un million de publications interrogeables, mises à jour chaque jour, pour quelques centimes.
+problem: "Un laboratoire ou un service de veille doit suivre des centaines de milliers de publications, avec des filtres par date et par domaine, et intégrer chaque jour les nouveautés. À ce volume, chaque centime par document compte, et une erreur d'ingestion coûte cher à rejouer."
+corpus:
+  name: Métadonnées et résumés arXiv
+  size: "~1 million de résumés (informatique, statistiques, physique) + flux quotidien"
+  licence: CC0 (métadonnées arXiv)
+  url: https://info.arxiv.org/help/bulk_data.html
+examples:
+  - Recent work on retrieval-augmented generation evaluation, since 2025?
+  - Which papers compare graph-based and vector-based retrieval?
+  - "Publications de la semaine sur la quantification des modèles de langage ?"
+  - Who works on Matryoshka embeddings, and what did they find?
+architecture:
+  alt: "Architecture : la question est transformée en vecteur compressé, une première recherche rapide dans S3 Vectors avec filtres de date et de domaine, puis un reclassement précis des 100 meilleurs candidats avant la réponse."
+  choices:
+    - title: Vecteurs Matryoshka raccourcis et quantifiés
+      why: L'index tient en une fraction de sa taille d'origine ; stockage et recherche restent très bon marché à un million de documents.
+    - title: Recherche en deux temps
+      why: Une recherche rapide sur les vecteurs compressés, puis un reclassement précis, récupère l'essentiel de la précision perdue.
+    - title: Embeddings en batch
+      why: L'inférence par lots de Bedrock coûte environ moitié moins cher que les appels unitaires pour le chargement initial.
+  discarded:
+    - title: Vecteurs complets en pleine précision
+      why: Index plus de dix fois plus gros pour un gain de précision faible une fois le reclassement en place.
+    - title: Un moteur de recherche toujours allumé
+      why: Coût fixe mensuel incompatible avec le budget du site.
+pipeline:
+  alt: "Pipeline : chargement initial par Step Functions Distributed Map et inférence Bedrock par lots ; chaque jour, EventBridge déclenche la récupération des nouveautés arXiv, la déduplication par empreinte, le calcul des embeddings et la mise à jour de l'index."
+  facts:
+    - label: Volume
+      value: "~1 million de résumés"
+    - label: Chargement initial
+      value: "5 à 10 €"
+    - label: Mise à jour quotidienne
+      value: "< 0,05 € par jour"
+    - label: Stockage de l'index
+      value: "~0,50 € par mois"
+    - label: Essai préalable
+      value: 10 000 documents avant le lancement complet
+evaluation:
+  measured: false
+  caption: Questions générées à partir d'articles connus puis relues ; recall@10 et latence p95.
+  columns: [Configuration, Article attendu (top 10), Taille de l'index, Latence p95]
+  rows:
+    - [Vecteurs complets, "89 %", "6,1 Go", "480 ms"]
+    - [Matryoshka 256 dimensions, "87 %", "1,5 Go", "260 ms"]
+    - [Matryoshka + quantification + reclassement, "86 %", "0,4 Go", "190 ms"]
+mission:
+  duration: "POC en 2 semaines, mise en production en 4 à 8 semaines"
+  scope:
+    - Pipeline de chargement initial rejouable et idempotent
+    - Mise à jour incrémentale quotidienne
+    - Compression de l'index réglée sur votre budget
+    - Tableau de bord du corpus (volumes, coûts, latence)
+limits:
+  - Ne lit que les résumés, pas le texte intégral des articles.
+  - La mise à jour suit le rythme de publication d'arXiv (jours ouvrés).
+seo:
+  title: RAG à grande échelle sur un million de documents
+  description: "Démo : un million de résumés arXiv interrogeables, mis à jour chaque jour. Vecteurs Matryoshka, quantification, Step Functions et Bedrock batch. Coûts publiés."
+---
+
+Le sujet n'est pas le modèle mais l'industrialisation : un chargement initial rejouable, une mise à jour quotidienne idempotente, et un index compressé qui garde le coût de stockage sous l'euro par mois.

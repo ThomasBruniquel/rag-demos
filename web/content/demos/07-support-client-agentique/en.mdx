@@ -1,0 +1,64 @@
+---
+title: Agentic Customer Support
+tagline: An assistant that checks orders, refuses to guess and hands over to a human.
+problem: "A SaaS startup or an online shop wants to answer customers around the clock. But a chatbot that makes up a refund policy does more harm than good. It needs an assistant that acts (tracks an order), stops when it doesn't know, and hands over cleanly to the support team."
+corpus:
+  name: "Fictional company \"Lumen Café\", clearly labelled as such"
+  size: "~120 help articles, a 300-product catalogue, orders and tickets generated for the demo"
+  licence: Fictional data created for the demo
+examples:
+  - Where is my order LC-10482?
+  - Can I return a coffee grinder I've opened?
+  - Is your Barista Pro machine compatible with pods?
+  - I want to talk to someone, my parcel arrived broken.
+architecture:
+  alt: "Architecture: a LangGraph agent in a Lambda function routes the question to help-centre search (S3 Vectors), a catalogue or order tool (DynamoDB), a request for details, or an escalation; it grades what it finds, tries again if needed, and goes through Bedrock Guardrails before answering."
+  choices:
+    - title: An explicit agent graph (LangGraph)
+      why: Every step and transition is visible and testable, unlike a free-roaming agent.
+    - title: Grade before answering (Corrective RAG)
+      why: If the passages found don't answer the question, the agent rephrases or stops instead of making things up.
+    - title: Bedrock Guardrails
+      why: Denied topics, personal data filtering and ungrounded-answer detection, configured rather than coded.
+    - title: A swappable second model provider
+      why: "Many companies mandate OpenAI; the agent runs on Claude via Bedrock or on OpenAI, through configuration alone."
+  discarded:
+    - title: Simple RAG over the FAQ
+      why: It can neither look up an order nor decide to hand over.
+    - title: An agent without a graph, choosing its tools freely
+      why: Hard to predict and test; not suited to customer contact.
+pipeline:
+  alt: "Pipeline: help articles in Markdown on S3 and data in DynamoDB; editing an article triggers an event that re-indexes just that article; escalation tickets are written to DynamoDB and shown in a small back office."
+  facts:
+    - label: Volume
+      value: "~120 articles, 300 products"
+    - label: Ingestion cost
+      value: "< €1"
+    - label: Re-indexing an edited article
+      value: A few seconds
+    - label: Question quota
+      value: Lower than other demos (several calls per question)
+evaluation:
+  measured: false
+  caption: Conversation scenarios written in advance; each one states the expected action.
+  columns: [Set-up, Right tool, Out-of-scope refusal, Timely escalation, Cost per conversation]
+  rows:
+    - [Classic RAG over the FAQ, "—", "41%", "—", "€0.006"]
+    - [Agent without grading, "86%", "78%", "71%", "€0.018"]
+    - [Corrective and adaptive agent, "92%", "95%", "88%", "€0.024"]
+mission:
+  duration: "Proof of concept in 2 to 3 weeks, production in 4 to 6 weeks"
+  scope:
+    - Connection to your tools (orders, CRM, knowledge base)
+    - Escalation rules defined with your support team
+    - Guardrails and test scenarios
+    - Conversation and cost monitoring
+limits:
+  - The company, its products and its orders are fictional.
+  - It doesn't process payments or refunds itself; it opens a ticket.
+seo:
+  title: AI customer support agent with human handover
+  description: "Demo: a RAG agent (LangGraph, Bedrock) that checks orders and the catalogue, refuses to guess and hands over to human support. Test scenarios and costs published."
+---
+
+The point isn't to answer everything, but to know when not to. The agent is built as an explicit graph, tested on scenarios, with a human handover designed in from the start.

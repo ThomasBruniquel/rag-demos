@@ -1,0 +1,30 @@
+---
+name: Classic RAG
+origin: Method published by Facebook AI Research (May 2020)
+sourceLabel: "Lewis et al., Retrieval-Augmented Generation for Knowledge-Intensive NLP Tasks"
+need: Have a language model answer from your documents rather than from its own memory.
+how:
+  - label: Split
+    text: Documents are cut into fixed-size chunks, turned into vectors and stored in a database.
+  - label: Retrieve
+    text: The question becomes a vector too; the closest chunks are fetched.
+  - label: Answer
+    text: The model writes its answer from those chunks and cites them.
+strengths:
+  - Simple to build and to explain.
+  - Cheap to run, even at large volumes.
+  - Every answer comes with sources you can check.
+limits:
+  - Fixed-size chunks break tables, sections and context.
+  - Exact terms (references, clause numbers) are poorly matched by vectors alone.
+  - Nothing checks that the answer actually says what the sources say.
+choose:
+  - A first document assistant that needs to ship fast.
+  - Plain documents written in running text.
+avoid:
+  - Documents full of tables, diagrams or deep structure.
+  - Questions that require combining many documents.
+seo:
+  title: Classic RAG, the baseline for every demo
+  description: "How a classic RAG pipeline works (chunking, vector search, generation), its strengths and limits, and why every demo on this site is benchmarked against it."
+---

@@ -1,0 +1,13 @@
+id: "08"
+slugs: { fr: graphrag-analyse-incidents, en: graphrag-incident-analysis }
+status: soon
+featured: false
+method: graphrag
+docTypes: [text, data]
+volume: small
+constraints: [reliability]
+sectors: [insurance, industry]
+aws: [Glue, Athena, Step Functions, Bedrock, Lambda]
+vectorStore: Neo4j AuraDB + index vectoriel
+sourcePath: demos/08-analyse-incidents-graphrag
+player: { sideBySide: true }

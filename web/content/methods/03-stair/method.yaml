@@ -1,0 +1,9 @@
+id: stair
+slug: stair
+family: structure
+badge: recent
+date: "2026-09"
+sourceUrl: https://arxiv.org/abs/2609.03874
+demo: "03"
+gauges: { quality: 4, cost: 3, complexity: 4 }
+order: 3

@@ -1,0 +1,49 @@
+---
+name: Hallucination check
+origin: "Approach published by IBM Research with the Granite Guardian models (Dec 2024)"
+sourceLabel: "Padhi et al., Granite Guardian"
+need: Never let through an answer that the documents don't support.
+how:
+  - label: Retrieve
+    text: Hybrid search (keywords + vectors) followed by reranking finds the relevant clauses.
+  - label: Draft
+    text: The model drafts an answer, citing every passage it relies on.
+  - label: Check
+    text: A judge model scores how faithful each claim is to the cited passages; below the threshold, the answer is blocked or rewritten.
+strengths:
+  - Hallucinations are caught before they reach the user.
+  - Every answer carries a readable faithfulness score.
+  - The judge is independent from the model that writes.
+limits:
+  - One more model call, so slightly more latency and cost.
+  - The judge may reject a correct answer that cites the wrong passage.
+choose:
+  - "Legal, compliance, healthcare: mistakes are expensive."
+  - Users who must be able to trust every sentence.
+avoid:
+  - Exploratory use where a rough answer is good enough.
+  - An extremely tight per-question budget.
+adaptation: "The demo runs this faithfulness check after hybrid search and reranking. The judge model used (Granite Guardian or equivalent) will be stated at launch, with its measured cost."
+duel:
+  measured: false
+  rows:
+    - criterion: Answers containing an unsupported claim
+      classic: "14%"
+      method: "2%"
+      winner: method
+    - criterion: Relevant clause in the top 5 results
+      classic: "72%"
+      method: "91%"
+      winner: method
+    - criterion: Response time
+      classic: "2.4 s"
+      method: "3.6 s"
+      winner: classic
+    - criterion: Cost per question
+      classic: "€0.004"
+      method: "€0.007"
+      winner: classic
+seo:
+  title: "RAG hallucination checking: every answer verified"
+  description: "A judge model checks that every answer is faithful to the contracts it cites, following IBM Research's Granite Guardian approach. Demo on 510 contracts."
+---

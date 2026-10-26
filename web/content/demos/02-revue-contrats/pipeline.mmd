@@ -1,0 +1,8 @@
+flowchart LR
+  A[("S3<br/><<510 contrats|510 contracts>>")]:::store --> SF["Step Functions"]
+  SF --> B["<<Extraction du texte|Text extraction>>"] --> C["<<Découpage par clause<br/>+ métadonnées|Clause-level chunking<br/>+ metadata>>"]:::key
+  C --> E["<<Embeddings|Embeddings>><br/>Bedrock"] --> DB[("Aurora<br/>pgvector + tsvector")]:::store
+
+  classDef user stroke-width:0
+  classDef key stroke-width:2px
+  classDef store stroke-width:1px

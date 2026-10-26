@@ -1,0 +1,49 @@
+---
+name: "STAIR : la recherche guidée par la table des matières"
+origin: Méthode publiée par IBM Research (sept. 2026)
+sourceLabel: "Kumar et al., STAIR (STructure Aware Information Retriever)"
+need: Retrouver la bonne section d'un long document structuré sans casser sa structure.
+how:
+  - label: Lire le sommaire
+    text: La table des matières du rapport sert de plan d'accès, au lieu de morceaux coupés à taille fixe.
+  - label: Descendre
+    text: Le modèle choisit le chapitre, puis la section, puis le tableau qui répondent à la question.
+  - label: Répondre
+    text: La réponse cite la section exacte ; les calculs sont confiés à un outil, pas au modèle.
+strengths:
+  - Les tableaux et les sections restent entiers.
+  - La citation pointe vers une section précise, facile à vérifier.
+  - Les auteurs mesurent 82,6 % de bonne section trouvée du premier coup, contre 59,5 % pour une recherche par mots-clés.
+limits:
+  - Il faut des documents qui ont une vraie structure (sommaire, titres).
+  - Plusieurs appels au modèle par question, donc plus lent qu'une recherche vectorielle.
+choose:
+  - Rapports annuels, normes, manuels, documentation réglementaire.
+  - Des questions qui portent sur une section ou un tableau précis.
+avoid:
+  - Des textes courts ou sans structure (courriels, tickets).
+  - Un besoin de réponse instantanée sur des millions de pages.
+adaptation: "Dans le papier, un modèle est entraîné pour mémoriser le corpus et le retrouver par sa table des matières. La démo en reprend le principe sans entraînement : un modèle du commerce parcourt la table des matières pour choisir les sections à lire."
+duel:
+  measured: false
+  rows:
+    - criterion: Chiffres exacts sur les questions FinanceBench
+      classic: "54 %"
+      method: "79 %"
+      winner: method
+    - criterion: Tableau cité en entier
+      classic: "31 %"
+      method: "88 %"
+      winner: method
+    - criterion: Délai de réponse
+      classic: "2,2 s"
+      method: "5,8 s"
+      winner: classic
+    - criterion: Coût par question
+      classic: "0,4 c€"
+      method: "1,1 c€"
+      winner: classic
+seo:
+  title: "STAIR : RAG guidé par la table des matières pour les rapports financiers"
+  description: "La méthode STAIR publiée par IBM Research (sept. 2026) appliquée aux rapports annuels : recherche par la structure du document, tableaux préservés, calculs vérifiés."
+---

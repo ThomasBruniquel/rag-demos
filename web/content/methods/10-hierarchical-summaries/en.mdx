@@ -1,0 +1,48 @@
+---
+name: Timestamped hierarchical summaries
+origin: "Proven practice: multi-level summaries of transcripts, every passage keeping its timestamp"
+need: Find what was said or decided across hours of recordings, and replay the exact moment.
+how:
+  - label: Transcribe
+    text: Audio is transcribed, with speakers identified and a timestamp on every sentence.
+  - label: Summarise in layers
+    text: "Speaker turns are summarised by topic, then by meeting: decisions, actions, open points."
+  - label: Point
+    text: The answer cites the passage and starts the video at the right second.
+strengths:
+  - Synthesis questions ("what did we decide?") draw on the summaries.
+  - Precise questions link to the exact moment in the recording.
+  - Simple and cheap once the transcript exists.
+limits:
+  - Quality depends on the transcript (audio, accents, jargon).
+  - Summaries must be recomputed when the transcript is corrected.
+choose:
+  - Council meetings, board meetings, training sessions, webinars.
+  - Teams that need to find past decisions.
+avoid:
+  - Recordings with poor audio quality.
+  - Mostly visual content (demonstrations without speech).
+adaptation: "The demo transcribes with Amazon Transcribe, keeps summaries in DynamoDB and indexes timestamped passages in S3 Vectors."
+duel:
+  measured: false
+  rows:
+    - criterion: Citation within 30 seconds of the right moment
+      classic: "58%"
+      method: "89%"
+      winner: method
+    - criterion: Synthesis questions answered
+      classic: "47%"
+      method: "83%"
+      winner: method
+    - criterion: Ingestion cost for 10 hours
+      classic: "€14"
+      method: "€15"
+      winner: tie
+    - criterion: Response time
+      classic: "2.0 s"
+      method: "2.2 s"
+      winner: tie
+seo:
+  title: "Search across meetings and videos: timestamped RAG"
+  description: "Find a decision across hours of recordings and replay the video at the right moment: transcription, hierarchical summaries and timestamped citations."
+---

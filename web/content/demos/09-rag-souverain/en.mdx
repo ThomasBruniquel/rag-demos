@@ -1,0 +1,65 @@
+---
+title: Sovereign, Confidential RAG
+tagline: Different answers for each role, personal data masked, nothing leaving your premises.
+problem: "Banks, HR departments, healthcare providers: internal documents contain personal data, not everyone may see everything, and internal policy often forbids sending data to a US AI provider. They need an assistant that respects access rights, GDPR and the EU AI Act, and that can run on site."
+corpus:
+  name: Internal records of a fictional company
+  size: "~2,000 documents (HR files, memos, procedures, minutes) with realistic fake personal data"
+  licence: Fictional data created for the demo
+examples:
+  - "What is Claire Martin's salary? (try it with each role)"
+  - What is the procedure for sick leave?
+  - What did the last executive committee decide?
+  - "Qui a validé la dernière politique de télétravail ?"
+architecture:
+  alt: "Architecture: the visitor picks a role; the Lambda function only searches Qdrant for passages allowed for that role, has Mistral (API hosted in Europe) write the answer and logs the access. On-premise variant: Ollama and Qdrant with docker compose."
+  choices:
+    - title: Rights enforced before the search
+      why: Filtering passages at the source guarantees that no forbidden document ever reaches the model.
+    - title: Personal data masked at ingestion
+      why: Presidio for French, Amazon Comprehend for English; a report lists what was masked.
+    - title: Mistral, plus an installable variant
+      why: A European provider for the online demo, open models (Ollama) for installation at the client's.
+    - title: Audit trail
+      why: "Who asked what, under which role, and which documents were used: ready for an audit."
+  discarded:
+    - title: Filtering the answer afterwards
+      why: The model would already have read forbidden documents; a leak remains possible.
+    - title: A US model hosted outside Europe
+      why: Against the policy of many clients this demo is aimed at.
+pipeline:
+  alt: "Pipeline: documents encrypted (KMS) on S3, personal data detected and masked, rights assigned per passage, Mistral embeddings, written to Qdrant (Europe region); CloudTrail logging."
+  facts:
+    - label: Volume
+      value: "~2,000 documents"
+    - label: Ingestion cost
+      value: "< €3"
+    - label: Roles
+      value: Employee, manager, HR
+    - label: Personal data detected
+      value: Names, addresses, IBANs, social security numbers
+evaluation:
+  measured: false
+  caption: Leak tests (questions designed to extract information beyond the role's rights) and personal data detection rate.
+  columns: [Set-up, Leaks in 100 tests, Personal data masked, Quality (out of 5)]
+  rows:
+    - [Classic RAG without rights, "37", "—", "4.1"]
+    - [Answer filtered afterwards, "11", "—", "4.0"]
+    - [Rights before search + masking, "0", "96%", "3.8"]
+mission:
+  duration: "Proof of concept in 3 weeks, production in 6 to 10 weeks"
+  scope:
+    - Mapping of access rights and sensitive data
+    - Masking and audit trail
+    - Installation on your servers or in your European cloud
+    - Compliance documentation (GDPR record, AI Act)
+limits:
+  - All people and documents are fictional.
+  - The online demo uses Mistral's API; only the installed variant runs entirely on the client's side.
+  - It doesn't replace your data protection officer's assessment.
+seo:
+  title: Confidential, GDPR-ready, sovereign RAG
+  description: "Demo: a document assistant that masks personal data, enforces role-based access, logs every access and can run on the client's premises with open models."
+---
+
+Confidentiality is decided before the model: masking at ingestion, rights enforced at search time, a log of every access. The choice of model (European or installed on site) adds to these guarantees; it doesn't replace them.

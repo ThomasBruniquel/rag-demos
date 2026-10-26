@@ -1,0 +1,64 @@
+---
+title: Support client agentique
+tagline: Un assistant qui consulte les commandes, refuse de deviner et passe la main à un humain.
+problem: "Une startup SaaS ou un e-commerçant veut répondre aux clients jour et nuit. Mais un chatbot qui invente une politique de remboursement fait plus de dégâts qu'il n'en évite. Il faut un assistant qui agit (suivre une commande), s'arrête quand il ne sait pas, et transmet proprement au support."
+corpus:
+  name: Entreprise fictive « Lumen Café », clairement signalée comme telle
+  size: "~120 articles d'aide, un catalogue de 300 produits, des commandes et des tickets générés pour l'occasion"
+  licence: Données fictives créées pour la démo
+examples:
+  - Où en est ma commande LC-10482 ?
+  - Puis-je retourner un moulin à café ouvert ?
+  - "Votre machine Barista Pro est-elle compatible avec les dosettes ?"
+  - Je veux parler à quelqu'un, mon colis est arrivé cassé.
+architecture:
+  alt: "Architecture : un agent LangGraph dans une Lambda aiguille la question vers la recherche dans l'aide (S3 Vectors), un outil catalogue ou commandes (DynamoDB), une demande de précision, ou une escalade ; il évalue ce qu'il trouve, recommence si besoin, et passe par Bedrock Guardrails avant de répondre."
+  choices:
+    - title: Un graphe d'agent explicite (LangGraph)
+      why: Chaque étape et chaque transition est visible et testable, contrairement à un agent libre.
+    - title: Évaluer avant de répondre (Corrective RAG)
+      why: Si les extraits trouvés ne répondent pas à la question, l'agent reformule ou s'arrête au lieu d'inventer.
+    - title: Bedrock Guardrails
+      why: Sujets interdits, filtrage des données personnelles et détection des réponses non fondées, configurés plutôt que codés.
+    - title: Second fournisseur de modèle interchangeable
+      why: "Beaucoup d'entreprises imposent OpenAI ; l'agent fonctionne avec Claude sur Bedrock ou avec OpenAI, par simple configuration."
+  discarded:
+    - title: Un RAG simple sur la FAQ
+      why: Ne peut ni consulter une commande ni décider de passer la main.
+    - title: Un agent sans graphe, qui choisit librement ses outils
+      why: Comportement difficile à prévoir et à tester ; inadapté au contact client.
+pipeline:
+  alt: "Pipeline : articles d'aide en Markdown sur S3 et données dans DynamoDB ; une modification d'article déclenche un événement qui réindexe ce seul article ; les tickets d'escalade sont écrits dans DynamoDB et affichés dans un mini back-office."
+  facts:
+    - label: Volume
+      value: "~120 articles, 300 produits"
+    - label: Coût d'ingestion
+      value: "< 1 €"
+    - label: Réindexation d'un article modifié
+      value: "Quelques secondes"
+    - label: Quota de questions
+      value: Plus bas que les autres démos (plusieurs appels par question)
+evaluation:
+  measured: false
+  caption: Scénarios de conversation écrits à l'avance ; chaque scénario précise l'action attendue.
+  columns: [Configuration, Bon outil choisi, Refus hors périmètre, Escalade au bon moment, Coût par conversation]
+  rows:
+    - [RAG classique sur la FAQ, "—", "41 %", "—", "0,6 c€"]
+    - [Agent sans évaluation, "86 %", "78 %", "71 %", "1,8 c€"]
+    - [Agent correctif et adaptatif, "92 %", "95 %", "88 %", "2,4 c€"]
+mission:
+  duration: "POC en 2 à 3 semaines, mise en production en 4 à 6 semaines"
+  scope:
+    - Branchement sur vos outils (commandes, CRM, base de connaissances)
+    - Règles d'escalade définies avec votre équipe support
+    - Garde-fous et scénarios de test
+    - Suivi des conversations et des coûts
+limits:
+  - L'entreprise, ses produits et ses commandes sont fictifs.
+  - Ne traite pas les paiements ni les remboursements eux-mêmes ; il crée un ticket.
+seo:
+  title: Agent IA de support client avec escalade vers un humain
+  description: "Démo : un agent RAG (LangGraph, Bedrock) qui consulte commandes et catalogue, refuse de deviner et transmet au support humain. Scénarios de test et coûts publiés."
+---
+
+L'enjeu n'est pas de répondre à tout, mais de savoir quand ne pas répondre. L'agent est construit comme un graphe explicite, testé sur des scénarios, avec un passage à l'humain prévu dès le départ.

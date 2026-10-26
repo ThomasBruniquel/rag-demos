@@ -1,0 +1,63 @@
+---
+title: Documentation technique
+tagline: Retrouver une procédure ou un schéma dans des rapports scannés, et voir la figure citée.
+problem: "Un industriel dispose de décennies de manuels et de rapports techniques, souvent scannés, pleins de schémas et de tableaux. La réponse à une question de maintenance se trouve parfois uniquement dans une figure, que l'extraction de texte ignore."
+corpus:
+  name: NASA Technical Reports Server (NTRS)
+  size: "~100 rapports, ~4 000 pages, dont des scans des années 1960 à 1980"
+  licence: Domaine public (documents de la NASA, États-Unis)
+  url: https://ntrs.nasa.gov/
+examples:
+  - Show me the diagram of the fuel system test rig.
+  - What is the procedure for inspecting the turbine blades?
+  - Which report describes the wind tunnel set-up, and what does the figure show?
+  - "Quelle était la température maximale mesurée pendant l'essai ?"
+architecture:
+  alt: "Architecture : deux chaînes comparées sur les mêmes questions. Voie OCR : Textract, texte et descriptions de figures indexés dans S3 Vectors. Voie visuelle : pages traitées comme des images par un modèle de type ColPali. La réponse affiche la page et la figure citées."
+  choices:
+    - title: Comparer OCR et recherche visuelle
+      why: Selon le document, l'une ou l'autre gagne ; la démo le montre sur les mêmes questions plutôt que de l'affirmer.
+    - title: Afficher la figure citée
+      why: Pour une question de maintenance, voir le schéma vaut mieux qu'une description.
+    - title: Contrôle qualité de l'OCR
+      why: Les pages dont la confiance Textract est faible sont signalées pour relecture.
+  discarded:
+    - title: OCR seul
+      why: Perd l'information des schémas, qui est souvent celle qu'on cherche.
+    - title: Décrire chaque figure par un modèle de vision, sans recherche visuelle
+      why: Coûteux à l'ingestion et la description rate des détails ; gardé comme variante de comparaison.
+pipeline:
+  alt: "Pipeline : dépôt sur S3, événement S3, Step Functions : détection scan ou natif, Textract si scan, extraction des figures, calcul des représentations texte et visuelles, index S3 Vectors."
+  facts:
+    - label: Volume
+      value: "~100 rapports, ~4 000 pages"
+    - label: Durée d'ingestion
+      value: "~2 h"
+    - label: Coût d'ingestion
+      value: "15 à 35 €"
+    - label: Pages signalées pour relecture
+      value: Confiance OCR sous 80 %
+evaluation:
+  measured: false
+  caption: Questions dont la réponse se trouve uniquement dans une figure ou un tableau scanné, et questions sur le texte.
+  columns: [Configuration, Réponses dans une figure, Bonne page (top 5), Coût par question]
+  rows:
+    - [OCR + RAG texte, "23 %", "64 %", "0,4 c€"]
+    - [OCR + descriptions de figures, "52 %", "75 %", "0,5 c€"]
+    - [Recherche visuelle (type ColPali), "71 %", "86 %", "0,6 c€"]
+mission:
+  duration: "POC en 2 semaines, mise en production en 4 à 6 semaines"
+  scope:
+    - Diagnostic de vos documents (scans, schémas, qualité)
+    - Comparaison OCR et recherche visuelle sur vos questions
+    - Affichage des figures dans les réponses
+    - Contrôle qualité et file de relecture
+limits:
+  - Ne lit pas les plans au format CAO, seulement les documents PDF et images.
+  - Les scans très dégradés restent difficiles pour les deux approches.
+seo:
+  title: RAG multimodal sur documents techniques scannés
+  description: "Démo : rechercher dans 4 000 pages de rapports scannés avec schémas. OCR Textract contre recherche visuelle ColPali, figures affichées dans la réponse."
+---
+
+Plutôt que de choisir à l'aveugle entre OCR et recherche visuelle, la démo met les deux face à face sur les mêmes questions, et affiche la figure qui justifie la réponse.

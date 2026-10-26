@@ -1,0 +1,9 @@
+flowchart LR
+  A[("S3<br/><<articles d'aide (Markdown)|help articles (Markdown)>>")]:::store --> EV["<<Événement de modification|Edit event>>"]
+  EV --> R["Lambda<br/><<réindexe cet article seul|re-indexes that article only>>"]:::key --> SV[("S3 Vectors")]:::store
+  DB[("DynamoDB<br/><<catalogue, commandes|catalogue, orders>>")]:::store --> ST["DynamoDB Streams"] --> EB["EventBridge"]
+  EB --> BO["<<Mini back-office<br/>des tickets|Ticket<br/>back office>>"]
+
+  classDef user stroke-width:0
+  classDef key stroke-width:2px
+  classDef store stroke-width:1px

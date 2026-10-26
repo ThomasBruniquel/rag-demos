@@ -1,0 +1,9 @@
+id: cag
+slug: cag
+family: search
+badge: proven
+date: "2024-12"
+sourceUrl: https://arxiv.org/abs/2412.15605
+demo: "01"
+gauges: { quality: 4, cost: 2, complexity: 1 }
+order: 1

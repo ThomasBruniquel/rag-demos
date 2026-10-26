@@ -1,0 +1,67 @@
+---
+title: Conversational Data Lake
+tagline: Ask 20 million rows a question in plain language, and see the SQL that answers it.
+problem: "The data is there, in the data lake, but every business question goes through the data team and waits its turn. Managers want to query the figures themselves, without writing SQL, and without the risk of a wrong number circulating in meetings."
+corpus:
+  name: DVF property transactions (Demandes de valeurs foncières), data.gouv.fr
+  size: "~20 million French property sales over 5 years"
+  licence: Etalab Open Licence 2.0
+examples:
+  - Median price per m² for flats in Lyon in 2024, by district?
+  - How many houses were sold in Gironde in 2023, and at what average price?
+  - Which towns in the Ain department saw the steepest price rise since 2020?
+  - "Nombre de ventes à Paris par an ?"
+architecture:
+  alt: "Architecture: the question triggers a search over table descriptions and validated examples, generation of several candidate SQL queries, their validation and read-only execution by Athena, then selection of the best one and a summary with a table and a chart."
+  choices:
+    - title: Several candidate queries, then selection
+      why: A single query sometimes gets a join or a filter wrong; comparing several results makes the error visible.
+    - title: RAG over the data catalogue
+      why: The model only sees the tables, columns and examples relevant to the question, not the whole schema.
+    - title: SQL guardrails
+      why: "Read-only role (Lake Formation), syntax validation, a cap on data scanned by the Athena workgroup, at most two corrections."
+    - title: Parquet partitioned by year and department
+      why: A typical question scans a few megabytes instead of several gigabytes, keeping Athena's cost around half a cent.
+  discarded:
+    - title: Giving the model the whole schema
+      why: More expensive, and the model mixes up similarly named columns.
+    - title: An always-on database
+      why: Pointless for occasional use; Athena bills per query.
+pipeline:
+  alt: "Pipeline: raw DVF CSV files on S3, cleaned and typed by Glue ETL, written as partitioned Parquet, catalogued by a Glue Crawler, queried by Athena; table descriptions and validated examples are indexed in S3 Vectors."
+  facts:
+    - label: Volume
+      value: "~20 million rows"
+    - label: Ingestion time
+      value: "~15 min (Glue)"
+    - label: Ingestion cost
+      value: "< €2"
+    - label: Athena cost per question
+      value: "~€0.005"
+    - label: Parquet storage
+      value: "< €0.10 per month"
+evaluation:
+  measured: false
+  caption: "~40 questions with their reference query; results are compared, not the SQL text."
+  columns: [Set-up, Exact result, Rejected queries, Data scanned per question]
+  rows:
+    - ["One query, full schema", "61%", "9%", "120 MB"]
+    - ["One query, targeted catalogue", "72%", "6%", "95 MB"]
+    - [Several candidates + selection, "84%", "3%", "310 MB"]
+mission:
+  duration: "Proof of concept in 2 weeks, production in 4 to 6 weeks"
+  scope:
+    - An audit and write-up of your data catalogue
+    - A set of business questions with reference queries
+    - Guardrails (permissions, caps, logging)
+    - Integration with your tools (Slack, Teams, intranet)
+limits:
+  - It doesn't replace recurring dashboards.
+  - Questions must be about data that exists; it won't guess missing figures.
+  - DVF data excludes Alsace, Moselle and Mayotte.
+seo:
+  title: Text-to-SQL over an AWS data lake (Athena, Glue)
+  description: "Demo: query 20 million property transactions in plain language. Several candidate SQL queries, guardrails, query shown. Glue, Parquet and Athena pipeline."
+---
+
+This is the most data-engineering-heavy demo on the site: answer quality depends first on the pipeline (partitioned Parquet, a documented catalogue, read-only permissions), and only then on the model that writes the SQL.

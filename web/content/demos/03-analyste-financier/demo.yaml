@@ -1,0 +1,12 @@
+id: "03"
+slugs: { fr: analyse-rapports-financiers, en: financial-report-analysis }
+status: soon
+featured: false
+method: stair
+docTypes: [pdf]
+volume: medium
+constraints: [reliability]
+sectors: [finance]
+aws: [Textract, Step Functions, Glue Data Catalog, Bedrock, Lambda, S3 Vectors]
+vectorStore: S3 Vectors
+sourcePath: demos/03-analyste-financier

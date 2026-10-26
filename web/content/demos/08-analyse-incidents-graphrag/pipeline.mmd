@@ -1,0 +1,10 @@
+flowchart LR
+  A[("<<Données NTSB|NTSB data>>")]:::store --> GL["Glue"] --> ATH["Athena"]
+  A --> SF["Step Functions"]
+  SF --> X["<<Extraction entités + relations<br/>(schéma imposé)|Entities + relations extracted<br/>(fixed schema)>>"]:::key
+  ATH -.->|"<<validation|validation>>"| X
+  X --> N[("Neo4j")]:::store --> CM["<<Communautés<br/>+ résumés|Communities<br/>+ summaries>>"]
+
+  classDef user stroke-width:0
+  classDef key stroke-width:2px
+  classDef store stroke-width:1px

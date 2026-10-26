@@ -1,0 +1,49 @@
+---
+name: "GraphRAG, LightRAG, RAPTOR: knowledge as a graph"
+origin: "GraphRAG published by Microsoft Research (Apr 2024), RAPTOR by Stanford University (Jan 2024), LightRAG by the University of Hong Kong (Oct 2024)"
+sourceLabel: "Edge et al., From Local to Global: A Graph RAG Approach to Query-Focused Summarization"
+need: Answer global questions ("which factors come up most often?") that classic RAG can't handle.
+how:
+  - label: Extract
+    text: A model picks out the entities in each report (aircraft, flight phase, cause) and how they relate.
+  - label: Group
+    text: Entities form a graph; clusters of related entities are summarised (GraphRAG) or organised into a hierarchy (RAPTOR).
+  - label: Answer
+    text: Global questions draw on those summaries, precise ones on the graph and the original text.
+strengths:
+  - Answers questions about the corpus as a whole.
+  - Follows links across documents ("multi-hop" questions).
+  - The graph can be explored and checked by a domain expert.
+limits:
+  - "Costly ingestion: every document goes through a model."
+  - More moving parts to maintain (graph, summaries, indexes).
+choose:
+  - Incident analysis, intelligence gathering, investigations, risk management.
+  - Synthesis questions across thousands of documents.
+avoid:
+  - "Simple factual questions: classic RAG answers just as well, for less."
+  - A corpus that changes all the time.
+adaptation: "The demo shows classic RAG and the graph answering the same question side by side. The graph lives in Neo4j; LightRAG and RAPTOR are compared with GraphRAG on the same question set."
+duel:
+  measured: false
+  rows:
+    - criterion: Completeness on global questions (judge score)
+      classic: "2.1 / 5"
+      method: "4.2 / 5"
+      winner: method
+    - criterion: Multi-hop questions answered
+      classic: "38%"
+      method: "74%"
+      winner: method
+    - criterion: Simple factual questions answered
+      classic: "88%"
+      method: "87%"
+      winner: tie
+    - criterion: Ingestion cost for 3,000 reports
+      classic: "€2"
+      method: "€18"
+      winner: classic
+seo:
+  title: "GraphRAG for incident analysis: classic RAG versus a knowledge graph"
+  description: "GraphRAG, LightRAG and RAPTOR applied to 3,000 accident reports: global and multi-hop questions, compared side by side with classic RAG."
+---

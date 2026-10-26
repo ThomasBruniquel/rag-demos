@@ -1,0 +1,194 @@
+{
+  "meta": {
+    "titleTemplate": "%s · {brand}",
+    "defaultTitle": "{brand} · RAG et data engineering sur AWS, démos testables en ligne",
+    "description": "Assistants documentaires et recherche augmentée par IA (RAG) pour PME, ETI et startups : 10 démos testables en ligne, qualité mesurée, coût maîtrisé, code public."
+  },
+  "a11y": {
+    "skipToContent": "Aller au contenu",
+    "mainNav": "Navigation principale",
+    "openMenu": "Ouvrir le menu",
+    "closeMenu": "Fermer le menu",
+    "homeLink": "{brand}, retour à l'accueil"
+  },
+  "nav": {
+    "demos": "Démos",
+    "methods": "Méthodes",
+    "whatIsRag": "Comprendre le RAG",
+    "services": "Offres",
+    "dataEngineering": "Data engineering",
+    "articles": "Articles",
+    "about": "À propos",
+    "contact": "Me contacter"
+  },
+  "theme": {
+    "toDark": "Passer au thème sombre",
+    "toLight": "Passer au thème clair"
+  },
+  "localeSwitcher": {
+    "short": "EN",
+    "ariaLabel": "Read this page in English"
+  },
+  "footer": {
+    "tagline": "Assistants documentaires (RAG) et pipelines de données sur AWS, pour les PME, ETI et startups.",
+    "explore": "Explorer",
+    "work": "Travailler ensemble",
+    "legalTitle": "Légal",
+    "legal": "Mentions légales",
+    "privacy": "Confidentialité",
+    "commitmentsLabel": "Engagements",
+    "commitments": [
+      "Qualité mesurée sur chaque démo",
+      "Coût affiché pour chaque question",
+      "Code source public sur GitHub",
+      "Vos documents supprimés sous une heure"
+    ],
+    "rights": "© {year} {owner}. Code des démos sous licence libre."
+  },
+  "draft": {
+    "notice": "Page en cours de rédaction : le contenu détaillé arrive dans les prochaines étapes."
+  },
+  "marks": {
+    "toMeasure": "Valeurs indicatives, en attente du banc d'évaluation : elles seront remplacées par les mesures réelles."
+  },
+  "home": {
+    "eyebrow": "Freelance RAG & data engineering · AWS",
+    "titleTop": "Vos documents ont les réponses.",
+    "titleBottom": "Vos équipes, elles, cherchent encore.",
+    "lead": "Je conçois des systèmes de recherche augmentée par IA (RAG) sur AWS pour les PME, ETI et startups. Avant même de me contacter, testez dix démos construites sur de vrais cas clients : pour chacune, l'architecture, la qualité mesurée et le coût par question sont publiés.",
+    "primaryCta": "Voir les démos",
+    "secondaryCta": "Parler de votre projet"
+  },
+  "catalog": {
+    "eyebrow": "10 démos · 10 cas clients",
+    "filtersLabel": "Filtrer les démos",
+    "docTypes": "Type de documents",
+    "volume": "Volume",
+    "constraints": "Contrainte",
+    "sectors": "Secteur",
+    "any": "Tous",
+    "reset": "Réinitialiser",
+    "countOne": "1 démo",
+    "countMany": "{n} démos",
+    "empty": "Aucune démo ne réunit tous ces critères. Retirez un filtre pour élargir la recherche.",
+    "status": {
+      "soon": "Bientôt disponible",
+      "live": "En ligne"
+    },
+    "method": "Méthode phare"
+  },
+  "demo": {
+    "back": "Toutes les démos",
+    "number": "Démo {id}",
+    "problem": "Le problème",
+    "try": "Essayer",
+    "examples": "Questions d'exemple",
+    "playerSoon": "Le lecteur interactif arrive à la prochaine étape du site. Voici les questions que vous pourrez poser :",
+    "behind": "Coulisses",
+    "behindIntro": "Pour chaque réponse : les extraits retrouvés et leur score, les modèles utilisés, la latence et le coût exact de la question.",
+    "built": "Comment c'est construit",
+    "choices": "Choix techniques, et pourquoi",
+    "discarded": "Ce qui a été écarté",
+    "pipeline": "Pipeline de données",
+    "results": "Résultats mesurés",
+    "project": "Pour votre projet",
+    "duration": "Durée typique",
+    "scope": "Périmètre habituel",
+    "limits": "Ce que cette démo ne fait pas",
+    "contactCta": "Parler d'un projet similaire",
+    "source": "Code source",
+    "sourceCta": "Voir le code de la démo sur GitHub",
+    "corpus": "Corpus",
+    "licence": "Licence",
+    "aws": "Services AWS",
+    "vectorStore": "Stockage vectoriel",
+    "methodCard": "Méthode phare",
+    "seeMethod": "Voir la fiche de la méthode",
+    "diagramPending": "Schéma en cours de dessin.",
+    "estimate": "estimation",
+    "facts": "En chiffres"
+  },
+  "methods": {
+    "eyebrow": "Un personnage par méthode",
+    "family": "Famille",
+    "reference": "Personnage de référence",
+    "referenceIntro": "Chaque méthode se mesure à lui dans un duel chiffré.",
+    "origin": "Origine :",
+    "readPaper": "Lire la publication",
+    "need": "Le besoin résolu",
+    "how": "Comment ça marche",
+    "strengths": "Points forts",
+    "limits": "Limites",
+    "gauges": "En un coup d'œil",
+    "quality": "Qualité des réponses",
+    "cost": "Coût de fonctionnement",
+    "complexity": "Complexité de mise en place",
+    "gaugeValue": "{label} : {value} sur 5",
+    "choose": "Quand la choisir",
+    "avoid": "Quand l'éviter",
+    "adaptation": "Ce que fait la démo",
+    "duel": "Duel contre le RAG classique",
+    "criterion": "Critère",
+    "classic": "RAG classique",
+    "advantage": "Avantage",
+    "tie": "Égalité",
+    "tryDemo": "Essayer la démo",
+    "allMethods": "Toutes les méthodes",
+    "familiesTitle": "Six familles de méthodes",
+    "familyIntro": {
+      "search": "Trouver vite et pour pas cher, même dans des millions de documents.",
+      "structure": "Respecter la structure des documents et des données : sommaires, tableaux, liens.",
+      "verification": "Contrôler chaque réponse avant qu'elle n'arrive à l'utilisateur.",
+      "agents": "Raisonner en plusieurs étapes, utiliser des outils, savoir passer la main.",
+      "sovereignty": "Garder les données chez soi, avec des modèles ouverts.",
+      "multimodal": "Comprendre les images, les schémas, l'audio et la vidéo."
+    }
+  },
+  "pages": {
+    "demos": {
+      "title": "Démos",
+      "lead": "Dix situations clients réelles, de la base documentaire d'une PME au data lake de 20 millions de lignes. Chaque démo se teste en ligne et s'accompagne de son architecture, de son pipeline de données, de ses résultats d'évaluation et de son coût."
+    },
+    "methods": {
+      "title": "Les méthodes",
+      "lead": "Il n'existe pas un RAG, mais des familles de méthodes, chacune adaptée à un problème. Chaque démo en met une en scène, sous les traits d'un personnage, face au RAG classique."
+    },
+    "whatIsRag": {
+      "title": "Qu'est-ce qu'un RAG ?",
+      "lead": "Comment un assistant IA peut répondre à partir de vos documents, sources à l'appui, et quand ce n'est pas la bonne solution."
+    },
+    "services": {
+      "title": "Offres",
+      "lead": "Quatre formats de mission, du cadrage en deux jours à la mise en production, plus un format dédié à l'amélioration d'un RAG existant."
+    },
+    "dataEngineering": {
+      "title": "Data engineering pour l'IA",
+      "lead": "Un RAG fiable est d'abord un bon pipeline de données : ingestion, transformation, stockage, mise à jour et sécurité. Le modèle de langage ne vient qu'à la fin."
+    },
+    "articles": {
+      "title": "Articles",
+      "lead": "Retours d'expérience techniques sur chaque démo : ce qui a marché, ce qui a été écarté, et pourquoi."
+    },
+    "about": {
+      "title": "À propos",
+      "lead": "Développeur Python confirmé, spécialisé dans les systèmes RAG et les pipelines de données sur AWS."
+    },
+    "contact": {
+      "title": "Me contacter",
+      "lead": "Décrivez votre situation en quelques lignes : type de documents, volume, contraintes. Je reviens vers vous avec une première analyse et des questions précises."
+    },
+    "legal": {
+      "title": "Mentions légales",
+      "lead": "Informations légales sur l'éditeur et l'hébergeur de ce site."
+    },
+    "privacy": {
+      "title": "Confidentialité",
+      "lead": "Quelles données ce site traite, pourquoi, et pendant combien de temps."
+    }
+  },
+  "notFound": {
+    "title": "Page introuvable",
+    "body": "Cette adresse ne correspond à aucune page. Elle a peut-être été déplacée.",
+    "back": "Retour à l'accueil"
+  }
+}

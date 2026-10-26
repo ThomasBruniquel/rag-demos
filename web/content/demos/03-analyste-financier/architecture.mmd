@@ -1,0 +1,12 @@
+flowchart LR
+  U(["<<Visiteur|Visitor>>"]):::user --> L["Lambda"]
+  L --> T["<<Table des matières<br/>du rapport|Report's table<br/>of contents>>"]:::key
+  T --> N["<<Le modèle choisit<br/>chapitre → section|Model picks<br/>chapter → section>>"]:::key
+  N --> S[("<<Sections entières<br/>(tableaux intacts)|Whole sections<br/>(tables intact)>>")]:::store
+  S --> G["<<Rédaction|Drafting>>"]
+  G <--> CALC["<<Outil de calcul|Calculator tool>>"]
+  G -->|"<<chiffres + section citée|figures + cited section>>"| U
+
+  classDef user stroke-width:0
+  classDef key stroke-width:2px
+  classDef store stroke-width:1px

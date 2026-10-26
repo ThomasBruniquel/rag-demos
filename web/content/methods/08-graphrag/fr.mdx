@@ -1,0 +1,49 @@
+---
+name: "GraphRAG, LightRAG, RAPTOR : la connaissance en graphe"
+origin: "GraphRAG publié par Microsoft Research (avr. 2024), RAPTOR par l'université Stanford (janv. 2024), LightRAG par l'université de Hong Kong (oct. 2024)"
+sourceLabel: "Edge et al., From Local to Global: A Graph RAG Approach to Query-Focused Summarization"
+need: Répondre aux questions globales (« quels facteurs reviennent le plus ? ») qu'un RAG classique ne sait pas traiter.
+how:
+  - label: Extraire
+    text: Un modèle relève dans chaque rapport les entités (appareil, phase de vol, cause) et leurs relations.
+  - label: Regrouper
+    text: Les entités forment un graphe ; les groupes d'entités liées sont résumés (GraphRAG) ou hiérarchisés (RAPTOR).
+  - label: Répondre
+    text: Les questions globales s'appuient sur ces résumés, les questions précises sur le graphe et les textes d'origine.
+strengths:
+  - Répond aux questions qui portent sur l'ensemble du corpus.
+  - Suit les liens entre documents (questions « à plusieurs sauts »).
+  - Le graphe est explorable et vérifiable par un expert.
+limits:
+  - "Ingestion coûteuse : chaque document passe par un modèle."
+  - Plus de pièces à maintenir (graphe, résumés, index).
+choose:
+  - Analyse d'incidents, veille, enquêtes, gestion des risques.
+  - Des questions de synthèse sur des milliers de documents.
+avoid:
+  - "Des questions factuelles simples : un RAG classique répond aussi bien, pour moins cher."
+  - Un corpus qui change en permanence.
+adaptation: "La démo affiche côte à côte la réponse d'un RAG classique et celle du graphe pour la même question. Le graphe vit dans Neo4j ; LightRAG et RAPTOR sont comparés à GraphRAG sur le même jeu de questions."
+duel:
+  measured: false
+  rows:
+    - criterion: Exhaustivité sur les questions globales (note d'un juge)
+      classic: "2,1 / 5"
+      method: "4,2 / 5"
+      winner: method
+    - criterion: Questions à plusieurs sauts réussies
+      classic: "38 %"
+      method: "74 %"
+      winner: method
+    - criterion: Questions factuelles simples réussies
+      classic: "88 %"
+      method: "87 %"
+      winner: tie
+    - criterion: Coût d'ingestion pour 3 000 rapports
+      classic: "2 €"
+      method: "18 €"
+      winner: classic
+seo:
+  title: "GraphRAG pour l'analyse d'incidents : RAG classique contre graphe"
+  description: "GraphRAG, LightRAG et RAPTOR appliqués à 3 000 rapports d'accidents : les questions globales et à plusieurs sauts, comparées côte à côte avec un RAG classique."
+---

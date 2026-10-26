@@ -1,0 +1,49 @@
+---
+name: Corrective and adaptive RAG (agent)
+origin: "Corrective RAG published by Yan et al. (Jan 2024) and Adaptive-RAG published by Jeong et al. (Mar 2024, NAACL 2024)"
+sourceLabel: "Yan et al., Corrective Retrieval Augmented Generation"
+need: A customer assistant that picks the right action, refuses to guess and knows when to hand over to a human.
+how:
+  - label: Route
+    text: The agent sizes up the question (simple, complex, off-topic) and chooses between the FAQ, a tool (catalogue, orders) or asking for details.
+  - label: Correct
+    text: It grades what it found; if that isn't enough, it rephrases and searches again.
+  - label: Escalate
+    text: If doubt remains, it won't answer at random and opens a ticket for a human.
+strengths:
+  - Fewer made-up answers when information is missing.
+  - It can act (track an order), not just quote the FAQ.
+  - Handing over to a human is planned, logged and measurable.
+limits:
+  - Several model calls per question, so a higher cost.
+  - More scenarios to test than a simple RAG.
+choose:
+  - Customer support, internal helpdesks, questions that lead to an action.
+  - "Multiple sources: FAQ, product database, order system."
+avoid:
+  - "A plain static FAQ: classic RAG is enough."
+  - A very low budget per conversation.
+adaptation: "The demo builds the agent with LangGraph, applies Bedrock Guardrails and creates escalation tickets in a small back office visible on the site."
+duel:
+  measured: false
+  rows:
+    - criterion: Right tool chosen (test scenarios)
+      classic: "—"
+      method: "92%"
+      winner: method
+    - criterion: Correct refusal of an out-of-scope question
+      classic: "41%"
+      method: "95%"
+      winner: method
+    - criterion: Escalation triggered at the right time
+      classic: "—"
+      method: "88%"
+      winner: method
+    - criterion: Cost per conversation
+      classic: "€0.006"
+      method: "€0.024"
+      winner: classic
+seo:
+  title: "Agentic RAG for customer support: corrects, refuses, escalates"
+  description: "A LangGraph agent that picks its tools, checks what it finds and hands over to a human instead of guessing (Corrective and Adaptive RAG). Live demo."
+---

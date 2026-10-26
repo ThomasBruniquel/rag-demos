@@ -1,0 +1,67 @@
+---
+title: Analyse d'incidents (GraphRAG)
+tagline: Les questions globales sur des milliers de rapports, comparées côte à côte avec un RAG classique.
+problem: "Un assureur, un service qualité ou une direction sécurité dispose de milliers de rapports d'incidents. Les questions utiles sont rarement « que dit ce rapport ? », mais plutôt « quels facteurs reviennent le plus ? » ou « quels incidents combinent tel équipement et tel défaut de maintenance ? ». Un RAG classique, qui ne lit que quelques extraits, ne sait pas y répondre."
+corpus:
+  name: Base d'accidents aéronautiques du NTSB (National Transportation Safety Board)
+  size: "~3 000 rapports : données structurées et récits d'enquête"
+  licence: Domaine public (États-Unis)
+  url: https://www.ntsb.gov/Pages/AviationQuery.aspx
+examples:
+  - What factors come up most often in approach-phase accidents?
+  - Which accidents involve both a single-engine aircraft and a maintenance issue?
+  - "Quels liens entre conditions météo et pertes de contrôle en vol ?"
+  - Summarise the main causes of runway excursions.
+architecture:
+  alt: "Architecture : pour la même question, deux réponses côte à côte. À gauche, un RAG classique sur les récits. À droite, une recherche dans le graphe Neo4j : résumés de communautés pour les questions globales, parcours du graphe pour les questions à plusieurs sauts."
+  choices:
+    - title: Affichage côte à côte
+      why: Montrer la différence sur la même question est plus convaincant que de l'affirmer.
+    - title: Schéma d'entités imposé à l'extraction
+      why: "Appareil, phase de vol, cause, facteur, lieu : un schéma fixe évite un graphe désordonné et facilite la vérification."
+    - title: Validation par les données structurées
+      why: Les champs officiels du NTSB, interrogés par Athena, servent à contrôler les entités extraites par le modèle.
+    - title: Trois variantes comparées
+      why: GraphRAG, LightRAG et RAPTOR ont des coûts et des forces différents ; la démo publie la comparaison.
+  discarded:
+    - title: Neptune (base de graphe AWS)
+      why: Coût fixe trop élevé pour le budget du site ; Neo4j AuraDB Free suffit pour 3 000 rapports.
+    - title: Extraction libre, sans schéma
+      why: Produit des milliers de types d'entités inutilisables.
+pipeline:
+  alt: "Pipeline : données NTSB chargées par Glue et interrogeables par Athena ; Step Functions fait extraire entités et relations par un modèle léger, les valide contre les données structurées, construit le graphe dans Neo4j, détecte les communautés et les résume."
+  facts:
+    - label: Volume
+      value: "~3 000 rapports"
+    - label: Durée d'ingestion
+      value: "~4 h"
+    - label: Coût d'ingestion
+      value: "10 à 25 €"
+    - label: Base de graphe
+      value: Neo4j AuraDB Free (mise en pause si inactive)
+evaluation:
+  measured: false
+  caption: Questions globales notées par un modèle juge (exhaustivité, diversité) ; questions factuelles vérifiées par Athena.
+  columns: [Configuration, Questions globales (sur 5), Questions à plusieurs sauts, Questions factuelles]
+  rows:
+    - [RAG classique, "2,1", "38 %", "88 %"]
+    - [RAPTOR, "3,6", "52 %", "87 %"]
+    - [LightRAG, "3,9", "69 %", "87 %"]
+    - [GraphRAG, "4,2", "74 %", "87 %"]
+mission:
+  duration: "POC en 3 semaines, mise en production en 5 à 8 semaines"
+  scope:
+    - Schéma d'entités défini avec vos experts métier
+    - Extraction et validation sur vos rapports
+    - Graphe explorable et questions de synthèse
+    - Comparaison chiffrée avec votre recherche actuelle
+limits:
+  - Les rapports sont en anglais (source américaine).
+  - "La base gratuite se met en pause après une période d'inactivité : la première question peut être plus lente."
+  - Les questions factuelles simples ne gagnent rien au graphe.
+seo:
+  title: GraphRAG contre RAG classique, côte à côte
+  description: "Démo GraphRAG sur 3 000 rapports d'accidents NTSB : questions globales et à plusieurs sauts, Neo4j, comparaison avec LightRAG, RAPTOR et un RAG classique."
+---
+
+Le graphe n'est pas une fin en soi : il sert les questions de synthèse, et la démo montre aussi honnêtement où il n'apporte rien (les questions factuelles simples).

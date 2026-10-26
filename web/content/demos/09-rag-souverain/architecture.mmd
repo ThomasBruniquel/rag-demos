@@ -1,0 +1,11 @@
+flowchart LR
+  U(["<<Visiteur + rôle choisi|Visitor + chosen role>>"]):::user --> L["Lambda"]
+  L --> F["<<Filtre des droits<br/>AVANT la recherche|Rights filter<br/>BEFORE search>>"]:::key
+  F --> Q[("Qdrant<br/><<région Europe|Europe region>>")]:::store
+  Q --> M["<<Mistral (API en Europe)<br/>ou modèle ouvert sur site|Mistral (EU API)<br/>or open model on site>>"]
+  M --> U
+  L --> AU[("<<Journal d'audit|Audit trail>><br/>CloudTrail")]:::store
+
+  classDef user stroke-width:0
+  classDef key stroke-width:2px
+  classDef store stroke-width:1px

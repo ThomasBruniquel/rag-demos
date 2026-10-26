@@ -1,0 +1,11 @@
+flowchart LR
+  A[("S3<br/><<rapports PDF|PDF reports>>")]:::store --> SF["Step Functions<br/>Map"]
+  SF --> X["<<Extraction<br/>Textract · Docling|Extraction<br/>Textract · Docling>>"]
+  X --> T["<<Reconstruction de la<br/>table des matières|Table of contents<br/>rebuilt>>"]:::key
+  T --> C["<<Découpage par section<br/>+ contexte|Section chunks<br/>+ context>>"]
+  C --> V[("S3 Vectors")]:::store
+  C --> GC[("Glue Data Catalog<br/><<métadonnées|metadata>>")]:::store
+
+  classDef user stroke-width:0
+  classDef key stroke-width:2px
+  classDef store stroke-width:1px

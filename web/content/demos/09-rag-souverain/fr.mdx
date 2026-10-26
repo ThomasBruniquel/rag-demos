@@ -1,0 +1,65 @@
+---
+title: RAG souverain et confidentiel
+tagline: Des réponses différentes selon le rôle, des données personnelles masquées, rien qui ne sorte de chez vous.
+problem: "Banques, services RH, établissements de santé : les documents internes contiennent des données personnelles, chacun n'a pas le droit de tout voir, et la politique interne interdit souvent d'envoyer des données à un fournisseur d'IA américain. Il faut un assistant qui respecte les droits d'accès, le RGPD et l'AI Act, et qui puisse tourner sur place."
+corpus:
+  name: Dossiers internes d'une entreprise fictive
+  size: "~2 000 documents (fiches RH, notes, procédures, comptes rendus) avec de fausses données personnelles réalistes"
+  licence: Données fictives créées pour la démo
+examples:
+  - "Quel est le salaire de Claire Martin ? (essayez avec chaque rôle)"
+  - Quelle est la procédure en cas d'arrêt maladie ?
+  - Quelles décisions ont été prises au dernier comité de direction ?
+  - Who approved the latest remote-work policy?
+architecture:
+  alt: "Architecture : le visiteur choisit un rôle ; la Lambda ne cherche dans Qdrant que les extraits autorisés pour ce rôle, fait rédiger la réponse par Mistral (API hébergée en Europe) et journalise l'accès. Variante sur site : Ollama et Qdrant en docker compose."
+  choices:
+    - title: Droits appliqués avant la recherche
+      why: Filtrer les extraits à la source garantit qu'aucun document interdit n'arrive jusqu'au modèle.
+    - title: Masquage des données personnelles à l'ingestion
+      why: Presidio pour le français, Amazon Comprehend pour l'anglais ; un rapport liste ce qui a été masqué.
+    - title: Mistral et une variante installable
+      why: Un fournisseur européen pour la démo en ligne, des modèles ouverts (Ollama) pour l'installation chez le client.
+    - title: Journal d'audit
+      why: "Qui a demandé quoi, avec quel rôle, et quels documents ont servi : prêt pour un contrôle."
+  discarded:
+    - title: Filtrer la réponse après coup
+      why: Le modèle aurait déjà lu les documents interdits ; une fuite reste possible.
+    - title: Un modèle américain hébergé hors d'Europe
+      why: Contraire à la politique de nombreux clients visés par cette démo.
+pipeline:
+  alt: "Pipeline : documents chiffrés (KMS) sur S3, détection et masquage des données personnelles, attribution des droits par extrait, embeddings Mistral, écriture dans Qdrant (région Europe) ; journalisation CloudTrail."
+  facts:
+    - label: Volume
+      value: "~2 000 documents"
+    - label: Coût d'ingestion
+      value: "< 3 €"
+    - label: Rôles
+      value: Employé, manager, RH
+    - label: Données personnelles détectées
+      value: Noms, adresses, IBAN, numéros de sécurité sociale
+evaluation:
+  measured: false
+  caption: Tests de fuite (questions conçues pour obtenir une information hors des droits du rôle) et taux de détection des données personnelles.
+  columns: [Configuration, Fuites sur 100 tests, Données personnelles masquées, Qualité (sur 5)]
+  rows:
+    - [RAG classique sans droits, "37", "—", "4,1"]
+    - [Filtrage de la réponse après coup, "11", "—", "4,0"]
+    - [Droits avant recherche + masquage, "0", "96 %", "3,8"]
+mission:
+  duration: "POC en 3 semaines, mise en production en 6 à 10 semaines"
+  scope:
+    - Cartographie des droits d'accès et des données sensibles
+    - Masquage et journal d'audit
+    - Installation sur vos serveurs ou dans votre cloud européen
+    - Documentation de conformité (fiche RGPD, AI Act)
+limits:
+  - Toutes les personnes et tous les documents sont fictifs.
+  - La démo en ligne utilise l'API Mistral ; seule la variante installée tourne entièrement chez le client.
+  - Ne remplace pas l'analyse de votre délégué à la protection des données.
+seo:
+  title: RAG confidentiel, RGPD et souverain
+  description: "Démo : assistant documentaire qui masque les données personnelles, applique les droits par rôle, journalise les accès et peut tourner chez le client avec des modèles ouverts."
+---
+
+La confidentialité se joue avant le modèle : masquage à l'ingestion, droits appliqués à la recherche, journal de chaque accès. Le choix du modèle (européen ou installé sur place) vient compléter ces garanties, il ne les remplace pas.

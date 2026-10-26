@@ -1,0 +1,13 @@
+flowchart LR
+  U(["<<Visiteur|Visitor>>"]):::user --> L["Lambda<br/><<API de la démo|Demo API>>"]
+  L -->|"<<question sur les fiches|about the help pages>>"| KB["Bedrock<br/>Knowledge Bases"]:::key
+  KB <--> SV[("S3 Vectors")]:::store
+  L -->|"<<question sur votre PDF|about your PDF>>"| C["<<PDF entier en contexte<br/>+ cache de prompt|Whole PDF in context<br/>+ prompt caching>>"]:::key
+  KB --> G["<<Génération|Generation>><br/>Claude · Bedrock"]
+  C --> G
+  G -->|"<<réponse + citations|answer + citations>>"| U
+  L --- Q[("DynamoDB<br/><<quotas, sessions|quotas, sessions>>")]:::store
+
+  classDef user stroke-width:0
+  classDef key stroke-width:2px
+  classDef store stroke-width:1px

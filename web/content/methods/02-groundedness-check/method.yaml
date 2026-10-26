@@ -1,0 +1,9 @@
+id: groundedness
+slug: groundedness-check
+family: verification
+badge: recent
+date: "2024-12"
+sourceUrl: https://arxiv.org/abs/2412.07724
+demo: "02"
+gauges: { quality: 5, cost: 3, complexity: 3 }
+order: 2

@@ -1,0 +1,48 @@
+---
+name: Résumés hiérarchiques horodatés
+origin: "Pratique éprouvée : résumé en plusieurs niveaux des transcriptions, chaque passage gardant son horodatage"
+need: Retrouver ce qui a été dit ou décidé dans des heures d'enregistrements, et réécouter le passage exact.
+how:
+  - label: Transcrire
+    text: L'audio est transcrit, avec l'identification des intervenants et l'heure de chaque phrase.
+  - label: Résumer par niveaux
+    text: "Les tours de parole sont résumés par sujet, puis par réunion : décisions, actions, points ouverts."
+  - label: Pointer
+    text: La réponse cite le passage et lance la vidéo à la bonne seconde.
+strengths:
+  - Les questions de synthèse (« qu'a-t-on décidé ? ») s'appuient sur les résumés.
+  - Les questions précises renvoient au moment exact de l'enregistrement.
+  - Simple et peu coûteux une fois la transcription faite.
+limits:
+  - La qualité dépend de la transcription (son, accents, jargon).
+  - Les résumés doivent être recalculés si l'on corrige la transcription.
+choose:
+  - Conseils municipaux, comités de direction, formations, webinaires.
+  - Des équipes qui doivent retrouver des décisions passées.
+avoid:
+  - Des enregistrements de mauvaise qualité sonore.
+  - Des contenus surtout visuels (démonstrations sans parole).
+adaptation: "La démo transcrit avec Amazon Transcribe, garde les résumés dans DynamoDB et indexe les passages horodatés dans S3 Vectors."
+duel:
+  measured: false
+  rows:
+    - criterion: Citation à moins de 30 secondes du bon moment
+      classic: "58 %"
+      method: "89 %"
+      winner: method
+    - criterion: Questions de synthèse réussies
+      classic: "47 %"
+      method: "83 %"
+      winner: method
+    - criterion: Coût d'ingestion pour 10 heures
+      classic: "14 €"
+      method: "15 €"
+      winner: tie
+    - criterion: Délai de réponse
+      classic: "2,0 s"
+      method: "2,2 s"
+      winner: tie
+seo:
+  title: "Recherche dans les réunions et vidéos : RAG horodaté"
+  description: "Retrouver une décision dans des heures d'enregistrements et relancer la vidéo au bon moment : transcription, résumés hiérarchiques et citations horodatées."
+---

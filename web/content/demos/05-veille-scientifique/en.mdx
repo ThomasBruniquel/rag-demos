@@ -1,0 +1,65 @@
+---
+title: Research Monitoring
+tagline: A million papers you can query, updated daily, for a few cents.
+problem: "A lab or an intelligence team must keep track of hundreds of thousands of papers, filter them by date and field, and add new ones every day. At that volume every cent per document counts, and an ingestion mistake is expensive to replay."
+corpus:
+  name: arXiv metadata and abstracts
+  size: "~1 million abstracts (computer science, statistics, physics) + daily feed"
+  licence: CC0 (arXiv metadata)
+  url: https://info.arxiv.org/help/bulk_data.html
+examples:
+  - Recent work on retrieval-augmented generation evaluation, since 2025?
+  - Which papers compare graph-based and vector-based retrieval?
+  - This week's papers on language model quantisation?
+  - Who works on Matryoshka embeddings, and what did they find?
+architecture:
+  alt: "Architecture: the question becomes a compressed vector, a fast first search in S3 Vectors with date and field filters, then precise reranking of the top 100 candidates before answering."
+  choices:
+    - title: Truncated, quantised Matryoshka vectors
+      why: The index shrinks to a fraction of its original size; storage and search stay very cheap at a million documents.
+    - title: Two-stage search
+      why: A fast pass over compressed vectors, then precise reranking, recovers most of the lost precision.
+    - title: Batch embeddings
+      why: Bedrock batch inference costs about half as much as single calls for the initial load.
+  discarded:
+    - title: Full-precision, full-length vectors
+      why: An index more than ten times larger for a small precision gain once reranking is in place.
+    - title: An always-on search engine
+      why: A fixed monthly cost incompatible with the site's budget.
+pipeline:
+  alt: "Pipeline: initial load with Step Functions Distributed Map and Bedrock batch inference; every day, EventBridge triggers fetching new arXiv papers, de-duplication by hash, embedding and index update."
+  facts:
+    - label: Volume
+      value: "~1 million abstracts"
+    - label: Initial load
+      value: "€5 to €10"
+    - label: Daily update
+      value: "< €0.05 per day"
+    - label: Index storage
+      value: "~€0.50 per month"
+    - label: Dry run
+      value: 10,000 documents before the full load
+evaluation:
+  measured: false
+  caption: Questions generated from known papers then reviewed; recall@10 and p95 latency.
+  columns: [Set-up, Expected paper (top 10), Index size, p95 latency]
+  rows:
+    - [Full vectors, "89%", "6.1 GB", "480 ms"]
+    - ["Matryoshka, 256 dimensions", "87%", "1.5 GB", "260 ms"]
+    - [Matryoshka + quantisation + reranking, "86%", "0.4 GB", "190 ms"]
+mission:
+  duration: "Proof of concept in 2 weeks, production in 4 to 8 weeks"
+  scope:
+    - A replayable, idempotent initial load pipeline
+    - Daily incremental updates
+    - Index compression tuned to your budget
+    - A corpus dashboard (volumes, costs, latency)
+limits:
+  - It only reads abstracts, not full papers.
+  - Updates follow arXiv's publication rhythm (working days).
+seo:
+  title: RAG at scale over a million documents
+  description: "Demo: a million arXiv abstracts you can query, updated daily. Matryoshka vectors, quantisation, Step Functions and Bedrock batch. Costs published."
+---
+
+The challenge here isn't the model but running it at scale: a replayable initial load, an idempotent daily update, and a compressed index that keeps storage under a euro a month.

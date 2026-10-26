@@ -1,0 +1,49 @@
+---
+name: "STAIR: retrieval guided by the table of contents"
+origin: Method published by IBM Research (Sept 2026)
+sourceLabel: "Kumar et al., STAIR (STructure Aware Information Retriever)"
+need: Find the right section of a long, structured document without breaking its structure.
+how:
+  - label: Read the contents
+    text: The report's table of contents is the way in, instead of fixed-size chunks.
+  - label: Drill down
+    text: The model picks the chapter, then the section, then the table that answers the question.
+  - label: Answer
+    text: The answer cites the exact section; calculations go to a tool, not to the model.
+strengths:
+  - Tables and sections stay whole.
+  - Citations point to a precise section that is easy to check.
+  - The authors report the right section found first time in 82.6% of cases, against 59.5% for keyword search.
+limits:
+  - Documents need real structure (contents page, headings).
+  - Several model calls per question, so slower than vector search.
+choose:
+  - Annual reports, standards, manuals, regulatory documentation.
+  - Questions about one specific section or table.
+avoid:
+  - Short or unstructured text (emails, tickets).
+  - Instant answers over millions of pages.
+adaptation: "In the paper, a model is trained to memorise the corpus and retrieve it through its table of contents. The demo keeps the principle without training: an off-the-shelf model walks the table of contents to choose which sections to read."
+duel:
+  measured: false
+  rows:
+    - criterion: Exact figures on FinanceBench questions
+      classic: "54%"
+      method: "79%"
+      winner: method
+    - criterion: Table cited in full
+      classic: "31%"
+      method: "88%"
+      winner: method
+    - criterion: Response time
+      classic: "2.2 s"
+      method: "5.8 s"
+      winner: classic
+    - criterion: Cost per question
+      classic: "€0.004"
+      method: "€0.011"
+      winner: classic
+seo:
+  title: "STAIR: table-of-contents guided RAG for financial reports"
+  description: "The STAIR method published by IBM Research (Sept 2026) applied to annual reports: retrieval through document structure, tables kept intact, calculations verified."
+---

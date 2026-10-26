@@ -1,0 +1,194 @@
+{
+  "meta": {
+    "titleTemplate": "%s · {brand}",
+    "defaultTitle": "{brand} · RAG and AI data engineering on AWS, with live demos",
+    "description": "Document assistants and retrieval-augmented generation (RAG) for SMEs, mid-sized companies and startups: ten live demos with measured quality, controlled costs and public code."
+  },
+  "a11y": {
+    "skipToContent": "Skip to content",
+    "mainNav": "Main navigation",
+    "openMenu": "Open menu",
+    "closeMenu": "Close menu",
+    "homeLink": "{brand}, back to home page"
+  },
+  "nav": {
+    "demos": "Demos",
+    "methods": "Methods",
+    "whatIsRag": "What is RAG?",
+    "services": "Services",
+    "dataEngineering": "Data engineering",
+    "articles": "Articles",
+    "about": "About",
+    "contact": "Get in touch"
+  },
+  "theme": {
+    "toDark": "Switch to dark theme",
+    "toLight": "Switch to light theme"
+  },
+  "localeSwitcher": {
+    "short": "FR",
+    "ariaLabel": "Lire cette page en français"
+  },
+  "footer": {
+    "tagline": "Document assistants (RAG) and data pipelines on AWS for SMEs, mid-sized companies and startups.",
+    "explore": "Explore",
+    "work": "Work together",
+    "legalTitle": "Legal",
+    "legal": "Legal notice",
+    "privacy": "Privacy",
+    "commitmentsLabel": "Commitments",
+    "commitments": [
+      "Quality measured on every demo",
+      "Cost shown for every question",
+      "Public source code on GitHub",
+      "Your documents deleted within an hour"
+    ],
+    "rights": "© {year} {owner}. Demo code released under an open-source licence."
+  },
+  "draft": {
+    "notice": "This page is being written: the full content is coming in the next iterations."
+  },
+  "marks": {
+    "toMeasure": "Indicative values pending the evaluation bench: they will be replaced by real measurements."
+  },
+  "home": {
+    "eyebrow": "Freelance RAG & data engineering · AWS",
+    "titleTop": "Your documents hold the answers.",
+    "titleBottom": "Your teams are still searching.",
+    "lead": "I build retrieval-augmented generation (RAG) systems on AWS for SMEs, mid-sized companies and startups. Before you even get in touch, try ten demos built on real client scenarios, each published with its architecture, measured quality and cost per question.",
+    "primaryCta": "Browse the demos",
+    "secondaryCta": "Discuss your project"
+  },
+  "catalog": {
+    "eyebrow": "10 demos · 10 client scenarios",
+    "filtersLabel": "Filter the demos",
+    "docTypes": "Kind of documents",
+    "volume": "Volume",
+    "constraints": "Constraint",
+    "sectors": "Sector",
+    "any": "Any",
+    "reset": "Reset",
+    "countOne": "1 demo",
+    "countMany": "{n} demos",
+    "empty": "No demo matches all of these criteria. Remove a filter to widen the search.",
+    "status": {
+      "soon": "Coming soon",
+      "live": "Live"
+    },
+    "method": "Key method"
+  },
+  "demo": {
+    "back": "All demos",
+    "number": "Demo {id}",
+    "problem": "The problem",
+    "try": "Try it",
+    "examples": "Sample questions",
+    "playerSoon": "The interactive player arrives in the next iteration of the site. Here are the questions you'll be able to ask:",
+    "behind": "Behind the scenes",
+    "behindIntro": "For every answer: the passages retrieved and their scores, the models used, the latency and the exact cost of the question.",
+    "built": "How it's built",
+    "choices": "Technical choices, and why",
+    "discarded": "What was ruled out",
+    "pipeline": "Data pipeline",
+    "results": "Measured results",
+    "project": "For your project",
+    "duration": "Typical duration",
+    "scope": "Usual scope",
+    "limits": "What this demo doesn't do",
+    "contactCta": "Discuss a similar project",
+    "source": "Source code",
+    "sourceCta": "See the demo's code on GitHub",
+    "corpus": "Corpus",
+    "licence": "Licence",
+    "aws": "AWS services",
+    "vectorStore": "Vector store",
+    "methodCard": "Key method",
+    "seeMethod": "See the method's profile",
+    "diagramPending": "Diagram being drawn.",
+    "estimate": "estimate",
+    "facts": "In numbers"
+  },
+  "methods": {
+    "eyebrow": "One character per method",
+    "family": "Family",
+    "reference": "Baseline character",
+    "referenceIntro": "Every method faces it in a scored duel.",
+    "origin": "Origin:",
+    "readPaper": "Read the paper",
+    "need": "The need it solves",
+    "how": "How it works",
+    "strengths": "Strengths",
+    "limits": "Limits",
+    "gauges": "At a glance",
+    "quality": "Answer quality",
+    "cost": "Running cost",
+    "complexity": "Set-up complexity",
+    "gaugeValue": "{label}: {value} out of 5",
+    "choose": "When to choose it",
+    "avoid": "When to avoid it",
+    "adaptation": "What the demo does",
+    "duel": "Duel against classic RAG",
+    "criterion": "Criterion",
+    "classic": "Classic RAG",
+    "advantage": "Edge",
+    "tie": "Tie",
+    "tryDemo": "Try the demo",
+    "allMethods": "All methods",
+    "familiesTitle": "Six families of methods",
+    "familyIntro": {
+      "search": "Find things fast and cheaply, even across millions of documents.",
+      "structure": "Respect the structure of documents and data: contents pages, tables, links.",
+      "verification": "Check every answer before it reaches the user.",
+      "agents": "Reason in several steps, use tools, know when to hand over.",
+      "sovereignty": "Keep data in-house, with open models.",
+      "multimodal": "Understand images, diagrams, audio and video."
+    }
+  },
+  "pages": {
+    "demos": {
+      "title": "Demos",
+      "lead": "Ten real-world client scenarios, from a small company's knowledge base to a 20-million-row data lake. Every demo runs live and comes with its architecture, data pipeline, evaluation results and running costs."
+    },
+    "methods": {
+      "title": "The methods",
+      "lead": "There is no single RAG, but families of methods, each suited to a problem. Every demo stars one of them, as a character, up against classic RAG."
+    },
+    "whatIsRag": {
+      "title": "What is RAG?",
+      "lead": "How an AI assistant can answer from your documents and show its sources, and when it isn't the right tool."
+    },
+    "services": {
+      "title": "Services",
+      "lead": "Four ways to work together, from a two-day scoping audit to a production rollout, plus a dedicated format for improving a RAG system you already run."
+    },
+    "dataEngineering": {
+      "title": "Data engineering for AI",
+      "lead": "A reliable RAG system is first and foremost a sound data pipeline: ingestion, transformation, storage, updates and security. The language model comes last."
+    },
+    "articles": {
+      "title": "Articles",
+      "lead": "Technical write-ups for each demo: what worked, what was ruled out, and why."
+    },
+    "about": {
+      "title": "About",
+      "lead": "Experienced Python developer focused on RAG systems and data pipelines on AWS."
+    },
+    "contact": {
+      "title": "Get in touch",
+      "lead": "Tell me about your situation in a few lines: the kind of documents, how many, and your constraints. I'll come back to you with a first assessment and a few pointed questions."
+    },
+    "legal": {
+      "title": "Legal notice",
+      "lead": "Legal information about the publisher and host of this website."
+    },
+    "privacy": {
+      "title": "Privacy",
+      "lead": "What data this site processes, why, and for how long."
+    }
+  },
+  "notFound": {
+    "title": "Page not found",
+    "body": "This address doesn't match any page. It may have moved.",
+    "back": "Back to home page"
+  }
+}

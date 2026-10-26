@@ -1,0 +1,49 @@
+---
+name: RAG correctif et adaptatif (agent)
+origin: "Corrective RAG publié par Yan et al. (janv. 2024) et Adaptive-RAG publié par Jeong et al. (mars 2024, NAACL 2024)"
+sourceLabel: "Yan et al., Corrective Retrieval Augmented Generation"
+need: Un assistant client qui choisit la bonne action, refuse de deviner et sait passer la main à un humain.
+how:
+  - label: Aiguiller
+    text: L'agent juge la question (simple, complexe, hors sujet) et choisit entre la FAQ, un outil (catalogue, commande) ou une demande de précision.
+  - label: Corriger
+    text: Il évalue ce qu'il a trouvé ; si c'est insuffisant, il reformule et cherche à nouveau.
+  - label: Escalader
+    text: S'il reste un doute, il refuse de répondre au hasard et crée un ticket pour un humain.
+strengths:
+  - Moins de réponses inventées quand l'information manque.
+  - Peut agir (suivre une commande) et pas seulement citer la FAQ.
+  - Le passage à un humain est prévu, tracé et mesurable.
+limits:
+  - Plusieurs appels au modèle par question, donc un coût plus élevé.
+  - Plus de scénarios à tester qu'un RAG simple.
+choose:
+  - Support client, assistance interne, questions qui mènent à une action.
+  - "Des sources multiples : FAQ, base produits, système de commandes."
+avoid:
+  - "Une simple FAQ statique : un RAG classique suffit."
+  - Un budget par conversation très bas.
+adaptation: "La démo assemble l'agent avec LangGraph, applique des garde-fous Bedrock Guardrails et crée les tickets d'escalade dans un mini back-office visible sur le site."
+duel:
+  measured: false
+  rows:
+    - criterion: Bon outil choisi (scénarios de test)
+      classic: "—"
+      method: "92 %"
+      winner: method
+    - criterion: Refus correct d'une question hors périmètre
+      classic: "41 %"
+      method: "95 %"
+      winner: method
+    - criterion: Escalade déclenchée au bon moment
+      classic: "—"
+      method: "88 %"
+      winner: method
+    - criterion: Coût par conversation
+      classic: "0,6 c€"
+      method: "2,4 c€"
+      winner: classic
+seo:
+  title: "Agent RAG pour le support client : corrige, refuse, escalade"
+  description: "Un agent LangGraph qui choisit ses outils, vérifie ce qu'il trouve et passe la main à un humain plutôt que d'inventer (Corrective et Adaptive RAG). Démo en ligne."
+---

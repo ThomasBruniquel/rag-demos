@@ -1,0 +1,9 @@
+id: multi-sql
+slug: multi-candidate-sql
+family: verification
+badge: recent
+date: "2024-10"
+sourceUrl: https://arxiv.org/abs/2410.01943
+demo: "04"
+gauges: { quality: 4, cost: 3, complexity: 4 }
+order: 4

@@ -1,0 +1,66 @@
+---
+title: Small Business Assistant
+tagline: A document chatbot that shows its sources, ships in days, and reads your PDFs too.
+problem: "A small company wants an assistant that answers from its own documentation, with sources, without spending months on it or paying for heavy infrastructure. Staff keep asking the same questions; the answers exist, but they are scattered across hundreds of pages."
+corpus:
+  name: "\"Entreprendre\" (business) help pages from Service-Public.fr, the French government portal (DILA)"
+  size: "~3,000 pages, in French"
+  licence: Etalab Open Licence 2.0
+  url: https://www.data.gouv.fr/datasets/fiches-pratiques-et-ressources-entreprendre-service-public-fr/
+examples:
+  - How do I register as a sole trader (micro-entreprise)?
+  - At what turnover do I have to charge VAT?
+  - What support is there for hiring a first employee?
+  - "With your PDF: what are the key dates in this document?"
+architecture:
+  alt: "Architecture: the browser calls a Lambda function, which queries Bedrock Knowledge Bases (S3 Vectors index) for the help pages, or reads the visitor's cached PDF directly, then generates the answer with Claude on Bedrock."
+  choices:
+    - title: A managed RAG service (Bedrock Knowledge Bases)
+      why: Chunking, indexing and citations come built in, leaving very little code to maintain, which is what a small company needs.
+    - title: The visitor's whole PDF in context, cached
+      why: "A 20-page document fits in the model's context: no risk of missing the right passage, and prompt caching avoids paying to read it again for every question."
+    - title: S3 Vectors as the index
+      why: No fixed cost, a few cents of storage per month.
+  discarded:
+    - title: OpenSearch Serverless
+      why: Several hundred euros a month at minimum, impossible to justify for 3,000 pages.
+    - title: A custom retrieval pipeline
+      why: More control, but weeks of work for little quality gain on simple pages.
+pipeline:
+  alt: "Pipeline: DILA archive downloaded, XML converted to Markdown by a Lambda function, stored on S3, Knowledge Base synchronised. For uploads: stored under a session prefix, deleted automatically after one hour."
+  facts:
+    - label: Volume
+      value: "~3,000 pages"
+    - label: Ingestion time
+      value: "~20 min"
+    - label: Ingestion cost
+      value: "< €2"
+    - label: Updates
+      value: Monthly (new DILA archive)
+    - label: Uploaded documents
+      value: Deleted after one hour
+evaluation:
+  measured: false
+  caption: On 50 hand-written questions about the help pages, and 20 questions about uploaded PDFs.
+  columns: [Set-up, Correct answers (help pages), Correct answers (PDF), Cost per question]
+  rows:
+    - [Classic RAG, "81%", "78%", "€0.003"]
+    - [Knowledge Base only, "86%", "80%", "€0.004"]
+    - [Knowledge Base + PDF in context, "86%", "91%", "€0.005"]
+mission:
+  duration: "Proof of concept in 1 week, production in 2 to 3 weeks"
+  scope:
+    - Your documentation brought in (PDF, web pages, Word)
+    - An assistant with sources, embedded in your website or intranet
+    - A quality and cost dashboard
+    - Handover to your team
+limits:
+  - It doesn't replace tailored legal or accounting advice.
+  - Uploaded PDFs are limited to 20 pages and 5 MB.
+  - Help pages are refreshed monthly, not in real time.
+seo:
+  title: RAG chatbot over your PDF documents, with sources
+  description: "Live demo: a document assistant that answers from 3,000 official help pages and from your own PDF, with citations. Architecture, costs and measured quality."
+---
+
+The architecture deliberately avoids sophistication: a managed service for the knowledge base, and the visitor's document read in full. That is what makes it possible to ship a reliable assistant to a small company within days, then run it for a few euros a month.

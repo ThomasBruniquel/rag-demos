@@ -1,0 +1,48 @@
+---
+name: Text-to-SQL multi-candidats
+origin: "Approche publiée par Google Cloud et l'université Stanford avec CHASE-SQL (oct. 2024, ICLR 2025)"
+sourceLabel: "Pourreza et al., CHASE-SQL"
+need: Interroger un data lake en français courant, avec une réponse chiffrée juste et la requête SQL visible.
+how:
+  - label: Proposer
+    text: Le modèle écrit plusieurs requêtes SQL candidates, par des raisonnements différents.
+  - label: Exécuter
+    text: Chaque candidate est validée puis exécutée en lecture seule, avec un plafond de données lues.
+  - label: Choisir
+    text: Un sélecteur compare les résultats et garde la requête la plus fiable ; elle est affichée avec la réponse.
+strengths:
+  - Une seule requête fausse ne suffit plus à donner un chiffre faux.
+  - La requête SQL reste visible et vérifiable par l'équipe data.
+  - S'appuie sur le catalogue de données existant (descriptions de tables, exemples validés).
+limits:
+  - Plusieurs requêtes par question, donc plus de calcul côté base.
+  - La qualité dépend de la documentation des tables et des colonnes.
+choose:
+  - Des métiers qui veulent « parler à leurs données » sans écrire de SQL.
+  - Un data lake déjà catalogué (Glue, dbt, etc.).
+avoid:
+  - Des données mal documentées ou des schémas qui changent sans arrêt.
+  - "Des tableaux de bord figés : un outil de BI suffit."
+duel:
+  measured: false
+  rows:
+    - criterion: Résultat exact (comparé à la requête de référence)
+      classic: "61 %"
+      method: "84 %"
+      winner: method
+    - criterion: Requêtes refusées par les garde-fous
+      classic: "9 %"
+      method: "3 %"
+      winner: method
+    - criterion: Délai de réponse
+      classic: "4,1 s"
+      method: "7,5 s"
+      winner: classic
+    - criterion: Données lues par question
+      classic: "120 Mo"
+      method: "310 Mo"
+      winner: classic
+seo:
+  title: "Text-to-SQL sur data lake : interroger ses données en langage naturel"
+  description: "Plusieurs requêtes SQL candidates, exécutées et comparées avant de répondre (approche CHASE-SQL). Démo sur 20 millions de transactions immobilières avec Athena."
+---

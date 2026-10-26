@@ -1,0 +1,9 @@
+id: matryoshka
+slug: matryoshka-quantization
+family: search
+badge: recent
+date: "2022-05"
+sourceUrl: https://arxiv.org/abs/2205.13147
+demo: "05"
+gauges: { quality: 3, cost: 1, complexity: 3 }
+order: 5

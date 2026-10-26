@@ -1,0 +1,49 @@
+---
+name: "Recherche visuelle (ColPali) face à l'OCR"
+origin: "Méthode publiée par Faysse et al. (juil. 2024, présentée à ICLR 2025)"
+sourceLabel: "Faysse et al., ColPali: Efficient Document Retrieval with Vision Language Models"
+need: Retrouver une information dans des pages scannées ou pleines de schémas, là où le texte extrait ne suffit pas.
+how:
+  - label: Photographier
+    text: Chaque page est traitée comme une image, sans passer par l'extraction de texte.
+  - label: Comparer
+    text: Un modèle vision-langage découpe la page en petites zones et compare chacune aux mots de la question.
+  - label: Montrer
+    text: La réponse affiche la page et la figure retrouvées, pour que l'utilisateur voie la source.
+strengths:
+  - Les schémas, tableaux et mises en page comptent dans la recherche.
+  - Pas de chaîne OCR fragile à maintenir pour retrouver la bonne page.
+  - La source s'affiche telle quelle, ce qui rassure l'utilisateur.
+limits:
+  - Un index plus lourd qu'un index de texte (plusieurs vecteurs par page).
+  - Le modèle demande plus de calcul qu'un modèle d'embedding texte.
+choose:
+  - Manuels techniques, plans, rapports scannés, documents anciens.
+  - Des réponses qui se trouvent dans une figure ou un tableau.
+avoid:
+  - "Des documents nativement textuels et propres : un OCR ou l'extraction directe suffit."
+  - Des millions de pages avec un budget très serré.
+adaptation: "La démo compare les deux voies sur les mêmes questions : OCR Textract suivi d'un RAG texte, et recherche visuelle de type ColPali. Le modèle exact et son hébergement seront précisés à la mise en ligne."
+duel:
+  measured: false
+  rows:
+    - criterion: Réponses présentes uniquement dans une figure
+      classic: "23 %"
+      method: "71 %"
+      winner: method
+    - criterion: Bonne page dans les 5 premiers résultats
+      classic: "64 %"
+      method: "86 %"
+      winner: method
+    - criterion: Coût d'ingestion pour 4 000 pages
+      classic: "6 €"
+      method: "9 €"
+      winner: classic
+    - criterion: Délai de réponse
+      classic: "2,5 s"
+      method: "3,4 s"
+      winner: classic
+seo:
+  title: "RAG multimodal sur documents scannés : ColPali contre OCR"
+  description: "Rechercher dans des rapports scannés pleins de schémas : comparaison entre OCR Textract et recherche visuelle ColPali, avec affichage des figures citées."
+---

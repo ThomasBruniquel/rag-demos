@@ -1,0 +1,14 @@
+# Fields shared by both languages. Texts are in fr.mdx / en.mdx.
+id: "01"
+slugs: { fr: chatbot-documentaire-pdf, en: pdf-document-chatbot }
+status: soon
+featured: true
+method: cag
+docTypes: [text, pdf]
+volume: small
+constraints: [time, budget]
+sectors: [smb, public]
+aws: [Bedrock Knowledge Bases, S3 Vectors, Lambda, DynamoDB, S3]
+vectorStore: S3 Vectors
+sourcePath: demos/01-assistant-entrepreneurs
+player: { upload: true }

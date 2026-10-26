@@ -1,0 +1,15 @@
+flowchart LR
+  U(["<<Visiteur|Visitor>>"]):::user --> L["Lambda"]
+  L --> C["<<RAG classique|Classic RAG>><br/><<sur les récits|over narratives>>"]
+  L --> G["<<Recherche dans le graphe|Graph search>>"]:::key
+  G --> N[("Neo4j AuraDB")]:::store
+  G --> CS["<<Résumés de communautés<br/>(questions globales)|Community summaries<br/>(global questions)>>"]
+  G --> P["<<Parcours du graphe<br/>(plusieurs sauts)|Graph traversal<br/>(multi-hop)>>"]
+  C -->|"<<réponse A|answer A>>"| SB["<<Affichage côte à côte|Side-by-side view>>"]
+  CS --> SB
+  P -->|"<<réponse B|answer B>>"| SB
+  SB --> U
+
+  classDef user stroke-width:0
+  classDef key stroke-width:2px
+  classDef store stroke-width:1px

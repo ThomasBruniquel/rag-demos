@@ -1,0 +1,49 @@
+---
+name: Vérification anti-hallucination
+origin: "Approche publiée par IBM Research avec les modèles Granite Guardian (déc. 2024)"
+sourceLabel: "Padhi et al., Granite Guardian"
+need: Ne jamais laisser passer une réponse que les documents ne permettent pas d'affirmer.
+how:
+  - label: Retrouver
+    text: Une recherche hybride (mots-clés + vecteurs) puis un reclassement trouvent les clauses pertinentes.
+  - label: Rédiger
+    text: Le modèle rédige une réponse en citant chaque passage utilisé.
+  - label: Contrôler
+    text: Un modèle vérificateur note la fidélité de chaque affirmation aux passages cités ; sous le seuil, la réponse est bloquée ou reformulée.
+strengths:
+  - Les hallucinations sont détectées avant d'arriver à l'utilisateur.
+  - Chaque réponse porte un score de fidélité lisible.
+  - Le vérificateur est indépendant du modèle qui rédige.
+limits:
+  - Un appel de modèle en plus, donc un peu plus de latence et de coût.
+  - Le vérificateur peut refuser une réponse correcte mais mal citée.
+choose:
+  - "Juridique, conformité, santé : une erreur coûte cher."
+  - Des utilisateurs qui doivent pouvoir se fier à chaque phrase.
+avoid:
+  - Un usage exploratoire où une réponse approximative suffit.
+  - Un budget par question extrêmement serré.
+adaptation: "La démo applique ce contrôle de fidélité après la recherche hybride et le reclassement. Le modèle vérificateur retenu (Granite Guardian ou équivalent) sera précisé à la mise en ligne, avec son coût mesuré."
+duel:
+  measured: false
+  rows:
+    - criterion: Réponses contenant une affirmation non sourcée
+      classic: "14 %"
+      method: "2 %"
+      winner: method
+    - criterion: Clause pertinente trouvée dans les 5 premiers résultats
+      classic: "72 %"
+      method: "91 %"
+      winner: method
+    - criterion: Délai de réponse
+      classic: "2,4 s"
+      method: "3,6 s"
+      winner: classic
+    - criterion: Coût par question
+      classic: "0,4 c€"
+      method: "0,7 c€"
+      winner: classic
+seo:
+  title: "Vérification anti-hallucination d'un RAG : chaque réponse contrôlée"
+  description: "Un modèle vérificateur contrôle que chaque réponse est fidèle aux contrats cités, selon l'approche Granite Guardian d'IBM Research. Démo sur 510 contrats."
+---

@@ -1,0 +1,67 @@
+---
+title: Revue de contrats
+tagline: Interroger un fonds de contrats et obtenir des réponses vérifiées, clause surlignée à l'appui.
+problem: "Une direction juridique doit retrouver vite ce que disent des centaines de contrats : clauses de non-concurrence, conditions de résiliation, plafonds de responsabilité. Une réponse fausse peut coûter cher ; chaque affirmation doit donc renvoyer à la clause exacte."
+corpus:
+  name: CUAD (Contract Understanding Atticus Dataset)
+  size: 510 contrats commerciaux en anglais, annotés par des juristes sur 41 types de clauses
+  licence: CC BY 4.0
+  url: https://www.atticusprojectai.org/cuad
+examples:
+  - Which contracts have a non-compete clause longer than two years?
+  - What does the distribution agreement say about termination for convenience?
+  - Is there a cap on liability in the supply agreements?
+  - "Quels contrats prévoient une exclusivité territoriale ?"
+architecture:
+  alt: "Architecture : la Lambda lance en parallèle une recherche plein texte et une recherche vectorielle dans Aurora (pgvector), fusionne et reclasse les résultats, fait rédiger la réponse, puis la soumet à un modèle vérificateur avant de l'afficher."
+  choices:
+    - title: Recherche hybride (mots-clés + vecteurs)
+      why: Les termes exacts d'un contrat (« indemnification », noms des parties, numéros d'article) sont mal retrouvés par les seuls vecteurs.
+    - title: Reclassement des résultats
+      why: Un modèle spécialisé remet en tête les clauses vraiment pertinentes parmi les 50 premiers candidats.
+    - title: Vérification de fidélité avant affichage
+      why: Une réponse non fondée sur les clauses citées est bloquée ou reformulée, et son score est affiché.
+    - title: Aurora Serverless v2 en veille, interrogé par Data API
+      why: La base s'arrête quand personne ne s'en sert ; la Data API évite de placer la Lambda dans un réseau privé (et la NAT Gateway qui va avec).
+  discarded:
+    - title: Vecteurs seuls
+      why: Rate trop de clauses citées par leur terme exact.
+    - title: Faire confiance au modèle sans vérification
+      why: Inacceptable pour un usage juridique, même avec de bonnes citations.
+pipeline:
+  alt: "Pipeline : contrats sur S3, Step Functions pour extraire le texte, découper par clause avec métadonnées, calculer les embeddings et écrire dans Aurora (pgvector et index plein texte)."
+  facts:
+    - label: Volume
+      value: 510 contrats
+    - label: Durée d'ingestion
+      value: "~40 min"
+    - label: Coût d'ingestion
+      value: "< 3 €"
+    - label: Réveil de la base
+      value: "~15 s après une période d'inactivité"
+evaluation:
+  measured: false
+  caption: Récupération mesurée automatiquement grâce aux annotations CUAD ; fidélité des réponses notée par un modèle juge.
+  columns: [Configuration, Clause trouvée (top 5), Réponses non sourcées, Coût par question]
+  rows:
+    - [Vecteurs seuls, "72 %", "14 %", "0,4 c€"]
+    - [Mots-clés seuls, "69 %", "15 %", "0,3 c€"]
+    - [Hybride + reclassement, "91 %", "9 %", "0,5 c€"]
+    - [Hybride + reclassement + vérification, "91 %", "2 %", "0,7 c€"]
+mission:
+  duration: "POC en 2 semaines, mise en production en 4 à 6 semaines"
+  scope:
+    - Découpage adapté à vos modèles de contrats
+    - Recherche hybride et reclassement réglés sur vos questions
+    - Vérification de fidélité et seuil de blocage
+    - Jeu d'évaluation construit avec vos juristes
+limits:
+  - Ne rend pas d'avis juridique ; elle retrouve et cite.
+  - Les contrats de démonstration sont en anglais (corpus CUAD).
+  - "Le premier appel après une pause peut prendre une quinzaine de secondes (réveil de la base)."
+seo:
+  title: RAG pour la revue de contrats, avec réponses vérifiées
+  description: "Démo sur 510 contrats : recherche hybride, reclassement et vérification anti-hallucination, chaque réponse renvoyant à la clause exacte. Résultats mesurés et coûts."
+---
+
+La qualité vient de trois étages complémentaires : une recherche hybride qui ne rate pas les termes exacts, un reclassement qui trie les candidats, et un contrôle de fidélité qui refuse de laisser passer une affirmation non sourcée.

@@ -1,0 +1,67 @@
+---
+title: Incident Analysis (GraphRAG)
+tagline: Global questions over thousands of reports, compared side by side with classic RAG.
+problem: "An insurer, a quality department or a safety team holds thousands of incident reports. The useful questions are rarely \"what does this report say?\" but rather \"which factors come up most often?\" or \"which incidents combine this equipment with that maintenance issue?\". Classic RAG, which only reads a few passages, can't answer them."
+corpus:
+  name: NTSB aviation accident database (National Transportation Safety Board)
+  size: "~3,000 reports: structured data and investigation narratives"
+  licence: Public domain (United States)
+  url: https://www.ntsb.gov/Pages/AviationQuery.aspx
+examples:
+  - What factors come up most often in approach-phase accidents?
+  - Which accidents involve both a single-engine aircraft and a maintenance issue?
+  - How are weather conditions linked to loss of control in flight?
+  - Summarise the main causes of runway excursions.
+architecture:
+  alt: "Architecture: for the same question, two answers side by side. On the left, classic RAG over the narratives. On the right, a search in the Neo4j graph: community summaries for global questions, graph traversal for multi-hop questions."
+  choices:
+    - title: Side-by-side display
+      why: Showing the difference on the same question is more convincing than claiming it.
+    - title: A fixed entity schema for extraction
+      why: "Aircraft, flight phase, cause, factor, location: a fixed schema prevents a messy graph and makes checking easier."
+    - title: Validation against structured data
+      why: The official NTSB fields, queried with Athena, are used to check the entities the model extracts.
+    - title: Three variants compared
+      why: GraphRAG, LightRAG and RAPTOR have different costs and strengths; the demo publishes the comparison.
+  discarded:
+    - title: Neptune (AWS graph database)
+      why: Fixed cost too high for the site's budget; Neo4j AuraDB Free is enough for 3,000 reports.
+    - title: Free-form extraction without a schema
+      why: Produces thousands of unusable entity types.
+pipeline:
+  alt: "Pipeline: NTSB data loaded with Glue and queryable with Athena; Step Functions has a light model extract entities and relations, validates them against the structured data, builds the graph in Neo4j, detects communities and summarises them."
+  facts:
+    - label: Volume
+      value: "~3,000 reports"
+    - label: Ingestion time
+      value: "~4 h"
+    - label: Ingestion cost
+      value: "€10 to €25"
+    - label: Graph database
+      value: Neo4j AuraDB Free (pauses when idle)
+evaluation:
+  measured: false
+  caption: Global questions scored by a judge model (completeness, diversity); factual questions checked with Athena.
+  columns: [Set-up, Global questions (out of 5), Multi-hop questions, Factual questions]
+  rows:
+    - [Classic RAG, "2.1", "38%", "88%"]
+    - [RAPTOR, "3.6", "52%", "87%"]
+    - [LightRAG, "3.9", "69%", "87%"]
+    - [GraphRAG, "4.2", "74%", "87%"]
+mission:
+  duration: "Proof of concept in 3 weeks, production in 5 to 8 weeks"
+  scope:
+    - An entity schema defined with your domain experts
+    - Extraction and validation on your reports
+    - An explorable graph and synthesis questions
+    - A scored comparison with your current search
+limits:
+  - Reports are in English (US source).
+  - "The free database pauses after a quiet period: the first question can be slower."
+  - Simple factual questions gain nothing from the graph.
+seo:
+  title: GraphRAG versus classic RAG, side by side
+  description: "GraphRAG demo on 3,000 NTSB accident reports: global and multi-hop questions, Neo4j, compared with LightRAG, RAPTOR and classic RAG."
+---
+
+The graph isn't an end in itself: it serves synthesis questions, and the demo is also honest about where it adds nothing (simple factual questions).

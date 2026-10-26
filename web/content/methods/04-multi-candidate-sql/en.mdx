@@ -1,0 +1,48 @@
+---
+name: Multi-candidate text-to-SQL
+origin: "Approach published by Google Cloud and Stanford University with CHASE-SQL (Oct 2024, ICLR 2025)"
+sourceLabel: "Pourreza et al., CHASE-SQL"
+need: Query a data lake in plain language, get the right figure, and see the SQL behind it.
+how:
+  - label: Propose
+    text: The model writes several candidate SQL queries, each through a different line of reasoning.
+  - label: Run
+    text: Each candidate is validated and executed read-only, with a cap on data scanned.
+  - label: Pick
+    text: A selector compares the results and keeps the most reliable query, which is shown with the answer.
+strengths:
+  - One wrong query is no longer enough to produce a wrong figure.
+  - The SQL stays visible and checkable by the data team.
+  - Builds on the existing data catalogue (table descriptions, validated examples).
+limits:
+  - Several queries per question, so more compute on the database side.
+  - Quality depends on how well tables and columns are documented.
+choose:
+  - Business users who want to "talk to their data" without writing SQL.
+  - A data lake that is already catalogued (Glue, dbt, etc.).
+avoid:
+  - Poorly documented data or schemas that change constantly.
+  - "Fixed dashboards: a BI tool is enough."
+duel:
+  measured: false
+  rows:
+    - criterion: Exact result (compared with the reference query)
+      classic: "61%"
+      method: "84%"
+      winner: method
+    - criterion: Queries rejected by guardrails
+      classic: "9%"
+      method: "3%"
+      winner: method
+    - criterion: Response time
+      classic: "4.1 s"
+      method: "7.5 s"
+      winner: classic
+    - criterion: Data scanned per question
+      classic: "120 MB"
+      method: "310 MB"
+      winner: classic
+seo:
+  title: "Text-to-SQL over a data lake: query your data in plain language"
+  description: "Several candidate SQL queries, executed and compared before answering (CHASE-SQL approach). Demo on 20 million property transactions with Athena."
+---

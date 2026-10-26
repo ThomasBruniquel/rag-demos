@@ -1,0 +1,12 @@
+id: "02"
+slugs: { fr: revue-de-contrats, en: contract-review }
+status: soon
+featured: true
+method: groundedness
+docTypes: [text]
+volume: small
+constraints: [reliability]
+sectors: [legal, finance]
+aws: [Aurora Serverless v2, RDS Data API, Step Functions, Bedrock, Lambda]
+vectorStore: pgvector (Aurora Serverless v2)
+sourcePath: demos/02-revue-contrats

@@ -1,0 +1,14 @@
+flowchart LR
+  A[("S3<br/><<rapports NASA|NASA reports>>")]:::store --> EV["<<Événement S3|S3 event>>"] --> SF["Step Functions"]
+  SF --> D{"<<Scan ou natif ?|Scanned or<br/>born-digital?>>"}
+  D -->|scan| T["Textract<br/><<+ score de confiance|+ confidence score>>"]
+  D --> F["<<Extraction des figures|Figure extraction>>"]
+  T --> F
+  F --> TX["<<Représentation texte|Text representation>>"]
+  F --> IM["<<Représentation visuelle|Visual representation>>"]:::key
+  TX --> SV[("S3 Vectors")]:::store
+  IM --> SV
+
+  classDef user stroke-width:0
+  classDef key stroke-width:2px
+  classDef store stroke-width:1px

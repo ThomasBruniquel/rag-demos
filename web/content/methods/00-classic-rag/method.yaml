@@ -1,0 +1,10 @@
+# Reference character: the RAG everyone starts with. Every other method is
+# compared ("duel") against it.
+id: classic
+slug: classic-rag
+family: classic
+badge: proven
+date: "2020-05"
+sourceUrl: https://arxiv.org/abs/2005.11401
+gauges: { quality: 3, cost: 2, complexity: 2 }
+order: 0

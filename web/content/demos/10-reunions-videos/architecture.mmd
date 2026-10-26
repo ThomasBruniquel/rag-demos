@@ -1,0 +1,11 @@
+flowchart LR
+  U(["<<Visiteur|Visitor>>"]):::user --> L["Lambda"]
+  L --> S[("<<Résumés par réunion<br/>et par sujet|Per-meeting and<br/>per-topic summaries>><br/>DynamoDB")]:::store
+  L --> P[("<<Passages horodatés|Timestamped passages>><br/>S3 Vectors")]:::store
+  S --> G["<<Réponse|Answer>>"]
+  P --> G
+  G -->|"<<citation → vidéo à la bonne seconde|citation → video at the right second>>"| U
+
+  classDef user stroke-width:0
+  classDef key stroke-width:2px
+  classDef store stroke-width:1px

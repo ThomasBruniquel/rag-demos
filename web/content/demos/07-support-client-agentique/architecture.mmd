@@ -1,0 +1,13 @@
+flowchart LR
+  U(["<<Client|Customer>>"]):::user --> A["<<Agent LangGraph|LangGraph agent>><br/>Lambda"]:::key
+  A -->|"<<question d'aide|help question>>"| H[("<<Centre d'aide<br/>S3 Vectors|Help centre<br/>S3 Vectors>>")]:::store
+  A -->|"<<commande, produit|order, product>>"| T[("<<Outils<br/>DynamoDB|Tools<br/>DynamoDB>>")]:::store
+  H --> E{"<<Suffisant ?|Enough?>>"}:::key
+  T --> E
+  E -.->|"<<non : reformuler|no: rephrase>>"| A
+  E -->|"<<oui|yes>>"| GR["Bedrock Guardrails"] --> U
+  E -->|"<<doute|doubt>>"| X["<<Ticket pour un humain|Ticket for a human>>"]
+
+  classDef user stroke-width:0
+  classDef key stroke-width:2px
+  classDef store stroke-width:1px

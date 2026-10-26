@@ -1,0 +1,49 @@
+---
+name: CAG + managed RAG
+origin: "CAG method published by Chan et al. (Dec 2024, WWW 2025 conference), paired with a managed RAG service"
+sourceLabel: "Don't Do RAG: When Cache-Augmented Generation is All You Need for Knowledge Tasks"
+need: Ship a reliable assistant within days, without building a custom retrieval pipeline.
+how:
+  - label: Route
+    text: "A small document (your PDF) fits whole in the model's context; a large knowledge base goes to a managed RAG service."
+  - label: Cache
+    text: The small document is loaded once and cached, so it isn't re-read for every question.
+  - label: Answer
+    text: The model answers from the full document or from the passages the managed service found, with citations.
+strengths:
+  - No retrieval errors on small documents, since everything is read.
+  - Very little code to maintain.
+  - Up and running within days.
+limits:
+  - "Putting everything in context only works up to a few hundred pages."
+  - The managed service offers fewer knobs than a custom pipeline.
+choose:
+  - A small or medium corpus and straightforward questions.
+  - A short deadline and a limited maintenance budget.
+avoid:
+  - Millions of documents that change every day.
+  - A need for fine control over chunking and ranking.
+adaptation: "The paper precomputes the model's internal cache. The demo uses Bedrock prompt caching, its managed equivalent, for the visitor's PDF; the 3,000 help pages go through Bedrock Knowledge Bases."
+duel:
+  measured: false
+  rows:
+    - criterion: Correct answers on your PDF (≤ 20 pages)
+      classic: "78%"
+      method: "91%"
+      winner: method
+    - criterion: Time to first word
+      classic: "2.1 s"
+      method: "1.3 s"
+      winner: method
+    - criterion: Cost per question
+      classic: "€0.003"
+      method: "€0.005"
+      winner: classic
+    - criterion: Set-up time
+      classic: "3 days"
+      method: "1 day"
+      winner: method
+seo:
+  title: "CAG and managed RAG: a document assistant shipped in days"
+  description: "When to put the whole document in the model's context (CAG) and when to rely on a managed RAG service such as Bedrock Knowledge Bases. Live demo."
+---

@@ -1,0 +1,62 @@
+---
+title: Réunions et vidéos
+tagline: Retrouver ce qui a été décidé, et réécouter le passage exact en un clic.
+problem: "Comités, conseils, formations, webinaires : des heures d'enregistrements que personne ne réécoute. Quand il faut retrouver une décision ou une explication, on ne sait plus dans quelle réunion, ni à quel moment."
+corpus:
+  name: "Enregistrements publics réutilisables (séances publiques ou conférences sous licence CC BY)"
+  size: "~10 heures de vidéo"
+  licence: "À confirmer selon la source retenue"
+examples:
+  - Qu'a-t-on décidé sur le budget lors des dernières séances ?
+  - Qui a présenté le projet de rénovation, et quels arguments ont été avancés ?
+  - "Résume les points restés ouverts à la fin de la dernière réunion."
+  - When was the cycling plan discussed, and what was said?
+architecture:
+  alt: "Architecture : la question interroge d'abord les résumés par réunion et par sujet (DynamoDB), puis les passages horodatés (S3 Vectors) ; la réponse cite chaque passage avec un lien qui lance la vidéo à la bonne seconde."
+  choices:
+    - title: Résumés à plusieurs niveaux
+      why: Les questions de synthèse s'appuient sur les résumés par réunion, les questions précises sur les passages.
+    - title: Horodatage conservé à chaque étape
+      why: Chaque citation renvoie à une seconde précise de l'enregistrement.
+    - title: Identification des intervenants
+      why: Permet de répondre à « qui a dit quoi ».
+  discarded:
+    - title: Découper la transcription à taille fixe
+      why: Coupe les tours de parole et mélange les intervenants.
+    - title: Un modèle qui écoute directement l'audio à chaque question
+      why: Bien trop coûteux et lent pour des heures d'enregistrement.
+pipeline:
+  alt: "Pipeline : dépôt de la vidéo sur S3, Step Functions lance Amazon Transcribe avec identification des intervenants, découpe par tour de parole et par sujet, calcule les résumés (DynamoDB) et les embeddings des passages (S3 Vectors)."
+  facts:
+    - label: Volume
+      value: "~10 heures"
+    - label: Coût de transcription
+      value: "~0,024 $ par minute"
+    - label: Coût d'ingestion total
+      value: "~15 €"
+    - label: Durée d'ingestion
+      value: "~1 h"
+evaluation:
+  measured: false
+  caption: Questions accompagnées du moment de référence dans l'enregistrement ; une citation est juste à 30 secondes près.
+  columns: [Configuration, Citation à ±30 s, Questions de synthèse, Coût par question]
+  rows:
+    - [Découpage à taille fixe, "58 %", "47 %", "0,3 c€"]
+    - [Tours de parole, "84 %", "55 %", "0,3 c€"]
+    - [Tours de parole + résumés hiérarchiques, "89 %", "83 %", "0,4 c€"]
+mission:
+  duration: "POC en 1 à 2 semaines, mise en production en 2 à 4 semaines"
+  scope:
+    - Transcription et résumés de vos enregistrements existants
+    - Ajout automatique des nouvelles réunions
+    - Lecteur avec citations horodatées
+    - Export des décisions et actions
+limits:
+  - La qualité dépend du son des enregistrements.
+  - Ne voit pas ce qui est montré à l'écran, seulement ce qui est dit.
+seo:
+  title: Recherche dans les réunions et vidéos avec l'IA
+  description: "Démo : interroger 10 heures de réunions, retrouver les décisions et relancer la vidéo au moment exact. Transcribe, résumés hiérarchiques, citations horodatées."
+---
+
+Une transcription brute ne suffit pas : ce sont les résumés par niveau, et l'horodatage conservé jusqu'à la citation, qui permettent à la fois de synthétiser et de retrouver le moment exact.

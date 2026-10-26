@@ -1,0 +1,64 @@
+---
+title: Analyste financier
+tagline: Des réponses chiffrées justes dans des rapports annuels pleins de tableaux.
+problem: "Analystes, auditeurs et directions financières passent des heures à chercher un chiffre dans des rapports de 300 pages, puis à le comparer d'une année ou d'une société à l'autre. Un assistant classique découpe les tableaux en morceaux et se trompe de ligne ; ici, une erreur de chiffre ne pardonne pas."
+corpus:
+  name: Rapports annuels 10-K issus de FinanceBench (sous-ensemble ouvert)
+  size: "~50 rapports, ~10 000 pages, avec questions et réponses de référence"
+  licence: "CC BY-NC 4.0 (usage non commercial, à confirmer avant mise en ligne)"
+  url: https://github.com/patronus-ai/financebench
+examples:
+  - What was the operating margin of the company in FY2022, and how did it change from FY2021?
+  - Compare capital expenditure between the two most recent fiscal years.
+  - Which segment contributed the most revenue?
+  - "Quel est le ratio d'endettement à la fin de l'exercice ?"
+architecture:
+  alt: "Architecture : la Lambda présente la table des matières du rapport au modèle, qui choisit chapitre puis section ; les sections retenues (tableaux en entier) sont lues, les calculs sont confiés à un outil, et la réponse cite la section."
+  choices:
+    - title: Navigation par la table des matières (inspirée de STAIR)
+      why: Les rapports annuels sont très structurés ; descendre chapitre par chapitre garde les tableaux entiers et cite une section précise.
+    - title: Comparaison de trois extracteurs de PDF
+      why: "Le vrai problème est l'extraction : texte brut, Docling (open source) et Textract sont comparés sur les mêmes questions."
+    - title: Un outil de calcul
+      why: Le modèle ne calcule pas de tête ; variations et ratios sont calculés par une fonction, puis cités.
+  discarded:
+    - title: Découpage à taille fixe
+      why: Coupe les tableaux en morceaux sans en-têtes, cause principale des chiffres faux.
+    - title: Entraîner un modèle sur les rapports, comme dans le papier STAIR
+      why: Coûteux et à refaire pour chaque nouveau rapport ; la variante sans entraînement garde l'essentiel du gain.
+pipeline:
+  alt: "Pipeline : PDF sur S3, Step Functions traite chaque rapport : extraction (Textract sur les pages à tableaux, Docling ailleurs), reconstruction de la table des matières, découpage par section, enrichissement de contexte, index S3 Vectors et métadonnées dans le Glue Data Catalog."
+  facts:
+    - label: Volume
+      value: "~50 rapports, ~10 000 pages"
+    - label: Durée d'ingestion
+      value: "~3 h"
+    - label: Coût d'ingestion
+      value: "20 à 40 €"
+    - label: Pages traitées par Textract
+      value: Pages à tableaux uniquement
+evaluation:
+  measured: false
+  caption: Questions de référence FinanceBench ; une réponse est juste si le chiffre est exact.
+  columns: [Configuration, Chiffres exacts, Tableau cité en entier, Coût par question]
+  rows:
+    - [RAG classique (texte brut), "54 %", "31 %", "0,4 c€"]
+    - [RAG classique (Textract), "63 %", "52 %", "0,4 c€"]
+    - [Table des matières + Textract + outil de calcul, "79 %", "88 %", "1,1 c€"]
+mission:
+  duration: "POC en 2 semaines, mise en production en 4 à 6 semaines"
+  scope:
+    - Banc de comparaison des extracteurs sur vos propres documents
+    - Navigation par la structure et outil de calcul
+    - Jeu d'évaluation avec vos analystes
+    - Pipeline d'ingestion pour les nouveaux rapports
+limits:
+  - Ne donne pas de recommandation d'investissement.
+  - Les rapports de démonstration sont américains (format 10-K), en anglais.
+  - Les documents sans table des matières exploitable retombent sur une recherche classique.
+seo:
+  title: RAG sur rapports financiers PDF avec tableaux
+  description: "Démo : retrouver et comparer des chiffres dans des rapports annuels de 300 pages, recherche guidée par la table des matières (méthode STAIR, IBM Research) et calculs vérifiés."
+---
+
+La démo compare honnêtement les approches : trois extracteurs de PDF, avec et sans navigation par la structure. Les tableaux restent entiers, la réponse cite la section, et les calculs sont faits par du code, pas par le modèle.

@@ -1,0 +1,49 @@
+---
+name: Modèles ouverts installés chez le client
+origin: "Pratique éprouvée depuis les premiers modèles ouverts performants, comme Mistral 7B publié par Mistral AI (sept. 2023)"
+sourceLabel: "Jiang et al., Mistral 7B"
+need: Profiter d'un assistant documentaire sans qu'aucune donnée sensible ne quitte l'entreprise.
+how:
+  - label: Masquer
+    text: "À l'ingestion, les données personnelles sont détectées et masquées ; chaque extrait reçoit ses droits d'accès."
+  - label: Filtrer
+    text: "À la question, seuls les extraits autorisés pour le rôle de l'utilisateur (employé, manager, RH) sont recherchés."
+  - label: Répondre sur place
+    text: Un modèle ouvert, installé sur les serveurs du client, rédige la réponse ; chaque accès est journalisé.
+strengths:
+  - Aucune donnée n'est envoyée à un fournisseur d'IA externe.
+  - Les droits d'accès sont appliqués avant la recherche, pas après.
+  - Un journal d'audit prêt pour les contrôles RGPD et AI Act.
+limits:
+  - Les modèles ouverts de taille raisonnable restent un cran sous les meilleurs modèles hébergés.
+  - Il faut du matériel (GPU) et quelqu'un pour l'exploiter.
+choose:
+  - Banque, santé, RH, administration, défense.
+  - Une politique interne qui interdit l'envoi de données à un tiers.
+avoid:
+  - Des documents publics, sans enjeu de confidentialité.
+  - Une équipe sans capacité à exploiter des serveurs.
+adaptation: "En ligne, la démo utilise l'API Mistral hébergée en Europe pour rester sans serveur permanent. La variante installable (Ollama + Qdrant, en docker compose) est fournie dans le dépôt pour tourner entièrement chez le client."
+duel:
+  measured: false
+  rows:
+    - criterion: Fuites d'information hors des droits du rôle (tests)
+      classic: "11 cas sur 100"
+      method: "0 sur 100"
+      winner: method
+    - criterion: Données personnelles détectées et masquées
+      classic: "—"
+      method: "96 %"
+      winner: method
+    - criterion: Qualité des réponses (note d'un juge)
+      classic: "4,1 / 5"
+      method: "3,8 / 5"
+      winner: classic
+    - criterion: Données envoyées hors de l'entreprise
+      classic: "Oui"
+      method: "Non"
+      winner: method
+seo:
+  title: "RAG confidentiel et RGPD : modèles ouverts, droits par rôle, audit"
+  description: "Un assistant documentaire qui masque les données personnelles, applique les droits par rôle et peut tourner entièrement chez le client avec des modèles ouverts."
+---

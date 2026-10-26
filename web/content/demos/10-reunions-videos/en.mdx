@@ -1,0 +1,62 @@
+---
+title: Meetings and Videos
+tagline: Find what was decided, and replay the exact moment in one click.
+problem: "Committees, council meetings, training sessions, webinars: hours of recordings nobody watches again. When you need to find a decision or an explanation, nobody remembers which meeting it was in, or when."
+corpus:
+  name: "Reusable public recordings (public sessions or talks under a CC BY licence)"
+  size: "~10 hours of video"
+  licence: "To be confirmed depending on the chosen source"
+examples:
+  - What was decided about the budget in the latest sessions?
+  - Who presented the renovation project, and what arguments were made?
+  - Summarise the points still open at the end of the last meeting.
+  - "Quand a-t-on parlé du plan vélo, et qu'a-t-on dit ?"
+architecture:
+  alt: "Architecture: the question first queries per-meeting and per-topic summaries (DynamoDB), then timestamped passages (S3 Vectors); the answer cites each passage with a link that starts the video at the right second."
+  choices:
+    - title: Multi-level summaries
+      why: Synthesis questions draw on per-meeting summaries, precise questions on the passages.
+    - title: Timestamps kept at every step
+      why: Every citation points to a precise second of the recording.
+    - title: Speaker identification
+      why: Makes it possible to answer "who said what".
+  discarded:
+    - title: Fixed-size transcript chunks
+      why: They cut speaker turns and mix up speakers.
+    - title: A model that listens to the audio for every question
+      why: Far too expensive and slow for hours of recordings.
+pipeline:
+  alt: "Pipeline: video uploaded to S3, Step Functions runs Amazon Transcribe with speaker identification, splits by speaker turn and topic, computes summaries (DynamoDB) and passage embeddings (S3 Vectors)."
+  facts:
+    - label: Volume
+      value: "~10 hours"
+    - label: Transcription cost
+      value: "~$0.024 per minute"
+    - label: Total ingestion cost
+      value: "~€15"
+    - label: Ingestion time
+      value: "~1 h"
+evaluation:
+  measured: false
+  caption: Questions with their reference moment in the recording; a citation counts as correct within 30 seconds.
+  columns: [Set-up, Citation within ±30 s, Synthesis questions, Cost per question]
+  rows:
+    - [Fixed-size chunks, "58%", "47%", "€0.003"]
+    - [Speaker turns, "84%", "55%", "€0.003"]
+    - [Speaker turns + hierarchical summaries, "89%", "83%", "€0.004"]
+mission:
+  duration: "Proof of concept in 1 to 2 weeks, production in 2 to 4 weeks"
+  scope:
+    - Transcripts and summaries of your existing recordings
+    - New meetings added automatically
+    - A player with timestamped citations
+    - Export of decisions and action items
+limits:
+  - Quality depends on the recordings' audio.
+  - It doesn't see what is shown on screen, only what is said.
+seo:
+  title: AI search across meetings and videos
+  description: "Demo: query 10 hours of meetings, find decisions and replay the video at the exact moment. Transcribe, hierarchical summaries, timestamped citations."
+---
+
+A raw transcript isn't enough: it's the layered summaries, and timestamps kept all the way to the citation, that make it possible both to summarise and to find the exact moment.

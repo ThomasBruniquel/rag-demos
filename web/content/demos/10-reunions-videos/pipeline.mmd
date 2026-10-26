@@ -1,0 +1,9 @@
+flowchart LR
+  A[("S3<br/><<vidéo|video>>")]:::store --> SF["Step Functions"] --> T["Amazon Transcribe<br/><<+ intervenants|+ speakers>>"]
+  T --> C["<<Découpage par tour<br/>de parole et sujet|Split by speaker<br/>turn and topic>>"]
+  C --> H["<<Résumés hiérarchiques|Hierarchical summaries>>"]:::key --> D[("DynamoDB")]:::store
+  C --> E["<<Embeddings horodatés|Timestamped embeddings>>"] --> SV[("S3 Vectors")]:::store
+
+  classDef user stroke-width:0
+  classDef key stroke-width:2px
+  classDef store stroke-width:1px

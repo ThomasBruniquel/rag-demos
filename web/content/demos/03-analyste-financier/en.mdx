@@ -1,0 +1,64 @@
+---
+title: Financial Analyst
+tagline: Accurate figures from annual reports packed with tables.
+problem: "Analysts, auditors and finance teams spend hours hunting for a figure in 300-page reports, then comparing it across years or companies. A standard assistant chops tables into pieces and reads the wrong row; here, a wrong figure is not an option."
+corpus:
+  name: 10-K annual reports from FinanceBench (open subset)
+  size: "~50 reports, ~10,000 pages, with reference questions and answers"
+  licence: "CC BY-NC 4.0 (non-commercial use, to be confirmed before launch)"
+  url: https://github.com/patronus-ai/financebench
+examples:
+  - What was the operating margin of the company in FY2022, and how did it change from FY2021?
+  - Compare capital expenditure between the two most recent fiscal years.
+  - Which segment contributed the most revenue?
+  - What is the debt-to-equity ratio at year end?
+architecture:
+  alt: "Architecture: the Lambda function shows the report's table of contents to the model, which picks a chapter then a section; the chosen sections (whole tables) are read, calculations go to a tool, and the answer cites the section."
+  choices:
+    - title: Navigation through the table of contents (inspired by STAIR)
+      why: Annual reports are highly structured; drilling down chapter by chapter keeps tables whole and cites a precise section.
+    - title: Three PDF extractors compared
+      why: "Extraction is the real problem: plain text, Docling (open source) and Textract are compared on the same questions."
+    - title: A calculation tool
+      why: The model doesn't do mental arithmetic; changes and ratios are computed by a function, then cited.
+  discarded:
+    - title: Fixed-size chunks
+      why: They cut tables into pieces without headers, the main cause of wrong figures.
+    - title: Training a model on the reports, as in the STAIR paper
+      why: Expensive, and has to be redone for every new report; the training-free variant keeps most of the gain.
+pipeline:
+  alt: "Pipeline: PDFs on S3, Step Functions processes each report: extraction (Textract on table pages, Docling elsewhere), table of contents rebuilt, section-based chunking, context enrichment, S3 Vectors index and metadata in the Glue Data Catalog."
+  facts:
+    - label: Volume
+      value: "~50 reports, ~10,000 pages"
+    - label: Ingestion time
+      value: "~3 h"
+    - label: Ingestion cost
+      value: "€20 to €40"
+    - label: Pages sent to Textract
+      value: Table pages only
+evaluation:
+  measured: false
+  caption: FinanceBench reference questions; an answer is correct when the figure is exact.
+  columns: [Set-up, Exact figures, Table cited in full, Cost per question]
+  rows:
+    - [Classic RAG (plain text), "54%", "31%", "€0.004"]
+    - [Classic RAG (Textract), "63%", "52%", "€0.004"]
+    - [Table of contents + Textract + calculator, "79%", "88%", "€0.011"]
+mission:
+  duration: "Proof of concept in 2 weeks, production in 4 to 6 weeks"
+  scope:
+    - An extractor benchmark on your own documents
+    - Structure-based navigation and a calculation tool
+    - An evaluation set built with your analysts
+    - An ingestion pipeline for new reports
+limits:
+  - It gives no investment advice.
+  - The demo reports are US filings (10-K format), in English.
+  - Documents without a usable table of contents fall back to standard search.
+seo:
+  title: RAG over financial PDF reports with tables
+  description: "Demo: find and compare figures in 300-page annual reports, with retrieval guided by the table of contents (STAIR method, IBM Research) and verified calculations."
+---
+
+The demo compares approaches honestly: three PDF extractors, with and without structure-based navigation. Tables stay whole, the answer cites the section, and calculations are done by code, not by the model.

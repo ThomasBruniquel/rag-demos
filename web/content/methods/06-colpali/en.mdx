@@ -1,0 +1,49 @@
+---
+name: "Visual retrieval (ColPali) versus OCR"
+origin: "Method published by Faysse et al. (Jul 2024, presented at ICLR 2025)"
+sourceLabel: "Faysse et al., ColPali: Efficient Document Retrieval with Vision Language Models"
+need: Find information in scanned pages or pages full of diagrams, where extracted text isn't enough.
+how:
+  - label: Snapshot
+    text: Each page is handled as an image, with no text extraction step.
+  - label: Match
+    text: A vision-language model splits the page into small patches and matches each one against the words of the question.
+  - label: Show
+    text: The answer displays the page and figure it found, so the user sees the source.
+strengths:
+  - Diagrams, tables and layout count in the search.
+  - No fragile OCR chain to maintain just to find the right page.
+  - The source is shown as it is, which builds trust.
+limits:
+  - A heavier index than a text index (several vectors per page).
+  - The model needs more compute than a text embedding model.
+choose:
+  - Technical manuals, drawings, scanned reports, older documents.
+  - Answers that live in a figure or a table.
+avoid:
+  - "Clean, born-digital documents: OCR or direct extraction is enough."
+  - Millions of pages on a very tight budget.
+adaptation: "The demo compares both routes on the same questions: Textract OCR followed by text RAG, and ColPali-style visual retrieval. The exact model and its hosting will be stated at launch."
+duel:
+  measured: false
+  rows:
+    - criterion: Answers found only in a figure
+      classic: "23%"
+      method: "71%"
+      winner: method
+    - criterion: Right page in the top 5 results
+      classic: "64%"
+      method: "86%"
+      winner: method
+    - criterion: Ingestion cost for 4,000 pages
+      classic: "€6"
+      method: "€9"
+      winner: classic
+    - criterion: Response time
+      classic: "2.5 s"
+      method: "3.4 s"
+      winner: classic
+seo:
+  title: "Multimodal RAG on scanned documents: ColPali versus OCR"
+  description: "Searching scanned reports full of diagrams: Textract OCR compared with ColPali visual retrieval, with the cited figures displayed."
+---

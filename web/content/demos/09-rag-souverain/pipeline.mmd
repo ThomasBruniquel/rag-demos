@@ -1,0 +1,8 @@
+flowchart LR
+  A[("S3<br/><<chiffré KMS|KMS encrypted>>")]:::store --> P["<<Détection et masquage<br/>des données personnelles|Personal data<br/>detection and masking>>"]:::key
+  P --> R["<<Droits par extrait|Per-passage rights>>"] --> E["<<Embeddings Mistral|Mistral embeddings>>"] --> Q[("Qdrant")]:::store
+  P --> REP["<<Rapport de masquage|Masking report>>"]
+
+  classDef user stroke-width:0
+  classDef key stroke-width:2px
+  classDef store stroke-width:1px

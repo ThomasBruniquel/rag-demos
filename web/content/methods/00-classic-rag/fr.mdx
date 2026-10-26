@@ -1,0 +1,30 @@
+---
+name: RAG classique
+origin: Méthode publiée par Facebook AI Research (mai 2020)
+sourceLabel: "Lewis et al., Retrieval-Augmented Generation for Knowledge-Intensive NLP Tasks"
+need: Faire répondre un modèle de langage à partir de vos documents plutôt que de sa mémoire.
+how:
+  - label: Découper
+    text: Les documents sont coupés en morceaux de taille fixe, transformés en vecteurs et rangés dans une base.
+  - label: Rechercher
+    text: La question est transformée en vecteur ; on récupère les morceaux les plus proches.
+  - label: Répondre
+    text: Le modèle rédige la réponse à partir de ces morceaux et cite ses sources.
+strengths:
+  - Simple à construire et à expliquer.
+  - Peu coûteux à faire tourner, même sur de gros volumes.
+  - Les sources de chaque réponse sont vérifiables.
+limits:
+  - Le découpage à taille fixe casse les tableaux, les sections et le contexte.
+  - Les termes exacts (références, numéros d'article) sont mal retrouvés par les seuls vecteurs.
+  - Rien ne vérifie que la réponse dit bien ce que disent les sources.
+choose:
+  - Un premier assistant documentaire, à livrer vite.
+  - Des documents simples, rédigés en texte courant.
+avoid:
+  - Des documents riches en tableaux, schémas ou structure.
+  - Des questions qui demandent de croiser beaucoup de documents.
+seo:
+  title: Le RAG classique, la référence de toutes les démos
+  description: "Comment fonctionne un RAG classique (découpage, recherche vectorielle, génération), ses forces, ses limites, et pourquoi chaque démo du site se compare à lui."
+---

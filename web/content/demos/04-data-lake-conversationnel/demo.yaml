@@ -1,0 +1,12 @@
+id: "04"
+slugs: { fr: text-to-sql-data-lake, en: text-to-sql-data-lake }
+status: soon
+featured: true
+method: multi-sql
+docTypes: [data]
+volume: large
+constraints: [reliability, budget]
+sectors: [data, smb]
+aws: [Athena, Glue ETL, Glue Data Catalog, Lake Formation, S3, Bedrock, Lambda]
+vectorStore: S3 Vectors (schémas et exemples)
+sourcePath: demos/04-data-lake-conversationnel

@@ -1,0 +1,49 @@
+---
+name: Open models on the client's premises
+origin: "Proven practice since the first capable open models, such as Mistral 7B released by Mistral AI (Sept 2023)"
+sourceLabel: "Jiang et al., Mistral 7B"
+need: Get a document assistant without any sensitive data leaving the company.
+how:
+  - label: Mask
+    text: "At ingestion, personal data is detected and masked; every passage gets its access rights."
+  - label: Filter
+    text: "At question time, only the passages allowed for the user's role (employee, manager, HR) are searched."
+  - label: Answer on site
+    text: An open model installed on the client's servers writes the answer; every access is logged.
+strengths:
+  - No data is sent to an outside AI provider.
+  - Access rights are enforced before the search, not after.
+  - An audit trail ready for GDPR and AI Act reviews.
+limits:
+  - Reasonably sized open models are still a notch below the best hosted models.
+  - It takes hardware (GPUs) and someone to run it.
+choose:
+  - Banking, healthcare, HR, public administration, defence.
+  - An internal policy that forbids sending data to third parties.
+avoid:
+  - Public documents with no confidentiality stakes.
+  - A team with no capacity to run servers.
+adaptation: "Online, the demo uses Mistral's API hosted in Europe so that no server runs permanently. The installable variant (Ollama + Qdrant, with docker compose) ships in the repository and runs entirely on the client's side."
+duel:
+  measured: false
+  rows:
+    - criterion: Leaks outside the role's rights (tests)
+      classic: "11 in 100"
+      method: "0 in 100"
+      winner: method
+    - criterion: Personal data detected and masked
+      classic: "—"
+      method: "96%"
+      winner: method
+    - criterion: Answer quality (judge score)
+      classic: "4.1 / 5"
+      method: "3.8 / 5"
+      winner: classic
+    - criterion: Data sent outside the company
+      classic: "Yes"
+      method: "No"
+      winner: method
+seo:
+  title: "Private, GDPR-ready RAG: open models, role-based access, audit trail"
+  description: "A document assistant that masks personal data, enforces role-based access and can run entirely on the client's premises with open models."
+---
