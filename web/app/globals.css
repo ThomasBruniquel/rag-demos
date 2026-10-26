@@ -247,6 +247,58 @@
   @apply inline-block rounded-full border border-current px-2.5 py-0.5 text-[11px] font-extrabold uppercase tracking-wider;
 }
 
+/* ------------------------------------------------- Home: RAG in 3 steps */
+/* A gold bar runs across the three steps in turn: question, search, answer. */
+.rag-step {
+  border-top: 2px solid var(--line);
+}
+.rag-step::before {
+  content: "";
+  position: absolute;
+  top: -2px;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background: var(--gold);
+  transform-origin: left;
+  transform: scaleX(0);
+  animation: rag-flow 6s ease-in-out infinite;
+  animation-delay: calc(var(--i) * 1.4s);
+}
+@keyframes rag-flow {
+  0% { transform: scaleX(0); }
+  20%, 70% { transform: scaleX(1); }
+  85%, 100% { transform: scaleX(1); opacity: 0; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .rag-step::before {
+    animation: none;
+    transform: scaleX(1);
+  }
+}
+
+/* ------------------------------------------------------------- Wordmark */
+.wordmark-four {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.08em;
+  height: 1.08em;
+  margin: 0 0.06em 0 0.08em;
+  border-radius: 999px;
+  background: var(--gold);
+  color: #004446;
+  font-weight: 800;
+  font-size: 0.82em;
+  line-height: 1;
+  transform: rotate(-14deg);
+  transition: transform 0.35s cubic-bezier(0.34, 1.8, 0.64, 1);
+}
+a:hover .wordmark-four,
+.wordmark:hover .wordmark-four {
+  transform: rotate(0deg) translateY(-0.08em);
+}
+
 /* ------------------------------------------------------------ Characters */
 /* Moods are set by components/characters/character.tsx (class mood-*). */
 

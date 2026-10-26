@@ -1,8 +1,8 @@
 {
   "meta": {
     "titleTemplate": "%s · {brand}",
-    "defaultTitle": "{brand} · RAG et data engineering sur AWS, démos testables en ligne",
-    "description": "Assistants documentaires et recherche augmentée par IA (RAG) pour PME, ETI et startups : 10 démos testables en ligne, qualité mesurée, coût maîtrisé, code public."
+    "defaultTitle": "{brand} · Assistants IA sur vos documents (RAG)",
+    "description": "Des assistants IA qui répondent à partir de vos documents, sources à l'appui : dix démos testables en ligne, avec leur architecture, leur qualité mesurée et leur coût."
   },
   "a11y": {
     "skipToContent": "Aller au contenu",
@@ -19,7 +19,7 @@
     "dataEngineering": "Data engineering",
     "articles": "Articles",
     "about": "À propos",
-    "contact": "Me contacter"
+    "contact": "Contact"
   },
   "theme": {
     "toDark": "Passer au thème sombre",
@@ -30,7 +30,7 @@
     "ariaLabel": "Read this page in English"
   },
   "footer": {
-    "tagline": "Assistants documentaires (RAG) et pipelines de données sur AWS, pour les PME, ETI et startups.",
+    "tagline": "Assistants IA qui répondent à partir de vos documents, sources à l'appui.",
     "explore": "Explorer",
     "work": "Travailler ensemble",
     "legalTitle": "Légal",
@@ -52,12 +52,72 @@
     "toMeasure": "Valeurs indicatives, en attente du banc d'évaluation : elles seront remplacées par les mesures réelles."
   },
   "home": {
-    "eyebrow": "Freelance RAG & data engineering · AWS",
-    "titleTop": "Vos documents ont les réponses.",
-    "titleBottom": "Vos équipes, elles, cherchent encore.",
-    "lead": "Je conçois des systèmes de recherche augmentée par IA (RAG) sur AWS pour les PME, ETI et startups. Avant même de me contacter, testez dix démos construites sur de vrais cas clients : pour chacune, l'architecture, la qualité mesurée et le coût par question sont publiés.",
+    "eyebrow": "Assistants IA · RAG",
+    "titleTop": "Interrogez vos documents.",
+    "titleBottom": "Obtenez la réponse, et sa source.",
+    "lead": "Un RAG relie un modèle d'IA à vos propres documents : il retrouve les passages utiles, puis rédige une réponse qui les cite. Rien n'est inventé, tout se vérifie.",
     "primaryCta": "Voir les démos",
-    "secondaryCta": "Parler de votre projet"
+    "secondaryCta": "Discuter d'un projet",
+    "rag": {
+      "eyebrow": "Le RAG en bref",
+      "title": "Trois étapes, une réponse vérifiable",
+      "steps": [
+        {
+          "title": "Une question",
+          "text": "Posée en langage courant, comme à un collègue."
+        },
+        {
+          "title": "Une recherche dans vos documents",
+          "text": "Les passages qui répondent sont retrouvés parmi des milliers de pages."
+        },
+        {
+          "title": "Une réponse sourcée",
+          "text": "Chaque affirmation renvoie au document d'origine : on peut vérifier."
+        }
+      ],
+      "notForTitle": "Pas toujours la bonne solution",
+      "notFor": [
+        "Quelques pages seulement ? Les donner en entier au modèle suffit.",
+        "Besoin d'un ton ou d'un format précis ? Plutôt un ajustement du modèle (fine-tuning).",
+        "Juste retrouver un document ? Un moteur de recherche fait l'affaire."
+      ],
+      "more": "Comprendre le RAG en détail"
+    },
+    "demos": {
+      "eyebrow": "10 démos",
+      "title": "Testez sur des cas concrets",
+      "lead": "Dix situations réelles, chacune avec sa méthode, son architecture, sa qualité mesurée et son coût. Construites principalement sur AWS (Bedrock, S3 Vectors), avec Mistral ou OpenAI quand le cas l'exige.",
+      "all": "Toutes les démos, avec filtres"
+    },
+    "process": {
+      "eyebrow": "Accompagnement",
+      "title": "Du cadrage à la production",
+      "lead": "Un projet RAG avance par étapes courtes, chacune avec un résultat mesurable.",
+      "steps": [
+        {
+          "title": "Cadrage",
+          "duration": "2 à 3 jours",
+          "text": "Documents, questions, contraintes : la bonne méthode et son coût."
+        },
+        {
+          "title": "Prototype",
+          "duration": "1 à 2 semaines",
+          "text": "Une première version testée sur vos propres documents."
+        },
+        {
+          "title": "Mise en production",
+          "duration": "3 à 6 semaines",
+          "text": "Sécurité, suivi des coûts, pipeline de mise à jour."
+        },
+        {
+          "title": "Amélioration",
+          "duration": "En continu",
+          "text": "Évaluation et optimisation d'un RAG existant."
+        }
+      ],
+      "services": "Voir les offres",
+      "contact": "Discuter d'un projet"
+    }
   },
   "catalog": {
     "eyebrow": "10 démos · 10 cas clients",
@@ -147,7 +207,7 @@
   "pages": {
     "demos": {
       "title": "Démos",
-      "lead": "Dix situations clients réelles, de la base documentaire d'une PME au data lake de 20 millions de lignes. Chaque démo se teste en ligne et s'accompagne de son architecture, de son pipeline de données, de ses résultats d'évaluation et de son coût."
+      "lead": "Dix situations réelles, d'une base documentaire interne à un data lake de 20 millions de lignes. Chaque démo se teste en ligne et s'accompagne de son architecture, de son pipeline de données, de ses résultats d'évaluation et de son coût."
     },
     "methods": {
       "title": "Les méthodes",
@@ -171,11 +231,11 @@
     },
     "about": {
       "title": "À propos",
-      "lead": "Développeur Python confirmé, spécialisé dans les systèmes RAG et les pipelines de données sur AWS."
+      "lead": "Un développeur Python spécialisé dans les systèmes RAG et les pipelines de données."
     },
     "contact": {
-      "title": "Me contacter",
-      "lead": "Décrivez votre situation en quelques lignes : type de documents, volume, contraintes. Je reviens vers vous avec une première analyse et des questions précises."
+      "title": "Contact",
+      "lead": "Quelques lignes suffisent : type de documents, volume, contraintes. Réponse avec une première analyse et des questions précises."
     },
     "legal": {
       "title": "Mentions légales",

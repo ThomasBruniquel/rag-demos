@@ -21,27 +21,31 @@ export type DemoSummary = {
 };
 
 /** Card in the echic style: a 4:3 cover (here the method's character), then text. */
-export function DemoCard({ demo, eyebrow }: { demo: DemoSummary; eyebrow: string }) {
+export function DemoCard({ demo, eyebrow, compact = false }: { demo: DemoSummary; eyebrow: string; compact?: boolean }) {
   return (
     <Link href={demo.href} className="group flex h-full flex-col">
       <div
         className="relative flex aspect-[4/3] items-center justify-center overflow-hidden"
         style={{ background: `var(--fam-${demo.family}-soft)` }}
       >
-        <span className="absolute top-3 left-4 text-4xl font-extrabold text-ink/15 tabular-nums dark:text-ink/25">
+        <span className={`absolute top-3 left-4 font-extrabold text-ink/15 tabular-nums dark:text-ink/25 ${compact ? "text-2xl sm:text-4xl" : "text-4xl"}`}>
           {demo.id}
         </span>
         <Character
           method={demo.methodId}
           family={demo.family}
-          className="size-32 transition-transform duration-500 group-hover:-translate-y-1 group-hover:scale-105"
+          className={`${compact ? "size-24" : "size-32"} transition-transform duration-500 group-hover:-translate-y-1 group-hover:scale-105`}
         />
       </div>
       <div className="flex flex-1 flex-col pt-4">
         <p className="eyebrow mb-1.5 text-[10px]">
           {eyebrow} · {demo.familyLabel}
         </p>
-        <h3 className="mb-1 text-lg font-bold group-hover:underline group-hover:decoration-gold group-hover:underline-offset-4">
+        <h3
+          className={`mb-1 font-bold group-hover:underline group-hover:decoration-gold group-hover:underline-offset-4 ${
+            compact ? "text-[15px] sm:text-lg" : "text-lg"
+          }`}
+        >
           {demo.title}
         </h3>
         <p className="mb-3 text-sm text-muted">{demo.tagline}</p>

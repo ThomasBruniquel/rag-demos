@@ -6,6 +6,7 @@ import { getI18n } from "@/lib/i18n/server";
 import { siteConfig } from "@/site.config";
 import { LocaleSwitcher } from "./locale-switcher";
 import { DesktopNav, MobileNav, type NavItem } from "./nav-links";
+import { Wordmark } from "./wordmark";
 import { ThemeToggle } from "./theme";
 
 /** Teal header with the gold wordmark, as on echic. */
@@ -28,9 +29,9 @@ export async function Header() {
         <Link
           href={href(locale, "home")}
           aria-label={format(t.a11y.homeLink, { brand: siteConfig.brand })}
-          className="mr-auto text-[28px] font-medium tracking-wide text-gold sm:text-[32px] lg:mr-0"
+          className="mr-auto text-[28px] text-gold sm:text-[32px] lg:mr-0"
         >
-          {siteConfig.brand}
+          <Wordmark />
         </Link>
 
         <DesktopNav items={items} label={t.a11y.mainNav} />

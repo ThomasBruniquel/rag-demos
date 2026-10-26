@@ -57,7 +57,7 @@ Ordre des opérations :
 | # | Question | Quand trancher | Options |
 |---|---|---|---|
 | Q-1 | Région AWS | Phase 0 | eu-west-3 Paris (préféré pour le marketing) si S3 Vectors + Bedrock KB + modèles y sont, sinon eu-west-1 ou eu-central-1 |
-| Q-2 | Nom de marque et domaine | Avant la mise en ligne publique (fin semaine 2) | Nom personnel (ex. prénom-nom.dev) ou marque |
+| Q-2 | Domaine | Avant la mise en ligne publique (fin semaine 2) | Marque retenue le 2026-10-26 : **Rag4you** (mot-symbole avec le « 4 » en pastille dorée). Site provisoire : ragforyou.netlify.app. Reste le nom de domaine (ex. rag4you.fr / .com, à vérifier) |
 | Q-3 | Budget ponctuel d'ingestion de ~70 à 120 € | Avant la Phase 2 | Financé par les **crédits AWS** (100 $ disponibles, jusqu'à ~200 $ avec les activités) — voir D-011 |
 | Q-8 | Couverture de Claude (modèle tiers) par les crédits | Phase 0 | **Non confirmée** → petit appel Claude sur Bedrock, puis vérifier la facture du lendemain. Si non couvert : Amazon Nova pour l'ingestion en masse |
 | Q-4 | Licences des corpus 03 (FinanceBench CC BY-NC, DEU) et 10 (vidéos) | Avant chaque démo | Voir [02-catalogue-rag.md](02-catalogue-rag.md) |

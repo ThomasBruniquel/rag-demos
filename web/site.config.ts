@@ -5,8 +5,8 @@
  * Values marked [À COMPLÉTER] must be filled in before going live.
  */
 export const siteConfig = {
-  /** Provisional brand name. */
-  brand: "Atelier RAG",
+  /** Brand name (the wordmark with its round 4 is in components/layout/wordmark.tsx). */
+  brand: "Rag4you",
   owner: {
     name: "[À COMPLÉTER] Prénom Nom",
     jobTitle: {

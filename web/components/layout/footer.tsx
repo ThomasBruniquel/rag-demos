@@ -4,6 +4,7 @@ import { format } from "@/lib/i18n/messages";
 import { href } from "@/lib/i18n/routes";
 import { getI18n } from "@/lib/i18n/server";
 import { siteConfig } from "@/site.config";
+import { Wordmark } from "./wordmark";
 
 /** Commitments strip, then a light footer with the gold wordmark (echic layout). */
 export async function Footer() {
@@ -55,7 +56,9 @@ export async function Footer() {
       <div className="bg-sunken">
         <div className="mx-auto grid max-w-[1080px] gap-9 px-6 py-11 sm:grid-cols-2 lg:grid-cols-[2fr_1fr_1fr_1fr]">
           <div className="sm:col-span-2 lg:col-span-1">
-            <p className="text-[32px] font-medium tracking-wide text-gold">{siteConfig.brand}</p>
+            <p className="text-[32px] text-gold-display">
+              <Wordmark />
+            </p>
             <p className="mt-1.5 max-w-[300px] text-[13px] text-muted">{t.footer.tagline}</p>
             <div className="mt-3 flex gap-3 text-muted">
               <a href={siteConfig.links.github} className="hover:text-ink" aria-label="GitHub">
