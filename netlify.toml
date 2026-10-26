@@ -1,7 +1,10 @@
-# Netlify configuration. In the Netlify UI, set "Base directory" to `web`
-# (the site lives in a sub-folder of the monorepo); paths below are relative to it.
+# Netlify configuration, read from the repository root.
+# The site lives in the `web/` sub-folder of the monorepo: Netlify moves there
+# before installing and building. `publish` is relative to that base folder.
+# Settings here override the ones in the Netlify UI.
 
 [build]
+  base = "web"
   command = "pnpm build"
   publish = "out"
 
