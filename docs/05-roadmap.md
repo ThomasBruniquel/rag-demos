@@ -74,7 +74,7 @@ Mettre à jour cette section au fil du projet.
 - [ ] rag_core
 - [ ] Banc d'évaluation
 - [ ] Modules Terraform communs
-- [ ] Site Next.js déployé
+- [x] Site Next.js déployé (https://ragforyou.netlify.app, version en cours de construction, 2026-10-26)
 - [ ] Démo 01
 
 ### Phase 2
