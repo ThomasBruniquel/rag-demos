@@ -10,12 +10,11 @@ Chaque démo répond à un **type de mission réellement demandé** (lettres A �
 | 02 | Revue de contrats | Cabinet / direction juridique (EN) | Contrats longs (TXT/PDF) | 510 contrats | **Hybride BM25 + vecteurs, reranking**, citations surlignées | pgvector (Aurora Serverless v2) | Aurora, RDS Data API, Step Functions |
 | 03 | Analyste financier | Finance / audit | Rapports annuels PDF avec **tableaux** | ~50 rapports, ~10 000 pages | **STAIR (IBM) : recherche guidée par la table des matières**, tableaux, outil de calcul | S3 Vectors | Textract, Glue (catalogue), Step Functions |
 | 04 | Data lake conversationnel | ETI / data team | **Données tabulaires** (open data) | ~20 M lignes | **Text-to-SQL** + RAG sur le catalogue de schémas | S3 Vectors (schémas) | **Glue ETL, Glue Catalog, Athena, Lake Formation**, Parquet |
-| 05 | Veille scientifique | Labo, pharma, veille | Résumés d'articles | **~1 M documents**, mise à jour quotidienne | **Gros volume, ingestion incrémentale**, filtres de métadonnées | S3 Vectors | **Step Functions Distributed Map, Bedrock batch, EventBridge**, SQS |
-| 06 | Documentation technique | Industrie, maintenance | **PDF scannés**, schémas, figures | ~100 rapports, ~4 000 pages | **OCR + RAG multimodal vs recherche visuelle (ColPali)** | S3 Vectors | Textract, S3 events, Lambda |
-| 07 | Support client agentique | Startup SaaS / e-commerce | FAQ, catalogue, commandes, tickets | Petit, multi-sources | **Agent (LangGraph)**, outils, guardrails, passage à un humain | S3 Vectors + DynamoDB | DynamoDB Streams, EventBridge, Bedrock Guardrails |
-| 08 | Analyse d'incidents (GraphRAG) | Assurance, sécurité, qualité | Rapports d'accidents (texte + données) | ~3 000 rapports | **GraphRAG** : graphe d'entités, questions globales | Neo4j AuraDB Free + vecteurs | Glue, Athena (données NTSB), Step Functions |
-| 09 | RAG souverain & confidentiel | Banque, RH, santé, grands comptes | Dossiers internes fictifs avec **données personnelles** | ~2 000 documents | **Détection/masquage PII, contrôle d'accès par rôle**, LLM européen | Qdrant Cloud (free tier) | Lake Formation (concept), KMS, CloudTrail, Macie (concept) |
-| 10 | Réunions & vidéos | PME, collectivités, formation | **Audio / vidéo** | ~10 h d'enregistrements | **Transcription + RAG horodaté** (lecture au bon moment) | S3 Vectors | Transcribe, Step Functions, S3 events |
+| 05 | Documentation technique | Industrie, maintenance | **PDF scannés**, schémas, figures | ~100 rapports, ~4 000 pages | **OCR + RAG multimodal vs recherche visuelle (ColPali)** | S3 Vectors | Textract, S3 events, Lambda |
+| 06 | Support client agentique | Startup SaaS / e-commerce | FAQ, catalogue, commandes, tickets | Petit, multi-sources | **Agent (LangGraph)**, outils, guardrails, passage à un humain | S3 Vectors + DynamoDB | DynamoDB Streams, EventBridge, Bedrock Guardrails |
+| 07 | Analyse d'incidents (GraphRAG) | Assurance, sécurité, qualité | Rapports d'accidents (texte + données) | ~3 000 rapports | **GraphRAG** : graphe d'entités, questions globales | Neo4j AuraDB Free + vecteurs | Glue, Athena (données NTSB), Step Functions |
+| 08 | RAG souverain & confidentiel | Banque, RH, santé, grands comptes | Dossiers internes fictifs avec **données personnelles** | ~2 000 documents | **Détection/masquage PII, contrôle d'accès par rôle**, LLM européen | Qdrant Cloud (free tier) | Lake Formation (concept), KMS, CloudTrail, Macie (concept) |
+| 09 | Réunions & vidéos | PME, collectivités, formation | **Audio / vidéo** | ~10 h d'enregistrements | **Transcription + RAG horodaté** (lecture au bon moment) | S3 Vectors | Transcribe, Step Functions, S3 events |
 
 ## Deuxième axe : une contrainte client, une technique récente, une preuve mesurée
 
@@ -27,12 +26,11 @@ Chaque démo répond aussi à une **contrainte** typique d'un client et montre u
 | 02 | « Zéro hallucination, c'est du juridique » | **Couche anti-hallucination à la IBM** (*RAG intrinsics* / Granite Guardian) : vérification d'« answerability » avant de répondre, risque d'hallucination phrase par phrase, citations générées après coup, refus motivé | Même pipeline sans vérification ; vérification par **Bedrock Guardrails (contextual grounding check)** ; LLM-juge | Taux d'hallucination, taux de refus à tort, sur les questions CUAD (dont des questions sans réponse ajoutées exprès) |
 | 03 | « Mes documents font des centaines de pages, le RAG ramène le mauvais passage » | **STAIR** (IBM, sept. 2026) : un petit modèle affiné lit la table des matières et désigne la bonne section, au lieu de découper le document en morceaux ; comparé à une **navigation par table des matières sans entraînement** (un LLM raisonne sur le sommaire) | RAG vectoriel classique + Contextual Retrieval | Recall@1 de la section, puis exactitude des réponses FinanceBench (le papier IBM n'évalue pas les réponses : c'est notre apport) |
 | 04 | « Les chiffres doivent être exacts » | Text-to-SQL avec **plusieurs requêtes candidates + sélection**, auto-correction guidée par l'exécution, couche sémantique (glossaire métier) | Une seule requête générée | Exactitude des résultats sur 40 questions de référence |
-| 05 | « On a des millions de documents, le coût doit rester bas » | **Embeddings Matryoshka** (dimensions réduites) + **quantification binaire** avec re-scoring, **self-query** (filtres de métadonnées extraits de la question) | Vecteurs pleine taille, sans filtre | Courbe coût / stockage / recall@10 / latence |
-| 06 | « Nos documents sont des scans et des schémas » | OCR + description des figures par un modèle de vision **vs recherche visuelle** (ColPali / ColQwen : on indexe l'image de la page, sans extraire le texte) | Chaque méthode sur des documents propres et sur des scans dégradés | D'après une étude de 2025, la recherche visuelle gagne sur les documents propres et l'OCR sur les scans dégradés. On le vérifie, pour savoir choisir selon les documents |
-| 07 | « L'assistant doit agir, et ne jamais inventer » | **Corrective RAG** (évaluation des passages récupérés, reformulation, recherche de repli) + **Adaptive RAG** (choix : pas de recherche / une recherche / plusieurs étapes) ; outils exposés via **MCP** | Agent qui cherche systématiquement une seule fois | Taux de bonne résolution, nombre d'appels LLM, coût par conversation |
-| 08 | « Mes questions portent sur l'ensemble du corpus, pas sur un passage » | **GraphRAG** (Microsoft) vs **LightRAG** vs **RAPTOR** (arbre de résumés, sans graphe) | RAG vectoriel classique | Exhaustivité des réponses aux questions globales, coût d'indexation de chaque méthode |
-| 09 | « Rien ne sort de chez nous » | **Petits modèles ouverts installables chez le client** (Mistral, IBM Granite sous licence Apache 2.0) + garde-fous locaux (Granite Guardian), détection de PII, contrôle d'accès par rôle | Même cas avec un gros modèle dans le cloud | Qualité perdue (ou non) en passant au local, matériel nécessaire, absence de fuite entre rôles |
-| 10 | « Des heures d'enregistrement, on veut retrouver le bon moment » | **Résumés hiérarchiques** (séance → sujet → passage) + recherche avec contrainte temporelle (« lors de la dernière réunion ») | Découpage à taille fixe | Précision du timestamp cité (±30 s) |
+| 05 | « Nos documents sont des scans et des schémas » | OCR + description des figures par un modèle de vision **vs recherche visuelle** (ColPali / ColQwen : on indexe l'image de la page, sans extraire le texte) | Chaque méthode sur des documents propres et sur des scans dégradés | D'après une étude de 2025, la recherche visuelle gagne sur les documents propres et l'OCR sur les scans dégradés. On le vérifie, pour savoir choisir selon les documents |
+| 06 | « L'assistant doit agir, et ne jamais inventer » | **Corrective RAG** (évaluation des passages récupérés, reformulation, recherche de repli) + **Adaptive RAG** (choix : pas de recherche / une recherche / plusieurs étapes) ; outils exposés via **MCP** | Agent qui cherche systématiquement une seule fois | Taux de bonne résolution, nombre d'appels LLM, coût par conversation |
+| 07 | « Mes questions portent sur l'ensemble du corpus, pas sur un passage » | **GraphRAG** (Microsoft) vs **LightRAG** vs **RAPTOR** (arbre de résumés, sans graphe) | RAG vectoriel classique | Exhaustivité des réponses aux questions globales, coût d'indexation de chaque méthode |
+| 08 | « Rien ne sort de chez nous » | **Petits modèles ouverts installables chez le client** (Mistral, IBM Granite sous licence Apache 2.0) + garde-fous locaux (Granite Guardian), détection de PII, contrôle d'accès par rôle | Même cas avec un gros modèle dans le cloud | Qualité perdue (ou non) en passant au local, matériel nécessaire, absence de fuite entre rôles |
+| 09 | « Des heures d'enregistrement, on veut retrouver le bon moment » | **Résumés hiérarchiques** (séance → sujet → passage) + recherche avec contrainte temporelle (« lors de la dernière réunion ») | Découpage à taille fixe | Précision du timestamp cité (±30 s) |
 
 Les techniques sont **à confirmer par un prototype** avant d'être annoncées sur le site. Si une technique ne donne rien de mieux que l'approche de base, on le publie quand même. Un résultat négatif bien expliqué est aussi une preuve d'expertise.
 
@@ -44,12 +42,11 @@ Les techniques sont **à confirmer par un prototype** avant d'être annoncées s
 | 02 | Vérification anti-hallucination (type Granite Guardian) | Vérification | Récent | IBM Research, déc. 2024 (arXiv 2412.07724) |
 | 03 | STAIR, recherche guidée par la table des matières (variante sans entraînement) | Structure | Récent | IBM Research, sept. 2026 (arXiv 2609.03874) |
 | 04 | Text-to-SQL multi-candidats | Vérification | Récent | CHASE-SQL, Google Cloud et Stanford, oct. 2024 (arXiv 2410.01943) |
-| 05 | Recherche compressée : Matryoshka + quantification | Recherche | Récent | Kusupati et al., mai 2022 (arXiv 2205.13147) |
-| 06 | Recherche visuelle ColPali face à l'OCR | Multimodal | Récent | Faysse et al., juil. 2024 (arXiv 2407.01449) |
-| 07 | RAG correctif et adaptatif (agent) | Agents | Récent | Yan et al., janv. 2024 (arXiv 2401.15884) ; Jeong et al., mars 2024 (arXiv 2403.14403) |
-| 08 | GraphRAG / LightRAG / RAPTOR | Structure | Récent | Microsoft Research, avr. 2024 (arXiv 2404.16130) ; arXiv 2410.05779 ; arXiv 2401.18059 |
-| 09 | Modèles ouverts installés chez le client | Souveraineté | Éprouvé | Mistral 7B, sept. 2023 (arXiv 2310.06825) |
-| 10 | Résumés hiérarchiques horodatés | Multimodal | Éprouvé | Pratique d'ingénierie |
+| 05 | Recherche visuelle ColPali face à l'OCR | Multimodal | Récent | Faysse et al., juil. 2024 (arXiv 2407.01449) |
+| 06 | RAG correctif et adaptatif (agent) | Agents | Récent | Yan et al., janv. 2024 (arXiv 2401.15884) ; Jeong et al., mars 2024 (arXiv 2403.14403) |
+| 07 | GraphRAG / LightRAG / RAPTOR | Structure | Récent | Microsoft Research, avr. 2024 (arXiv 2404.16130) ; arXiv 2410.05779 ; arXiv 2401.18059 |
+| 08 | Modèles ouverts installés chez le client | Souveraineté | Éprouvé | Mistral 7B, sept. 2023 (arXiv 2310.06825) |
+| 09 | Résumés hiérarchiques horodatés | Multimodal | Éprouvé | Pratique d'ingénierie |
 | — | RAG classique (référence) | — | Éprouvé | Lewis et al., mai 2020 (arXiv 2005.11401) |
 
 Les techniques décrites plus bas restent valables : la méthode phare est ce que la démo met en avant sur le site (fiche personnage, duel contre le RAG classique).
@@ -162,29 +159,7 @@ Le traitement des tableaux reste au programme : tableaux convertis en Markdown e
 
 ---
 
-## 05 — Veille scientifique à grande échelle (volume + incrémental)
-
-**Cas client.** Laboratoire, service de veille, pharma : interroger **des centaines de milliers** de publications, avec filtres (date, domaine) et **mise à jour chaque jour**. Offres B, J : pipelines d'ingestion, littérature scientifique.
-
-**Corpus.** Métadonnées **arXiv** (CC0) : environ 1 million de résumés (informatique, statistiques, physique) + flux quotidien des nouveaux articles via l'API OAI-PMH.
-
-**Ce que ça démontre.**
-- **Industrialisation** : chargement initial avec **Step Functions Distributed Map** et **Bedrock batch inference** (embeddings à -50 %), reprise sur erreur, idempotence.
-- **Incrémental** : EventBridge (quotidien) → récupération des nouveautés → déduplication (hash) → embeddings → upsert. Gestion des versions d'articles.
-- **Filtres de métadonnées** combinés à la recherche vectorielle à grande échelle.
-- Tableau de bord public : nombre de documents, dernière mise à jour, coût d'ingestion par million de documents, latence p95.
-
-**Stockage.** S3 Vectors (conçu pour des milliards de vecteurs à bas coût). Données sources en Parquet sur S3, cataloguées dans Glue, interrogeables par Athena (statistiques du corpus).
-
-**Évaluation.** Jeu de questions généré puis relu (synthèse de questions à partir d'articles connus), recall@k ; test de charge léger.
-
-**Coût estimé.** Ingestion initiale 5 à 10 € (embeddings en batch). Fonctionnement : stockage ~0,50 €/mois, mise à jour quotidienne < 0,05 €/jour.
-
-**Risques.** Quotas Bedrock batch (délais), coût d'une erreur sur gros volume → tester sur 10 000 documents avant le lancement complet.
-
----
-
-## 06 — Documentation technique (OCR + multimodal)
+## 05 — Documentation technique (OCR + multimodal)
 
 **Cas client.** Industriel avec des manuels et rapports anciens **scannés**, pleins de **schémas** : « Quelle est la procédure de remplacement de la pièce X ? Montre-moi le schéma. ». Offres H, I : OCR, documents scannés, multimodal.
 
@@ -204,7 +179,7 @@ Le traitement des tableaux reste au programme : tableaux convertis en Markdown e
 
 ---
 
-## 07 — Support client agentique
+## 06 — Support client agentique
 
 **Cas client.** Startup SaaS ou e-commerce : un assistant qui répond aux clients à partir de la FAQ, **consulte le catalogue et le statut des commandes**, **refuse de deviner** et **passe la main à un humain** si besoin. Offres A, L, M : agents, LangGraph, guardrails, escalade.
 
@@ -225,7 +200,7 @@ Le traitement des tableaux reste au programme : tableaux convertis en Markdown e
 
 ---
 
-## 08 — Analyse d'incidents (GraphRAG)
+## 07 — Analyse d'incidents (GraphRAG)
 
 **Cas client.** Assureur, service qualité, sécurité industrielle : « Quels facteurs reviennent le plus dans les accidents en phase d'approche ? », « Quels incidents impliquent à la fois tel type d'appareil et tel problème de maintenance ? ». Ce sont des questions **globales** ou **à plusieurs sauts**, où le RAG vectoriel classique échoue. Offre O : graphe de connaissances, Neo4j.
 
@@ -245,7 +220,7 @@ Le traitement des tableaux reste au programme : tableaux convertis en Markdown e
 
 ---
 
-## 09 — RAG souverain & confidentiel
+## 08 — RAG souverain & confidentiel
 
 **Cas client.** Banque, RH, santé, administration : documents contenant des **données personnelles**, accès différent selon le rôle, exigences **RGPD / AI Act**, souvent refus des LLM américains. Offres A, I, K : guardrails, données sensibles, LLM local, contrôle d'accès par rôle.
 
@@ -267,7 +242,7 @@ Le traitement des tableaux reste au programme : tableaux convertis en Markdown e
 
 ---
 
-## 10 — Réunions & vidéos
+## 09 — Réunions & vidéos
 
 **Cas client.** PME, organisme de formation, collectivité : « Qu'a-t-on décidé sur le budget lors des dernières réunions ? » avec **lien vers le moment exact** de l'enregistrement. Offre F : RAG sur réunions et documents, extraits exacts.
 

@@ -1,0 +1,8 @@
+id: summaries
+slug: hierarchical-summaries
+family: multimodal
+badge: proven
+date: "2023"
+demo: "09"
+gauges: { quality: 4, cost: 2, complexity: 2 }
+order: 9

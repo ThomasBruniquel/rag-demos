@@ -2,7 +2,7 @@
   "meta": {
     "titleTemplate": "%s · {brand}",
     "defaultTitle": "{brand} · AI assistants for your documents (RAG)",
-    "description": "AI assistants that answer from your documents and show their sources: ten live demos, each with its architecture, measured quality and cost."
+    "description": "AI assistants that answer from your documents and show their sources: nine live demos, each with its architecture, measured quality and cost."
   },
   "a11y": {
     "skipToContent": "Skip to content",
@@ -45,48 +45,35 @@
     ],
     "rights": "© {year} {owner}. Demo code released under an open-source licence."
   },
-  "draft": {
-    "notice": "This page is being written: the full content is coming in the next iterations."
-  },
   "marks": {
     "toMeasure": "Indicative values pending the evaluation bench: they will be replaced by real measurements."
   },
   "home": {
     "eyebrow": "AI assistants · RAG",
-    "titleTop": "Ask your documents.",
-    "titleBottom": "Get the answer, and its source.",
+    "titleTop": "State-of-the-art RAG,",
+    "titleBottom": "to query your documents intelligently, within your constraints.",
     "lead": "RAG connects an AI model to your own documents: it finds the relevant passages, then writes an answer that cites them. Nothing made up, everything checkable.",
     "primaryCta": "See the demos",
     "secondaryCta": "Discuss a project",
-    "rag": {
-      "eyebrow": "RAG in brief",
-      "title": "Three steps, one answer you can check",
-      "steps": [
-        {
-          "title": "A question",
-          "text": "Asked in plain language, as you would ask a colleague."
-        },
-        {
-          "title": "A search through your documents",
-          "text": "The passages that answer it are found among thousands of pages."
-        },
-        {
-          "title": "An answer with sources",
-          "text": "Every claim points back to the original document, so it can be checked."
-        }
-      ],
-      "notForTitle": "Not always the right tool",
-      "notFor": [
-        "Only a few pages? Giving them whole to the model is enough.",
-        "Need a specific tone or format? Fine-tuning fits better.",
-        "Just looking for a document? A search engine will do."
-      ],
-      "more": "RAG explained in detail"
-    },
+    "stepsLabel": "How it works",
+    "steps": [
+      {
+        "title": "A question",
+        "text": "Asked in plain language, as you would ask a colleague."
+      },
+      {
+        "title": "A search",
+        "text": "The relevant passages, found among thousands of pages."
+      },
+      {
+        "title": "An answer with sources",
+        "text": "Every claim points back to its original document."
+      }
+    ],
     "demos": {
-      "eyebrow": "10 demos",
+      "eyebrow": "9 demos",
       "title": "Try it on real cases",
-      "lead": "Ten real-world scenarios, each with its method, architecture, measured quality and cost. Built mostly on AWS (Bedrock, S3 Vectors), with Mistral or OpenAI where the case calls for it.",
+      "lead": "Nine real-world scenarios, each with its method, architecture, measured quality and cost. Built mostly on AWS (Bedrock, S3 Vectors), with Mistral or OpenAI where the case calls for it.",
       "all": "All demos, with filters"
     },
     "process": {
@@ -120,7 +107,7 @@
     }
   },
   "catalog": {
-    "eyebrow": "10 demos · 10 client scenarios",
+    "eyebrow": "9 demos · 9 client scenarios",
     "filtersLabel": "Filter the demos",
     "docTypes": "Kind of documents",
     "volume": "Volume",
@@ -207,7 +194,7 @@
   "pages": {
     "demos": {
       "title": "Demos",
-      "lead": "Ten real-world scenarios, from an internal knowledge base to a 20-million-row data lake. Every demo runs live and comes with its architecture, data pipeline, evaluation results and running costs."
+      "lead": "Nine real-world scenarios, from an internal knowledge base to a 20-million-row data lake. Every demo runs live and comes with its architecture, data pipeline, evaluation results and running costs."
     },
     "methods": {
       "title": "The methods",

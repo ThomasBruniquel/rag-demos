@@ -1,9 +1,0 @@
-id: graphrag
-slug: graphrag
-family: structure
-badge: recent
-date: "2024-04"
-sourceUrl: https://arxiv.org/abs/2404.16130
-demo: "08"
-gauges: { quality: 4, cost: 4, complexity: 5 }
-order: 8

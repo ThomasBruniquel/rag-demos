@@ -17,10 +17,10 @@ C'est exactement le programme de la certification **AWS Certified Data Engineer 
 
 | Domaine DEA-C01 (poids indicatif) | En RAG, ça sert à… | Services | Démos |
 |---|---|---|---|
-| **1. Ingestion et transformation des données** (~34 %) | Charger des documents en batch ou en continu, les parser, les découper, calculer les embeddings, orchestrer et rejouer les pipelines | S3, Lambda, **Step Functions**, **Glue ETL**, EventBridge, SQS, Kinesis (concept), Textract, Transcribe | Toutes ; surtout 04, 05, 06, 10 |
-| **2. Gestion des stockages de données** (~26 %) | Choisir où stocker vecteurs, textes et métadonnées ; formats (Parquet), partitionnement, catalogue, cycle de vie | **S3 Vectors**, Aurora/pgvector, DynamoDB, **Glue Data Catalog**, S3 lifecycle, Athena | 02, 04, 05 |
-| **3. Opérations et support** (~22 %) | Supervision des pipelines, gestion des erreurs, qualité des données, coûts, requêtes analytiques | CloudWatch, Step Functions (retries), **Athena**, Glue Data Quality, AWS Budgets | 04, 05, 08 |
-| **4. Sécurité et gouvernance** (~18 %) | Qui a le droit de voir quel document, masquage des données personnelles, chiffrement, traçabilité | IAM, **Lake Formation**, KMS, CloudTrail, Macie, Comprehend (PII) | 04, 09 |
+| **1. Ingestion et transformation des données** (~34 %) | Charger des documents en batch ou en continu, les parser, les découper, calculer les embeddings, orchestrer et rejouer les pipelines | S3, Lambda, **Step Functions**, **Glue ETL**, EventBridge, SQS, Kinesis (concept), Textract, Transcribe | Toutes ; surtout 04, 05, 09 |
+| **2. Gestion des stockages de données** (~26 %) | Choisir où stocker vecteurs, textes et métadonnées ; formats (Parquet), partitionnement, catalogue, cycle de vie | **S3 Vectors**, Aurora/pgvector, DynamoDB, **Glue Data Catalog**, S3 lifecycle, Athena | 02, 04|
+| **3. Opérations et support** (~22 %) | Supervision des pipelines, gestion des erreurs, qualité des données, coûts, requêtes analytiques | CloudWatch, Step Functions (retries), **Athena**, Glue Data Quality, AWS Budgets | 04, 07 |
+| **4. Sécurité et gouvernance** (~18 %) | Qui a le droit de voir quel document, masquage des données personnelles, chiffrement, traçabilité | IAM, **Lake Formation**, KMS, CloudTrail, Macie, Comprehend (PII) | 04, 08 |
 
 > Les pondérations sont celles du guide d'examen public tel que connu ; vérifier la version en vigueur sur la page officielle de la certification.
 
@@ -32,12 +32,11 @@ C'est exactement le programme de la certification **AWS Certified Data Engineer 
 | 02 | Aurora Serverless v2, RDS Data API, Step Functions (Map), modélisation des métadonnées |
 | 03 | Textract asynchrone (SNS/SQS), Step Functions avec gestion d'erreurs, Glue Data Catalog |
 | 04 | **Glue ETL PySpark, Parquet, partitionnement, Glue Crawler, Athena (workgroups, coûts), Lake Formation** |
-| 05 | **Step Functions Distributed Map, Bedrock batch, EventBridge Scheduler, idempotence, déduplication, CDC simplifié** |
-| 06 | S3 Event Notifications, traitement asynchrone, contrôle qualité des données extraites |
-| 07 | DynamoDB Streams, synchronisation incrémentale |
-| 08 | Glue + Athena pour valider des données extraites, qualité de données |
-| 09 | IAM fin, KMS, CloudTrail, masquage PII, principes Lake Formation (droits par ligne/colonne transposés aux chunks) |
-| 10 | Transcribe asynchrone, pipelines multi-étapes |
+| 05 | S3 Event Notifications, traitement asynchrone, contrôle qualité des données extraites |
+| 06 | DynamoDB Streams, synchronisation incrémentale |
+| 07 | Glue + Athena pour valider des données extraites, qualité de données |
+| 08 | IAM fin, KMS, CloudTrail, masquage PII, principes Lake Formation (droits par ligne/colonne transposés aux chunks) |
+| 09 | Transcribe asynchrone, pipelines multi-étapes |
 
 ## Comment le montrer sur le site
 

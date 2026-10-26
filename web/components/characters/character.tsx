@@ -105,13 +105,6 @@ const accessories: Record<string, ReactNode> = {
       <rect x="52" y="1" width="20" height="6" rx="1.5" fill={paper} {...stroke} strokeWidth={2} />
     </g>
   ),
-  // Matryoshka embeddings: nested rings.
-  matryoshka: (
-    <g fill="none" stroke={LINE} strokeWidth={2} opacity={0.4}>
-      <circle cx="48" cy="52" r="20" />
-      <circle cx="48" cy="56" r="12" />
-    </g>
-  ),
   // STAIR: a staircase, i.e. climbing down the table of contents.
   stair: <path d="M44 22v-6h9V9h9V2h10" {...stroke} fill="none" strokeWidth={3} />,
   // Graph RAG: a small graph of entities as antennas.

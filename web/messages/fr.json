@@ -2,7 +2,7 @@
   "meta": {
     "titleTemplate": "%s · {brand}",
     "defaultTitle": "{brand} · Assistants IA sur vos documents (RAG)",
-    "description": "Des assistants IA qui répondent à partir de vos documents, sources à l'appui : dix démos testables en ligne, avec leur architecture, leur qualité mesurée et leur coût."
+    "description": "Des assistants IA qui répondent à partir de vos documents, sources à l'appui : neuf démos testables en ligne, avec leur architecture, leur qualité mesurée et leur coût."
   },
   "a11y": {
     "skipToContent": "Aller au contenu",
@@ -45,48 +45,35 @@
     ],
     "rights": "© {year} {owner}. Code des démos sous licence libre."
   },
-  "draft": {
-    "notice": "Page en cours de rédaction : le contenu détaillé arrive dans les prochaines étapes."
-  },
   "marks": {
     "toMeasure": "Valeurs indicatives, en attente du banc d'évaluation : elles seront remplacées par les mesures réelles."
   },
   "home": {
     "eyebrow": "Assistants IA · RAG",
-    "titleTop": "Interrogez vos documents.",
-    "titleBottom": "Obtenez la réponse, et sa source.",
+    "titleTop": "RAG à l'état de l'art,",
+    "titleBottom": "pour interroger intelligemment vos documents, selon vos contraintes.",
     "lead": "Un RAG relie un modèle d'IA à vos propres documents : il retrouve les passages utiles, puis rédige une réponse qui les cite. Rien n'est inventé, tout se vérifie.",
     "primaryCta": "Voir les démos",
     "secondaryCta": "Discuter d'un projet",
-    "rag": {
-      "eyebrow": "Le RAG en bref",
-      "title": "Trois étapes, une réponse vérifiable",
-      "steps": [
-        {
-          "title": "Une question",
-          "text": "Posée en langage courant, comme à un collègue."
-        },
-        {
-          "title": "Une recherche dans vos documents",
-          "text": "Les passages qui répondent sont retrouvés parmi des milliers de pages."
-        },
-        {
-          "title": "Une réponse sourcée",
-          "text": "Chaque affirmation renvoie au document d'origine : on peut vérifier."
-        }
-      ],
-      "notForTitle": "Pas toujours la bonne solution",
-      "notFor": [
-        "Quelques pages seulement ? Les donner en entier au modèle suffit.",
-        "Besoin d'un ton ou d'un format précis ? Plutôt un ajustement du modèle (fine-tuning).",
-        "Juste retrouver un document ? Un moteur de recherche fait l'affaire."
-      ],
-      "more": "Comprendre le RAG en détail"
-    },
+    "stepsLabel": "Comment ça marche",
+    "steps": [
+      {
+        "title": "Une question",
+        "text": "Posée en langage courant, comme à un collègue."
+      },
+      {
+        "title": "Une recherche",
+        "text": "Les passages utiles, retrouvés parmi des milliers de pages."
+      },
+      {
+        "title": "Une réponse sourcée",
+        "text": "Chaque affirmation renvoie à son document d'origine."
+      }
+    ],
     "demos": {
-      "eyebrow": "10 démos",
+      "eyebrow": "9 démos",
       "title": "Testez sur des cas concrets",
-      "lead": "Dix situations réelles, chacune avec sa méthode, son architecture, sa qualité mesurée et son coût. Construites principalement sur AWS (Bedrock, S3 Vectors), avec Mistral ou OpenAI quand le cas l'exige.",
+      "lead": "Neuf situations réelles, chacune avec sa méthode, son architecture, sa qualité mesurée et son coût. Construites principalement sur AWS (Bedrock, S3 Vectors), avec Mistral ou OpenAI quand le cas l'exige.",
       "all": "Toutes les démos, avec filtres"
     },
     "process": {
@@ -120,7 +107,7 @@
     }
   },
   "catalog": {
-    "eyebrow": "10 démos · 10 cas clients",
+    "eyebrow": "9 démos · 9 cas clients",
     "filtersLabel": "Filtrer les démos",
     "docTypes": "Type de documents",
     "volume": "Volume",
@@ -207,7 +194,7 @@
   "pages": {
     "demos": {
       "title": "Démos",
-      "lead": "Dix situations réelles, d'une base documentaire interne à un data lake de 20 millions de lignes. Chaque démo se teste en ligne et s'accompagne de son architecture, de son pipeline de données, de ses résultats d'évaluation et de son coût."
+      "lead": "Neuf situations réelles, d'une base documentaire interne à un data lake de 20 millions de lignes. Chaque démo se teste en ligne et s'accompagne de son architecture, de son pipeline de données, de ses résultats d'évaluation et de son coût."
     },
     "methods": {
       "title": "Les méthodes",

@@ -1,10 +1,11 @@
-import { DraftPage, draftMetadata } from "@/components/pages/draft-page";
+import { LegalPage } from "@/components/pages/legal-views";
+import { textPageMetadata } from "@/lib/page-metadata";
 
 // This URL only exists in one language (see lib/i18n/routes.ts).
 export const dynamicParams = false;
 export const generateStaticParams = () => [{ locale: "en" }];
-export const generateMetadata = () => draftMetadata("legal");
+export const generateMetadata = () => textPageMetadata("legal");
 
 export default function Page() {
-  return <DraftPage id="legal" />;
+  return <LegalPage />;
 }

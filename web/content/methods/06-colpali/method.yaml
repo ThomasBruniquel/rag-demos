@@ -1,9 +1,0 @@
-id: colpali
-slug: colpali
-family: multimodal
-badge: recent
-date: "2024-07"
-sourceUrl: https://arxiv.org/abs/2407.01449
-demo: "06"
-gauges: { quality: 4, cost: 3, complexity: 4 }
-order: 6

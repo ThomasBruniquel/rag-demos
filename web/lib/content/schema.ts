@@ -25,7 +25,7 @@ export const methodMetaSchema = z.object({
   date: z.string().regex(/^\d{4}(-\d{2})?$/),
   /** Link to the paper or reference documentation. */
   sourceUrl: z.url().optional(),
-  /** Demo that showcases this method ("01"…"10"); none for the baseline. */
+  /** Demo that showcases this method ("01"…"09"); none for the baseline. */
   demo: z.string().regex(/^\d{2}$/).optional(),
   gauges: z.object({ quality: gauge, cost: gauge, complexity: gauge }),
   order: z.number().int(),

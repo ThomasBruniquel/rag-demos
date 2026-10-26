@@ -1,0 +1,12 @@
+id: "09"
+slugs: { fr: recherche-reunions-videos, en: meeting-video-search }
+status: soon
+featured: false
+method: summaries
+docTypes: [media]
+volume: small
+constraints: [time, budget]
+sectors: [public, smb]
+aws: [Transcribe, Step Functions, S3 events, DynamoDB, Bedrock, S3 Vectors]
+vectorStore: S3 Vectors
+sourcePath: demos/09-reunions-videos

@@ -44,3 +44,27 @@ export function pageMetadata({
     },
   };
 }
+
+/** schema.org description of the business and its owner, for the home page. */
+export function businessJsonLd(locale: Locale, description: string): string {
+  const { brand, owner, links, url } = siteConfig;
+  const data = {
+    "@context": "https://schema.org",
+    "@type": "ProfessionalService",
+    name: brand,
+    url: `${url}/${locale}`,
+    description,
+    email: owner.email,
+    areaServed: ["FR", "EU"],
+    availableLanguage: ["fr", "en"],
+    founder: {
+      "@type": "Person",
+      name: owner.name,
+      jobTitle: owner.jobTitle[locale],
+      email: owner.email,
+      sameAs: [links.linkedin, "https://github.com/ThomasBruniquel"],
+    },
+  };
+  // Escape "<" so the payload can never close the <script> tag.
+  return JSON.stringify(data).replace(/</g, "\\u003c");
+}

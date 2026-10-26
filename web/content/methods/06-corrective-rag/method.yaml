@@ -1,0 +1,9 @@
+id: corrective
+slug: corrective-rag
+family: agents
+badge: recent
+date: "2024-01"
+sourceUrl: https://arxiv.org/abs/2401.15884
+demo: "06"
+gauges: { quality: 4, cost: 4, complexity: 4 }
+order: 6

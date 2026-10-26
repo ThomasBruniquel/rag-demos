@@ -10,7 +10,7 @@ Transformer un visiteur (dirigeant de PME, CTO de startup, responsable data, ach
 |---|---|
 | **Accueil** | Accroche par le problème, « le RAG en 30 secondes » (quand c'est utile, quand ça ne l'est pas), « Quel est votre besoin ? », galerie des personnages-méthodes, preuves (métriques, GitHub, certification), appel à l'action — voir « Concept » ci-dessous |
 | **Qu'est-ce qu'un RAG ?** | Version longue et pédagogique de l'explication, pour les visiteurs non techniques |
-| **Démos** (catalogue) | Les 10 démos filtrables par **situation** : type de documents, volume, contrainte (confidentialité, budget, délai), secteur |
+| **Démos** (catalogue) | Les 9 démos filtrables par **situation** : type de documents, volume, contrainte (confidentialité, budget, délai), secteur |
 | **Page d'une démo** | Voir ci-dessous |
 | **Offres** | Formats de mission : audit/cadrage RAG (2-3 j), POC (1-2 sem.), mise en production (3-6 sem.), amélioration d'un RAG existant (évaluation + optimisation) |
 | **Data engineering pour l'IA** | Pourquoi un RAG est d'abord un pipeline de données (version grand public de [04](04-aws-data-engineer-et-rag.md)) |

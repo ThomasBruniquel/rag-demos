@@ -3,7 +3,7 @@
 ## Principes
 
 1. **Serverless et scale-to-zero partout** : le site doit coûter presque rien quand personne ne s'en sert.
-2. **Un socle commun, dix démos** : quotas, streaming, citations, traces, évaluation sont codés une seule fois.
+2. **Un socle commun, neuf démos** : quotas, streaming, citations, traces, évaluation sont codés une seule fois.
 3. **Même contrat d'API pour toutes les démos** : le front ne connaît qu'un seul format de réponse.
 4. **Ingestion séparée de l'interrogation** : l'ingestion est un pipeline de données (batch, rejouable, idempotent) ; l'interrogation est une API légère.
 5. **Tout en Terraform**, rien de créé à la main dans la console (sauf l'activation des modèles Bedrock et le compte lui-même).
@@ -58,13 +58,13 @@ flowchart LR
 | Exposition | Lambda Function URL (streaming), CORS limité au domaine du site | Pas de coût fixe ; API Gateway REST ne stream pas aussi bien |
 | Orchestration ingestion | **Step Functions** (+ Distributed Map pour le volume), **EventBridge Scheduler** | Visualisable, rejouable, cœur du programme DEA |
 | Transformation | Lambda, **Glue ETL** (PySpark) pour le tabulaire, Textract, Transcribe | Selon le type de document |
-| Stockage vectoriel | **S3 Vectors** (par défaut), **pgvector** sur Aurora Serverless v2 (démo 02), **Qdrant** (09), **Neo4j** (08) | Montrer qu'on sait choisir ; S3 Vectors = coût minimal |
+| Stockage vectoriel | **S3 Vectors** (par défaut), **pgvector** sur Aurora Serverless v2 (démo 02), **Qdrant** (08), **Neo4j** (07) | Montrer qu'on sait choisir ; S3 Vectors = coût minimal |
 | Métadonnées / état | **DynamoDB** à la demande | Quotas, sessions d'upload, traces, tickets |
-| Catalogue | **Glue Data Catalog** | Tables Athena (04, 05, 08) + métadonnées documents |
-| LLM | **Bedrock** (Claude Haiku par défaut, Claude Sonnet pour les tâches difficiles, Amazon Nova pour le très bas coût), **Mistral** (09), **OpenAI** (07) | Bedrock principal, deux fournisseurs externes demandés par le marché |
-| Embeddings | Titan Text Embeddings v2 (par défaut), Cohere Embed multilingue (comparaison), Mistral Embed (09) | Coût très bas, multilingue |
+| Catalogue | **Glue Data Catalog** | Tables Athena (04, 07) + métadonnées documents |
+| LLM | **Bedrock** (Claude Haiku par défaut, Claude Sonnet pour les tâches difficiles, Amazon Nova pour le très bas coût), **Mistral** (08), **OpenAI** (06) | Bedrock principal, deux fournisseurs externes demandés par le marché |
+| Embeddings | Titan Text Embeddings v2 (par défaut), Cohere Embed multilingue (comparaison), Mistral Embed (08) | Coût très bas, multilingue |
 | Reranking | Cohere Rerank / Amazon Rerank via Bedrock | Démo 02, 03 |
-| Frameworks RAG | Code maison léger + **LangGraph** (07) + **LlamaIndex** (au moins une démo) | Les offres citent LangChain/LangGraph ; un code maison lisible montre qu'on comprend ce qu'il y a dessous |
+| Frameworks RAG | Code maison léger + **LangGraph** (06) + **LlamaIndex** (au moins une démo) | Les offres citent LangChain/LangGraph ; un code maison lisible montre qu'on comprend ce qu'il y a dessous |
 | Observabilité | Traces maison dans DynamoDB + CloudWatch ; **Langfuse Cloud** (offre gratuite, UE) en option | Afficher les coulisses de chaque réponse sur le site |
 | Évaluation | Banc maison + **RAGAS** pour les métriques de génération | Les offres sérieuses exigent des jeux d'évaluation |
 | IaC | **Terraform** ≥ 1.10 (état dans S3 avec verrou natif `use_lockfile`) | Plus demandé que CDK dans les offres |
@@ -104,7 +104,7 @@ Préférence : **eu-west-3 (Paris)** pour l'argument « hébergé en France », 
 │   │   ├── eval/              # questions de référence + résultats
 │   │   ├── infra/             # module Terraform de la démo
 │   │   └── README.md          # cas client, choix, résultats, coûts
-│   └── ... 02 à 10
+│   └── ... 02 à 09
 ├── infra/
 │   ├── bootstrap/             # backend Terraform, rôle OIDC GitHub
 │   ├── modules/               # modules réutilisables (lambda_api, step_function, s3_vectors...)
@@ -130,7 +130,7 @@ Réponse en flux (Server-Sent Events) :
 ## Protection contre les abus et maîtrise des coûts
 
 1. **Cloudflare Turnstile** (gratuit) vérifié côté serveur à l'ouverture de session.
-2. **Quotas** dans DynamoDB : par IP hachée et par jour (ex. 15 questions, moins sur la démo 07), par session, et taille max des questions.
+2. **Quotas** dans DynamoDB : par IP hachée et par jour (ex. 15 questions, moins sur la démo 06), par session, et taille max des questions.
 3. **Plafond de coût global** : chaque requête ajoute son coût calculé à un compteur journalier ; au-delà du plafond (ex. 0,80 €/jour), les démos passent en mode « réponses en cache / revenez demain ».
 4. **AWS Budgets** avec alertes à 50 %, 80 %, 100 % et action automatique qui coupe les Lambdas des démos.
 5. **Concurrence réservée** limitée sur chaque Lambda.
@@ -153,7 +153,7 @@ Réponse en flux (Server-Sent Events) :
 | Qdrant, Neo4j, Langfuse, Turnstile | 0 € (offres gratuites) |
 | **Total** | **≈ 8 € en usage faible, ≤ 30 € au plafond** |
 
-Coûts ponctuels d'ingestion (une fois) : environ 70 à 120 € pour les 10 démos, dont l'essentiel sur 03, 06, 08 et 10. À réduire en limitant les corpus si nécessaire.
+Coûts ponctuels d'ingestion (une fois) : environ 70 à 120 € pour les 9 démos, dont l'essentiel sur 03, 05, 07 et 09. À réduire en limitant les corpus si nécessaire.
 
 **Financement par les crédits AWS.** Les crédits Free Tier (100 $ à l'inscription + jusqu'à 100 $ en réalisant des activités : budget, Bedrock, Lambda, RDS, EC2) servent en priorité à payer ces ingestions. Règles :
 - Faire les ingestions coûteuses **avant l'expiration des crédits** (12 mois après l'ouverture du compte).

@@ -31,10 +31,10 @@ Ordre conseillé (progression des compétences et valeur commerciale) :
 | Semaine | Démos | Pourquoi cet ordre |
 |---|---|---|
 | 3 | 02 Contrats, 03 Finance | Les fondamentaux du RAG « fait main » : découpage, hybride, rerank, parsing |
-| 4 | 04 Data lake, 05 Veille | Le cœur data engineering (et la révision DEA) |
-| 5 | 06 Documentation technique, 09 Souverain | OCR/multimodal ; puis l'argument grands comptes |
-| 6 | 07 Support agentique | Agents : s'appuie sur tout ce qui précède |
-| 7 | 08 GraphRAG, 10 Réunions | Les plus différenciantes, les plus risquées en dernier |
+| 4 | 04 Data lake | Le cœur data engineering (et la révision DEA) |
+| 5 | 05 Documentation technique, 08 Souverain | OCR/multimodal ; puis l'argument grands comptes |
+| 6 | 06 Support agentique | Agents : s'appuie sur tout ce qui précède |
+| 7 | 07 GraphRAG, 09 Réunions | Les plus différenciantes, les plus risquées en dernier |
 
 Pour chaque démo, la définition de « terminé » :
 - [ ] Pipeline d'ingestion en Terraform, rejouable
@@ -81,15 +81,14 @@ Mettre à jour cette section au fil du projet.
 - [ ] 02 Revue de contrats
 - [ ] 03 Analyste financier
 - [ ] 04 Data lake conversationnel
-- [ ] 05 Veille scientifique
-- [ ] 06 Documentation technique
-- [ ] 07 Support client agentique
-- [ ] 08 GraphRAG incidents
-- [ ] 09 RAG souverain
-- [ ] 10 Réunions & vidéos
+- [ ] 05 Documentation technique
+- [ ] 06 Support client agentique
+- [ ] 07 GraphRAG incidents
+- [ ] 08 RAG souverain
+- [ ] 09 Réunions & vidéos
 
 ### Phase 3
-- [ ] Pages commerciales
-- [ ] SEO
+- [x] Pages commerciales et éditoriales : offres, à propos, contact (Netlify Forms), qu'est-ce qu'un RAG, data engineering, mentions légales, confidentialité (2026-10-26 ; adresse et SIRET à compléter dans `web/site.config.ts`)
+- [ ] SEO : sitemap, robots.txt et données structurées faits (2026-10-26) ; reste le domaine définitif et le suivi dans Search Console
 - [ ] Articles
 - [ ] Lancement

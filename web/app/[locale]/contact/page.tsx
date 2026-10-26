@@ -1,7 +1,8 @@
-import { DraftPage, draftMetadata } from "@/components/pages/draft-page";
+import { ContactPage } from "@/components/pages/contact-view";
+import { textPageMetadata } from "@/lib/page-metadata";
 
-export const generateMetadata = () => draftMetadata("contact");
+export const generateMetadata = () => textPageMetadata("contact");
 
 export default function Page() {
-  return <DraftPage id="contact" />;
+  return <ContactPage />;
 }

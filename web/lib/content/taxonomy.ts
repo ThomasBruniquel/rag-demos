@@ -53,7 +53,6 @@ export const sectors = {
   legal: { fr: "Juridique", en: "Legal" },
   finance: { fr: "Finance et audit", en: "Finance and audit" },
   data: { fr: "Équipes data", en: "Data teams" },
-  research: { fr: "Recherche et pharma", en: "Research and pharma" },
   industry: { fr: "Industrie et maintenance", en: "Industry and maintenance" },
   saas: { fr: "SaaS et e-commerce", en: "SaaS and e-commerce" },
   insurance: { fr: "Assurance et qualité", en: "Insurance and quality" },

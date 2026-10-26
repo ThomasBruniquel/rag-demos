@@ -1,6 +1,6 @@
-# RAG Portfolio — site vitrine et 10 démos RAG
+# RAG Portfolio — site vitrine et 9 démos RAG
 
-Site vitrine de services freelance spécialisés en RAG (Retrieval-Augmented Generation), avec dix démos testables en ligne. Chaque démo correspond à une situation client différente : type de documents, volume, contrainte de confidentialité ou de budget.
+Site vitrine de services freelance spécialisés en RAG (Retrieval-Augmented Generation), avec neuf démos testables en ligne. Chaque démo correspond à une situation client différente : type de documents, volume, contrainte de confidentialité ou de budget.
 
 Statut : **plan rédigé, développement non commencé.**
 
@@ -8,7 +8,7 @@ Statut : **plan rédigé, développement non commencé.**
 
 - [Vision et contexte](docs/00-vision-et-contexte.md)
 - [Étude des offres RAG réelles](docs/01-etude-marche.md)
-- [Catalogue des 10 démos](docs/02-catalogue-rag.md)
+- [Catalogue des 9 démos](docs/02-catalogue-rag.md)
 - [Architecture technique](docs/03-architecture.md)
 - [AWS Data Engineer et RAG](docs/04-aws-data-engineer-et-rag.md)
 - [Feuille de route](docs/05-roadmap.md)

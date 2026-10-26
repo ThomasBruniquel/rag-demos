@@ -8,7 +8,7 @@ Format : une entrée par décision structurante. Statut : **Acceptée**, **À co
 Conséquence : uniquement du serverless ou du scale-to-zero ; plafond de coût LLM journalier ; pas d'OpenSearch Serverless, Kendra, Neptune, NAT Gateway, Fargate permanent.
 
 ### D-002 — Bedrock comme fournisseur LLM principal, Mistral et OpenAI en complément — Acceptée (2026-10-26)
-Mistral pour l'argument souveraineté (démo 09), OpenAI parce que beaucoup d'offres internationales l'imposent (démo 07, en option interchangeable).
+Mistral pour l'argument souveraineté (démo 08), OpenAI parce que beaucoup d'offres internationales l'imposent (démo 06, en option interchangeable).
 
 ### D-003 — Terraform pour toute l'infrastructure — Acceptée (2026-10-26)
 
@@ -47,10 +47,21 @@ Ordre des opérations :
 
 ### D-013 — Une méthode phare et un personnage par démo — Acceptée (2026-10-26)
 - Chaque démo met en scène une **méthode phare**, incarnée par un personnage SVG dessiné dans le code ; un personnage gris « RAG classique » sert de référence, et chaque méthode l'affronte dans un **duel chiffré** (valeurs marquées [À MESURER] tant que le banc d'évaluation n'a pas tourné).
-- Six familles, une couleur et une silhouette chacune : recherche (bleu, rond) 01 et 05 ; structure (violet, bloc) 03 et 08 ; vérification (vert, bouclier) 02 et 04 ; agents (orange, capsule à bras) 07 ; souveraineté (rouge, maison) 09 ; multimodal (jaune, écran) 06 et 10.
+- Six familles, une couleur et une silhouette chacune : recherche (bleu, rond) 01 ; structure (violet, bloc) 03 et 07 ; vérification (vert, bouclier) 02 et 04 ; agents (orange, capsule à bras) 06 ; souveraineté (rouge, maison) 08 ; multimodal (jaune, écran) 05 et 09.
 - Aucune marque tierce : origine écrite en texte (« méthode publiée par IBM Research (sept. 2026) ») avec lien vers la publication. Sources vérifiées le 2026-10-26.
 - **STAIR (démo 03)** : la méthode publiée (arXiv 2609.03874) entraîne un modèle pour mémoriser le corpus et le retrouver par sa table des matières. La démo en reprend le principe **sans entraînement** (un modèle du commerce parcourt la table des matières), ce que la fiche indique. Une version fidèle demanderait un fine-tuning et un hébergement de modèle incompatibles avec D-001.
-- Points à trancher au moment de construire les démos : modèle vérificateur de la démo 02 (Granite Guardian hébergé, ou contrôle de fidélité de Bedrock Guardrails) et hébergement du modèle de recherche visuelle de la démo 06 (ColPali demande du calcul à chaque question).
+- Points à trancher au moment de construire les démos : modèle vérificateur de la démo 02 (Granite Guardian hébergé, ou contrôle de fidélité de Bedrock Guardrails) et hébergement du modèle de recherche visuelle de la démo 05 (ColPali demande du calcul à chaque question).
+
+### D-014 — Neuf démos au lieu de dix — Acceptée (2026-10-26)
+- La démo **05 « Veille scientifique »** (embeddings Matryoshka + quantification, ~1 M résumés arXiv) est retirée : son secteur (laboratoires, pharma) est le plus éloigné des cibles (PME/ETI, SaaS), et sa méthode est une optimisation de coût de la recherche plutôt qu'un cas client distinct. L'argument « gros volume » reste porté par la démo 04 (data lake de 20 millions de lignes).
+- Les démos suivantes sont **renumérotées** pour éviter un trou : 06 → 05 (documentation technique), 07 → 06 (support agentique), 08 → 07 (GraphRAG), 09 → 08 (souverain), 10 → 09 (réunions). Les numéros cités dans les entrées précédentes et dans les autres documents suivent la nouvelle numérotation.
+- Neuf démos se présentent en grille 3 × 3 sur la page d'accueil.
+
+### D-015 — Formulaire de contact et durées de conservation — Acceptée (2026-10-26)
+- **Formulaire** : Netlify Forms (offre gratuite, 100 envois par mois), détecté dans le HTML statique ; envoi en arrière-plan avec JavaScript, envoi classique sans. Champ piège anti-spam. Pas de service tiers supplémentaire.
+- **Durées de conservation** publiées sur la page Confidentialité, à respecter dans le code des démos : messages de contact 3 ans après le dernier échange ; questions et réponses des démos 30 jours (TTL DynamoDB) ; empreinte d'IP pour les quotas 48 heures ; documents déposés moins d'une heure ; journaux CloudWatch 14 jours.
+- **Aucune mesure d'audience ni cookie de suivi** pour l'instant ; les polices sont servies par le site.
+- À vérifier au déploiement : activer la détection de formulaires dans l'interface Netlify et configurer la notification par e-mail.
 
 ## Questions ouvertes
 
@@ -60,10 +71,10 @@ Ordre des opérations :
 | Q-2 | Domaine | Avant la mise en ligne publique (fin semaine 2) | Marque retenue le 2026-10-26 : **Rag4you** (mot-symbole avec le « 4 » en pastille dorée). Site provisoire : ragforyou.netlify.app. Reste le nom de domaine (ex. rag4you.fr / .com, à vérifier) |
 | Q-3 | Budget ponctuel d'ingestion de ~70 à 120 € | Avant la Phase 2 | Financé par les **crédits AWS** (100 $ disponibles, jusqu'à ~200 $ avec les activités) — voir D-011 |
 | Q-8 | Couverture de Claude (modèle tiers) par les crédits | Phase 0 | **Non confirmée** → petit appel Claude sur Bedrock, puis vérifier la facture du lendemain. Si non couvert : Amazon Nova pour l'ingestion en masse |
-| Q-4 | Licences des corpus 03 (FinanceBench CC BY-NC, DEU) et 10 (vidéos) | Avant chaque démo | Voir [02-catalogue-rag.md](02-catalogue-rag.md) |
-| Q-5 | Neo4j AuraDB Free se met en pause en cas d'inactivité | Démo 08 | Réveil automatique documenté, ou graphe stocké en Parquet sur S3 et chargé en mémoire (NetworkX) dans la Lambda |
+| Q-4 | Licences des corpus 03 (FinanceBench CC BY-NC, DEU) et 09 (vidéos) | Avant chaque démo | Voir [02-catalogue-rag.md](02-catalogue-rag.md) |
+| Q-5 | Neo4j AuraDB Free se met en pause en cas d'inactivité | Démo 07 | Réveil automatique documenté, ou graphe stocké en Parquet sur S3 et chargé en mémoire (NetworkX) dans la Lambda |
 | Q-6 | Langfuse Cloud ou traces uniquement maison | Phase 1 | Langfuse apporte une interface reconnue par les clients ; traces maison suffisent pour le site |
-| Q-7 | Support du français par la détection PII (Comprehend, Bedrock Guardrails) | Démo 09 | Presidio + modèle spaCy français en principal |
+| Q-7 | Support du français par la détection PII (Comprehend, Bedrock Guardrails) | Démo 08 | Presidio + modèle spaCy français en principal |
 | Q-9 | Où faire tourner les modèles IBM Granite (intrinsics, Guardian), STAIR (Mistral 7B affiné) et ColQwen, qui demandent idéalement un GPU, avec un budget < 30 €/mois ? Piste AWS pour STAIR : Bedrock Custom Model Import (facturé à l'activité) | Démos 02, 03, 06, 09 | (a) Benchmark calculé hors ligne sur un GPU local ou loué à l'heure, résultats publiés, réponses précalculées pour les questions d'exemple, vérification en direct par Bedrock Guardrails ; (b) endpoint GPU qui s'éteint quand il ne sert pas (démarrage lent) ; (c) petits modèles quantifiés sur CPU (Lambda), lents. Préférence : (a) |
 | Q-10 | L'utilisateur dispose-t-il d'un GPU NVIDIA en local ? | Avant la démo 02 | Détermine le coût du point Q-9 (a) |
 | Q-11 | ~~Quelle « méthode IBM » ?~~ Résolu : **STAIR** (arXiv 2609.03874), placée dans la démo 03. Les RAG intrinsics / Granite Guardian restent dans la démo 02 | — | — |

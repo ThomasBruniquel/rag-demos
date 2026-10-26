@@ -1,0 +1,13 @@
+id: "08"
+slugs: { fr: rag-confidentiel-rgpd, en: private-gdpr-rag }
+status: soon
+featured: false
+method: open-models
+docTypes: [text]
+volume: small
+constraints: [confidentiality]
+sectors: [regulated]
+aws: [KMS, CloudTrail, Lambda, S3]
+vectorStore: Qdrant Cloud (région Europe)
+sourcePath: demos/08-rag-souverain
+player: { roles: true }

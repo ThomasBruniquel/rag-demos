@@ -4,7 +4,7 @@ Ce fichier sert de point d'entrée à chaque nouvelle session. Le lire en premie
 
 ## Le projet en une phrase
 
-Un site vitrine bilingue (FR/EN) pour vendre des services freelance spécialisés en RAG, avec **10 démos RAG testables en ligne**, chacune illustrant un cas client réel (type de documents, volume, contrainte technique différents), construites principalement sur AWS.
+Un site vitrine bilingue (FR/EN) pour vendre des services freelance spécialisés en RAG, avec **9 démos RAG testables en ligne**, chacune illustrant un cas client réel (type de documents, volume, contrainte technique différents), construites principalement sur AWS.
 
 ## Profil du porteur de projet
 
@@ -33,7 +33,7 @@ Conséquence budget : **pas de service "always-on" coûteux** (OpenSearch Server
 |---|---|
 | [docs/00-vision-et-contexte.md](docs/00-vision-et-contexte.md) | Objectifs, cibles, réponses aux questions de cadrage |
 | [docs/01-etude-marche.md](docs/01-etude-marche.md) | Analyse des offres RAG réelles et ce qu'elles demandent |
-| [docs/02-catalogue-rag.md](docs/02-catalogue-rag.md) | Les 10 démos : cas client, corpus, technique, services AWS |
+| [docs/02-catalogue-rag.md](docs/02-catalogue-rag.md) | Les 9 démos : cas client, corpus, technique, services AWS |
 | [docs/03-architecture.md](docs/03-architecture.md) | Architecture globale, stack, structure du dépôt, budget, sécurité |
 | [docs/04-aws-data-engineer-et-rag.md](docs/04-aws-data-engineer-et-rag.md) | Pourquoi la certif DEA sert à faire du RAG, mapping domaines → démos |
 | [docs/05-roadmap.md](docs/05-roadmap.md) | Phases, ordre de réalisation, checklist d'avancement |
@@ -52,6 +52,6 @@ Conséquence budget : **pas de service "always-on" coûteux** (OpenSearch Server
 
 ## État actuel
 
-Voir la checklist dans [docs/05-roadmap.md](docs/05-roadmap.md). Au 2026-10-26 : plan rédigé ; site vitrine en construction dans `web/` (catalogue, fiches démo et méthodes faits ; lecteur de démo, pages commerciales et SEO à venir). Dépôt public : https://github.com/ThomasBruniquel/rag-demos (commits avec l'adresse noreply GitHub).
+Voir la checklist dans [docs/05-roadmap.md](docs/05-roadmap.md). Au 2026-10-26 : plan rédigé ; site vitrine dans `web/` : catalogue de 9 démos, fiches démo et méthodes, pages éditoriales et commerciales, contact (Netlify Forms), sitemap faits ; lecteur de démo à venir. Textes des pages éditoriales dans `web/content/pages/*.ts` (FR + EN typés). Dépôt public : https://github.com/ThomasBruniquel/rag-demos (commits avec l'adresse noreply GitHub).
 
 Compte AWS : Free plan, 100 $ de crédits, plan gratuit jusqu'au 2027-04-08. **Ne jamais inscrire le compte dans AWS Organizations** (perte des crédits). Passer en Paid plan avant les ingestions coûteuses (voir D-011 dans [docs/06-decisions.md](docs/06-decisions.md)).

@@ -1,0 +1,9 @@
+id: open-models
+slug: open-models-on-premise
+family: sovereignty
+badge: proven
+date: "2023-09"
+sourceUrl: https://arxiv.org/abs/2310.06825
+demo: "08"
+gauges: { quality: 3, cost: 3, complexity: 4 }
+order: 8

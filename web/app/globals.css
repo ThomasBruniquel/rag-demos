@@ -248,7 +248,8 @@
 }
 
 /* ------------------------------------------------- Home: RAG in 3 steps */
-/* A gold bar runs across the three steps in turn: question, search, answer. */
+/* A gold bar runs across the three steps in turn: question, search, answer.
+   Side by side, an arrow sits in the gap between two steps. */
 .rag-step {
   border-top: 2px solid var(--line);
 }
@@ -269,6 +270,18 @@
   0% { transform: scaleX(0); }
   20%, 70% { transform: scaleX(1); }
   85%, 100% { transform: scaleX(1); opacity: 0; }
+}
+/* Arrow centred in the 2rem gap, on the line. */
+@media (width >= 40rem) {
+  .rag-step:not(:last-child)::after {
+    content: "→";
+    position: absolute;
+    top: -0.55em;
+    right: -1.4rem;
+    color: var(--gold-ink);
+    font-weight: 800;
+    line-height: 1;
+  }
 }
 @media (prefers-reduced-motion: reduce) {
   .rag-step::before {

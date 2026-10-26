@@ -33,19 +33,19 @@ Recherche faite le 2026-10-26 sur Malt, Codeur.com, Upwork, Collective.work et d
 | Compétence demandée | Fréquence | Démo(s) qui la prouve(nt) |
 |---|---|---|
 | Citations précises (document, page, extrait surligné) | Très forte | Toutes, mise en avant en 01, 02 |
-| Ingestion de PDF complexes, tableaux | Forte | 03, 06 |
-| OCR de documents scannés | Forte | 06 |
+| Ingestion de PDF complexes, tableaux | Forte | 03, 05 |
+| OCR de documents scannés | Forte | 05 |
 | Recherche hybride + reranking | Forte | 02, 03 |
 | Évaluation et métriques de qualité | Forte (missions sérieuses) | Toutes (banc d'évaluation commun) |
-| Bedrock Knowledge Bases / Agents | Forte (AWS) | 01, 07 |
-| Agents, LangGraph, outils | Forte | 07, 04 |
-| Guardrails, anti-hallucination, « je ne sais pas » | Forte | 07, 09 |
-| Contrôle d'accès par rôle, données sensibles, RGPD | Moyenne à forte (grands comptes) | 09 |
-| LLM local / souverain | Moyenne | 09 |
-| Gros volume, mise à jour continue | Moyenne (souvent implicite) | 05 |
+| Bedrock Knowledge Bases / Agents | Forte (AWS) | 01, 06 |
+| Agents, LangGraph, outils | Forte | 06, 04 |
+| Guardrails, anti-hallucination, « je ne sais pas » | Forte | 06, 08 |
+| Contrôle d'accès par rôle, données sensibles, RGPD | Moyenne à forte (grands comptes) | 08 |
+| LLM local / souverain | Moyenne | 08 |
+| Gros volume, mise à jour continue | Moyenne (souvent implicite) | 04 |
 | Données structurées (SQL) | Moyenne | 04 |
-| Réunions, audio, vidéo | Faible à moyenne | 10 |
-| GraphRAG | Faible mais différenciant | 08 |
+| Réunions, audio, vidéo | Faible à moyenne | 09 |
+| GraphRAG | Faible mais différenciant | 07 |
 | Upload de ses propres documents | Moyenne | 01 (mode « testez avec vos documents ») |
 
 ## Sources
