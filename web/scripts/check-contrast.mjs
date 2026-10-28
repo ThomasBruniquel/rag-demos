@@ -37,6 +37,10 @@ const pairs = [
   // Keyword badges, citation markers, player panes, highlighted Skills row.
   ["ink", "surface", 4.5], ["ink", "accent-soft", 4.5], ["gold-ink", "surface", 4.5],
   ["danger", "surface", 4.5], ["fg", "warn-soft", 4.5], ["muted", "warn-soft", 4.5],
+  // Keyword categories: coloured labels on every background, ink text on tinted badges.
+  ...["cloud", "framework", "models", "vector", "integrations", "compliance"].flatMap((c) => [
+    [`cat-${c}`, "paper", 4.5], [`cat-${c}`, "sunken", 4.5], [`cat-${c}`, "surface", 4.5], ["ink", `cat-${c}-soft`, 4.5],
+  ]),
   ["fam-search", "paper", 3], ["fam-structure", "paper", 3], ["fam-verification", "paper", 3],
   ["fam-agents", "paper", 2], ["fam-sovereignty", "paper", 3], ["fam-multimodal", "paper", 1.5],
 ];

@@ -2,7 +2,7 @@ import Link from "next/link";
 import { Section } from "@/components/layout/container";
 import { PageHeader } from "@/components/layout/page-header";
 import { dataEngineering } from "@/content/pages/data-engineering";
-import { StackBadges } from "@/components/demos/stack-badges";
+import { StackRows } from "@/components/demos/stack-badges";
 import { getDemos } from "@/lib/content/load";
 import { stackGroups } from "@/lib/content/stack";
 import { format } from "@/lib/i18n/messages";
@@ -99,7 +99,7 @@ export async function DataEngineeringPage() {
                   {demo.text[locale].title}
                 </span>
               </Link>
-              <StackBadges groups={stackGroups(demo.meta.stack, locale)} label={t.demo.stack} />
+              <StackRows groups={stackGroups(demo.meta.stack, locale)} label={t.demo.stack} />
             </li>
           ))}
         </ul>

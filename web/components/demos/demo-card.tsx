@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { Character } from "@/components/characters/character";
 import type { Family } from "@/lib/content/taxonomy";
-import { StackBadges, type StackGroup } from "./stack-badges";
+import { StackRows, type StackGroup } from "./stack-badges";
 
 /** Everything a project card needs; plain data so it can cross to the client. */
 export type DemoSummary = {
@@ -70,8 +70,8 @@ export function DemoCard({
         </h3>
         <p className="mb-3 text-sm text-muted">{demo.tagline}</p>
         {demo.stack.length ? (
-          <div className={`mb-3 ${compact ? "hidden sm:block" : ""}`}>
-            <StackBadges groups={demo.stack} label={stackLabel} />
+          <div className={`mb-4 ${compact ? "hidden sm:block" : ""}`}>
+            <StackRows groups={demo.stack} label={stackLabel} />
           </div>
         ) : null}
         <p className="mt-auto flex flex-wrap items-center gap-x-3 gap-y-1.5 text-xs">

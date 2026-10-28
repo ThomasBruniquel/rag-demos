@@ -75,6 +75,16 @@ export const stackCategories = {
 } as const satisfies Record<string, Labels>;
 export type StackCategory = keyof typeof stackCategories;
 
+/** One-word names, for the badge rows of the cards (one line each). */
+export const stackCategoriesShort = {
+  cloud: { fr: "Cloud", en: "Cloud" },
+  framework: { fr: "Framework", en: "Framework" },
+  models: { fr: "Modèles", en: "Models" },
+  vectorStores: { fr: "Vecteurs", en: "Vectors" },
+  integrations: { fr: "Intégrations", en: "Integrations" },
+  compliance: { fr: "Conformité", en: "Compliance" },
+} as const satisfies Record<StackCategory, Labels>;
+
 const same = (label: string): Labels => ({ fr: label, en: label });
 
 export const keywords = {

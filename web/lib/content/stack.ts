@@ -2,7 +2,7 @@ import type { StackGroup } from "@/components/demos/stack-badges";
 import type { Locale } from "@/lib/i18n/config";
 import { href } from "@/lib/i18n/routes";
 import type { DemoMeta } from "./schema";
-import { keywords, stackCategories, type StackCategory } from "./taxonomy";
+import { keywords, stackCategories, stackCategoriesShort, type StackCategory } from "./taxonomy";
 
 /** Anchor of a keyword row on the Skills page. */
 export function keywordAnchor(id: string): string {
@@ -19,6 +19,7 @@ export function stackGroups(stack: DemoMeta["stack"], locale: Locale, only?: Sta
       return {
         category,
         label: stackCategories[category][locale],
+        short: stackCategoriesShort[category][locale],
         items: (stack[category] as string[]).map((id) => ({
           id,
           label: labels[id][locale],

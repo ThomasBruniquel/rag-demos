@@ -55,6 +55,19 @@
   --fam-multimodal-soft: #fcf5e0;
   --fam-classic: #a9b3b9;
   --fam-classic-soft: #eef1f2;
+  /* Stack keyword categories (badges): a colour per category, text stays ink. */
+  --cat-cloud: #2a6795;
+  --cat-cloud-soft: #e5eff7;
+  --cat-framework: #5a4ea6;
+  --cat-framework-soft: #eeebf8;
+  --cat-models: #1d7266;
+  --cat-models-soft: #e1f2ee;
+  --cat-vector: #8f5508;
+  --cat-vector-soft: #fbefdc;
+  --cat-integrations: #56626f;
+  --cat-integrations-soft: #eceff2;
+  --cat-compliance: #a1375a;
+  --cat-compliance-soft: #f8e5ec;
   /* Characters: face always dark; legs and accessories lighten in dark mode. */
   --char-face: #002b40;
   --char-line: #002b40;
@@ -103,6 +116,18 @@
   --fam-multimodal-soft: #2f2a16;
   --fam-classic: #8c989e;
   --fam-classic-soft: #1b2d33;
+  --cat-cloud: #74aad8;
+  --cat-cloud-soft: #13293a;
+  --cat-framework: #a59ae4;
+  --cat-framework-soft: #221f3c;
+  --cat-models: #5cbcab;
+  --cat-models-soft: #0f302b;
+  --cat-vector: #e2a552;
+  --cat-vector-soft: #33260f;
+  --cat-integrations: #a3afbd;
+  --cat-integrations-soft: #1e2831;
+  --cat-compliance: #e588a4;
+  --cat-compliance-soft: #3a1a26;
   --char-line: #cfdde2;
 }
 
@@ -151,6 +176,18 @@
     --fam-multimodal-soft: #2f2a16;
     --fam-classic: #8c989e;
     --fam-classic-soft: #1b2d33;
+    --cat-cloud: #74aad8;
+    --cat-cloud-soft: #13293a;
+    --cat-framework: #a59ae4;
+    --cat-framework-soft: #221f3c;
+    --cat-models: #5cbcab;
+    --cat-models-soft: #0f302b;
+    --cat-vector: #e2a552;
+    --cat-vector-soft: #33260f;
+    --cat-integrations: #a3afbd;
+    --cat-integrations-soft: #1e2831;
+    --cat-compliance: #e588a4;
+    --cat-compliance-soft: #3a1a26;
     --char-line: #cfdde2;
   }
 }

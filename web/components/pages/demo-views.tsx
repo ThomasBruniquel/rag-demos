@@ -7,7 +7,7 @@ import { ToMeasure } from "@/components/content/to-complete";
 import { DemoCatalog, type FacetOptions } from "@/components/demos/demo-catalog";
 import type { DemoSummary } from "@/components/demos/demo-card";
 import { Diagram } from "@/components/demos/diagram";
-import { StackBadges, StackTable } from "@/components/demos/stack-badges";
+import { StackGrid } from "@/components/demos/stack-badges";
 import { Section } from "@/components/layout/container";
 import { PageHeader } from "@/components/layout/page-header";
 import { MethodBadge } from "@/components/methods/method-bits";
@@ -179,8 +179,8 @@ export async function DemoPage({ slug }: { slug: string }) {
                 {d.personal}
                 <span className="sr-only"> — {d.personalNote}</span>
               </p>
-              <div className="mt-5 max-w-[820px]">
-                <StackBadges groups={stack} label={d.stack} />
+              <div className="mt-6 max-w-[760px]">
+                <StackGrid groups={stack} label={d.stack} />
               </div>
             </div>
             <Character
@@ -273,8 +273,8 @@ export async function DemoPage({ slug }: { slug: string }) {
           <ReasonList title={d.choices} items={text.architecture.choices} />
           <ReasonList title={d.discarded} items={text.architecture.discarded} muted />
         </div>
-        <h3 className="mt-10 mb-1 text-[13px] font-bold uppercase tracking-[0.1em]">{d.stack}</h3>
-        <StackTable groups={stack} label={d.stack} />
+        <h3 className="mt-10 mb-4 text-[13px] font-bold uppercase tracking-[0.1em]">{d.stack}</h3>
+        <StackGrid groups={stack} label={d.stack} />
       </Section>
 
       {/* 4. Data pipeline */}

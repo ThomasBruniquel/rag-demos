@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { Section } from "@/components/layout/container";
+import { categoryColor } from "@/components/demos/stack-badges";
 import { PageHeader } from "@/components/layout/page-header";
 import { getDemos } from "@/lib/content/load";
 import { keywordAnchor, stackKeywords } from "@/lib/content/stack";
@@ -33,7 +34,8 @@ export async function SkillsPage() {
             if (!rows.length) return null;
             return (
               <section key={category} aria-labelledby={`cat-${category}`}>
-                <h2 id={`cat-${category}`} className="mb-3 text-[22px] font-bold">
+                <h2 id={`cat-${category}`} className="mb-3 flex items-center gap-3 text-[22px] font-bold">
+                  <span aria-hidden="true" className="inline-block size-3 rounded-full" style={{ background: categoryColor(category) }} />
                   {stackCategories[category][locale]}
                 </h2>
                 <table className="w-full border-collapse text-left text-[15px]">
@@ -43,7 +45,7 @@ export async function SkillsPage() {
                       <th scope="col">{t.skills.projects}</th>
                     </tr>
                   </thead>
-                  <tbody className="border-t-2 border-ink">
+                  <tbody className="border-t-2" style={{ borderColor: categoryColor(category) }}>
                     {rows.map((k) => (
                       <tr
                         key={k.id}
