@@ -35,10 +35,7 @@ export default async function HomePage() {
             </h1>
             <p className="mb-8 max-w-[620px] text-[17px] leading-relaxed font-medium text-muted sm:text-lg">{h.lead}</p>
             <div className="flex flex-wrap gap-3.5">
-              <a href={`#${projectsAnchor(locale)}`} className="btn-primary w-full sm:w-auto">
-                {h.primaryCta}
-              </a>
-              <Link href={href(locale, "contact")} className="btn-outline w-full sm:w-auto">
+              <Link href={href(locale, "contact")} className="btn-primary w-full sm:w-auto">
                 {h.secondaryCta}
               </Link>
             </div>
@@ -54,11 +51,10 @@ export default async function HomePage() {
 
       {/* The projects ("réalisations", D-021), with their filters: no separate catalogue page. */}
       <Section tone="light" id={projectsAnchor(locale)} labelledBy="projects-title">
-        <div className="mb-9">
-          <p className="eyebrow">{h.demos.eyebrow}</p>
-          <h2 id="projects-title" className="text-[26px] font-bold sm:text-[38px]">{h.demos.title}</h2>
-          <p className="mt-3 max-w-[680px] text-[17px] text-muted">{h.demos.lead}</p>
-        </div>
+        {/* A hairline separates the hook from the list (both on the same background). */}
+        <h2 id="projects-title" className="mb-8 border-t border-line-strong pt-8 text-[26px] font-bold sm:text-[38px]">
+          {h.demos.title}
+        </h2>
         <ProjectList />
       </Section>
 

@@ -57,9 +57,7 @@
     "primaryCta": "Voir les réalisations",
     "secondaryCta": "Discuter d'un projet",
     "demos": {
-      "eyebrow": "9 projets · données publiques · code ouvert",
-      "title": "Projets réalisés",
-      "lead": "Neuf projets construits de bout en bout sur données publiques, chacun avec sa méthode, sa stack, sa qualité mesurée et son coût. Les sessions affichées sont réelles : enregistrées sur le système en fonctionnement, puis rejouées telles quelles."
+      "title": "Projets réalisés"
     },
     "process": {
       "eyebrow": "Accompagnement",

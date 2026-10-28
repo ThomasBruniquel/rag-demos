@@ -57,9 +57,7 @@
     "primaryCta": "See the projects",
     "secondaryCta": "Discuss a project",
     "demos": {
-      "eyebrow": "9 projects · public data · open source",
-      "title": "Projects built",
-      "lead": "Nine projects built end to end on public data, each with its method, its stack, its measured quality and its cost. The sessions you see are real: recorded on the running system, then replayed exactly as they happened."
+      "title": "Projects built"
     },
     "process": {
       "eyebrow": "How projects run",
