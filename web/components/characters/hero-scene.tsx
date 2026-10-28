@@ -3,10 +3,11 @@ import { Character } from "./character";
 
 /*
  * Home page scene: four method characters behind a desk, going through
- * documents. Retrieval (blue) scans with a magnifying glass, verification
- * (green) checks, structure (purple) and multimodal (yellow) read along.
- * Decorative only (aria-hidden). Motion is light (the glass drifts, eyes
- * scan) and stops with prefers-reduced-motion (app/globals.css).
+ * documents, each one its own: verification (green) a page of text, structure
+ * (purple) a table of contents, retrieval (blue) a page under a magnifying
+ * glass, multimodal (yellow) a tablet showing images. Decorative only
+ * (aria-hidden); the only motion is the characters' blinking. The desk legs
+ * reach the bottom of the stage, so the desk stands on the line below it.
  *
  * Layering: characters first, then the desk drawn over their legs.
  * Positions are given on a 440 × 200 stage and turned into percentages, so
@@ -15,9 +16,9 @@ import { Character } from "./character";
  */
 
 const cast = [
-  { method: "groundedness", family: "verification", size: 88, left: 20, top: 83, mood: "verify" },
+  { method: "groundedness", family: "verification", size: 88, left: 20, top: 83, mood: "idle" },
   { method: "stair", family: "structure", size: 104, left: 98, top: 71, mood: "idle" },
-  { method: "cag", family: "search", size: 118, left: 192, top: 60, mood: "search" },
+  { method: "cag", family: "search", size: 118, left: 192, top: 60, mood: "idle" },
   { method: "colpali", family: "multimodal", size: 100, left: 318, top: 74, mood: "idle" },
 ] as const;
 
@@ -56,30 +57,44 @@ export function HeroScene({ className = "" }: { className?: string }) {
         <rect x="4" y="166" width="432" height="14" rx="2" fill="var(--line)" />
         <path d="M4 166h432" stroke="var(--line-strong)" strokeWidth="1.5" />
         {/* Two thin legs. */}
-        <path d="M20 180v18M420 180v18" stroke="var(--line-strong)" strokeWidth="4" strokeLinecap="round" />
+        <path d="M20 180v20M420 180v20" stroke="var(--line-strong)" strokeWidth="4" />
 
-        {/* Documents in front of each character. */}
+        {/* Documents in front of each character. Verification: a page of text. */}
         <Sheet x={38} tilt={-3} />
-        <Sheet x={126} tilt={2} />
-        {/* Under the glass: the page being searched, one line highlighted. */}
+        {/* Structure: a table of contents (entries, one indented, page numbers on the right). */}
+        <Sheet x={126} tilt={2}>
+          <g fill="var(--fam-structure)">
+            <circle cx="8.5" cy="153" r="1.3" />
+            <circle cx="11" cy="156.5" r="1.1" />
+            <circle cx="6" cy="160" r="1.3" />
+          </g>
+          <path d="M11 153h22M13.5 156.5h18M8.5 160h24" stroke="var(--line-strong)" strokeWidth="1.2" strokeLinecap="round" />
+          <path d="M40 153h4M42 156.5h4M43 160h4" stroke="var(--fam-structure)" strokeWidth="1.2" strokeLinecap="round" />
+        </Sheet>
+        {/* Retrieval: the page being searched, one line highlighted under the glass. */}
         <Sheet x={226} tilt={-1}>
           <path d="M8 153h34M6 160h28" stroke="var(--line-strong)" strokeWidth="1.2" strokeLinecap="round" />
           <path d="M7 156.5h40" stroke="var(--gold)" strokeWidth="2.4" strokeLinecap="round" />
         </Sheet>
-        {/* The multimodal character's page holds a figure. */}
-        <Sheet x={340} tilt={3}>
-          <rect x="10" y="152" width="18" height="8" rx="1" fill="none" stroke="var(--line-strong)" strokeWidth="1.2" />
-          <path d="m11 159 5-4 4 3 3-2 4 3" fill="none" stroke="var(--fam-multimodal)" strokeWidth="1.3" strokeLinejoin="round" />
-          <path d="M33 154h12M33 158h9" stroke="var(--line-strong)" strokeWidth="1.2" strokeLinecap="round" />
-        </Sheet>
+        {/* Multimodal: a tablet showing a page of images. */}
+        <g transform="translate(336 0) rotate(3 32 158)">
+          <path d="M3 147h56l7 17H-4Z" fill={line} strokeLinejoin="round" />
+          <path d="M6 149.5h50l5 12H1Z" fill="var(--paper)" />
+          {[6, 22, 38].map((x) => (
+            <g key={x} transform={`translate(${x} 0)`}>
+              <path d="M2 151h12l1.5 8H.5Z" fill="var(--fam-multimodal-soft)" stroke="var(--fam-multimodal)" strokeWidth="0.9" strokeLinejoin="round" />
+              <path d="m2 158.3 4-3.6 3 2.4 2.2-1.6 3.6 2.8" fill="none" stroke="var(--fam-multimodal)" strokeWidth="1" strokeLinejoin="round" />
+            </g>
+          ))}
+        </g>
         {/* A small stack of files at the end of the desk. */}
         <g>
           <path d="M408 146h20l3 6h-26Z" fill="var(--fam-structure-soft)" stroke="var(--line-strong)" strokeWidth="1.2" />
           <path d="M406 140h20l3 6h-26Z" fill="var(--fam-search-soft)" stroke="var(--line-strong)" strokeWidth="1.2" />
         </g>
 
-        {/* The magnifying glass, drifting slowly over the highlighted line. */}
-        <g className="scene-loupe">
+        {/* The magnifying glass, resting over the highlighted line. */}
+        <g>
           <path d="m272 162 15 13" stroke={line} strokeWidth="5" strokeLinecap="round" />
           <circle cx="262" cy="153" r="12" fill="var(--accent-soft)" fillOpacity="0.6" stroke={line} strokeWidth="3.5" />
           <path d="M256 148a7 7 0 0 1 6-2.5" stroke="var(--paper)" strokeWidth="2" strokeLinecap="round" fill="none" />

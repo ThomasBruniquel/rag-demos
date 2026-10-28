@@ -25,9 +25,10 @@ export default async function HomePage() {
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: businessJsonLd(locale, t.meta.description) }} />
 
       {/* Hook: the promise, one sentence on what RAG is, two buttons; the characters on the right. */}
-      <section className="relative overflow-hidden bg-sunken px-4 py-12 sm:px-8 sm:py-14">
-        <div className="relative z-10 mx-auto grid max-w-[1240px] items-end gap-8 lg:grid-cols-[1fr_auto] lg:gap-16">
-          <div className="max-w-[720px]">
+      {/* The hairline under it is the floor the desk of the scene stands on. */}
+      <section className="relative overflow-hidden bg-sunken px-4 pt-12 sm:px-6 sm:pt-14">
+        <div className="relative z-10 mx-auto grid max-w-[1240px] items-end gap-8 border-b border-line-strong lg:grid-cols-[1fr_auto] lg:gap-16">
+          <div className="max-w-[720px] pb-12 sm:pb-14">
             <p className="eyebrow mb-3">{h.eyebrow}</p>
             <h1 className="mb-5 text-[34px] leading-[1.06] font-extrabold tracking-[-0.04em] sm:text-[46px] xl:text-[52px]">
               <span className="block text-gold-display">{h.titleTop}</span>
@@ -46,9 +47,8 @@ export default async function HomePage() {
       </section>
 
       {/* The projects ("réalisations", D-021), with their filters: no separate catalogue page. */}
-      <Section tone="light" id={projectsAnchor(locale)} labelledBy="projects-title">
-        {/* A hairline separates the hook from the list (both on the same background). */}
-        <h2 id="projects-title" className="mb-8 border-t border-line-strong pt-8 text-[26px] font-bold sm:text-[38px]">
+      <Section tone="light" id={projectsAnchor(locale)} labelledBy="projects-title" className="pt-10 sm:pt-12">
+        <h2 id="projects-title" className="mb-8 text-[26px] font-bold sm:text-[38px]">
           {h.demos.title}
         </h2>
         <ProjectList />
