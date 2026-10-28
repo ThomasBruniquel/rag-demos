@@ -2,13 +2,63 @@
 
 ## Principes
 
-1. **Serverless et scale-to-zero partout** : le site doit coûter presque rien quand personne ne s'en sert.
-2. **Un socle commun, neuf démos** : quotas, streaming, citations, traces, évaluation sont codés une seule fois.
-3. **Même contrat d'API pour toutes les démos** : le front ne connaît qu'un seul format de réponse.
-4. **Ingestion séparée de l'interrogation** : l'ingestion est un pipeline de données (batch, rejouable, idempotent) ; l'interrogation est une API légère.
-5. **Tout en Terraform**, rien de créé à la main dans la console (sauf l'activation des modèles Bedrock et le compte lui-même).
+1. **Le site ne fait tourner aucun RAG (D-020)** : il rejoue des sessions réelles enregistrées. Coût récurrent ≈ 0 €.
+2. **La stack de chaque réalisation est choisie pour son cas et pour les mots-clés à démontrer (D-022)** : AWS, Azure, GCP ou sur site, avec LangChain, LlamaIndex, Haystack ou sans framework.
+3. **Un seul format de sortie pour toutes les réalisations** : le flux d'événements du contrat commun. C'est lui qu'on enregistre et que le site rejoue.
+4. **Ingestion séparée de l'interrogation** : l'ingestion est un pipeline de données (batch, rejouable, idempotent) ; l'interrogation est une API ou un script léger.
+5. **Déployable, mais pas déployé en permanence** : l'infrastructure cloud est décrite en Terraform (AWS, et Azure/GCP quand c'est utile), déployée le temps d'ingérer, d'enregistrer et de mesurer, puis détruite. Les réalisations locales démarrent par `docker compose up`.
 
-## Schéma global
+## Rejeu des sessions (D-020)
+
+1. **Enregistrement** : un script commun (`rag_core.recording`, à écrire) envoie les questions d'exemple à la réalisation et horodate chaque événement reçu. Il produit un fichier JSON par question et par langue, avec en en-tête la date, les modèles, la stack et le coût total mesuré. Fichiers versionnés dans `web/content/recordings/NN-…/`.
+2. **Rejeu** : le lecteur du site lit le fichier et réémet les événements avec leur rythme d'origine (accélérable). Citations cliquables, artifacts et coulisses fonctionnent comme en direct.
+3. **Vidéo** : un script Playwright ouvre la fiche, lance le rejeu et filme l'écran, en FR et en EN. Sortie MP4/WebM courte et légère, servie par Netlify.
+4. **Mode direct sur rendez-vous** : la même API, lancée en local ou déployée temporairement. Le lecteur s'y connecte quand une URL d'API est configurée.
+
+### Format d'un enregistrement (version 1)
+
+Un fichier par question et par langue : `web/content/recordings/<NN-nom>/<question_id>.<locale>.json`.
+
+```json
+{
+  "version": 1,
+  "demo": "05",
+  "locale": "fr",
+  "question_id": "q1-schema-pompe",
+  "question": "…",
+  "variant": "ocr_figures",
+  "recorded_at": "2026-11-03T14:12:00Z",
+  "stack": { "cloud": ["AWS"], "framework": [], "models": ["Claude Haiku 5.5"], "vector_store": ["S3 Vectors"] },
+  "duration_ms": 6120,
+  "cost_eur": 0.0013,
+  "events": [
+    { "t": 0,    "type": "status",   "data": { "step": "retrieval", "label": "Recherche dans 3 450 pages" } },
+    { "t": 840,  "type": "citation", "data": { "id": 1, "doc_title": "…", "location": "p. 12", "snippet": "…", "url": "…", "score": 0.82 } },
+    { "t": 1210, "type": "token",    "data": { "text": "La procédure…" } },
+    { "t": 6050, "type": "trace",    "data": { "chunks": [], "models": [], "latency_ms": 6050, "tokens": {}, "cost_eur": 0.0013 } },
+    { "t": 6120, "type": "done",     "data": {} }
+  ]
+}
+```
+
+- `t` : millisecondes depuis le début de la session. Le lecteur respecte ces écarts, avec une vitesse réglable (×1, ×2, instantané).
+- `type` et `data` : exactement les événements du contrat commun ci-dessous.
+- `variant` (facultatif) : la voie comparée quand la réalisation en a plusieurs (ex. 05 : `ocr_text`, `ocr_figures`, `visual`, `colqwen` ; 08 : le rôle choisi).
+- Les fichiers sont produits uniquement par le script d'enregistrement, à partir d'un vrai passage. Jamais écrits à la main.
+
+## Diffusion des réalisations
+
+| Réalisation | Où elle tourne pour l'enregistrement | Après l'enregistrement |
+|---|---|---|
+| 01, 04, 05 | AWS (Terraform) | `terraform destroy` ; données sources et index gardés sur le poste |
+| 02, 07, 08 | Poste local (Docker, Ollama, GPU) | Rien à arrêter |
+| 03 | Poste local + Textract ponctuel | Rien à arrêter |
+| 06 | Azure (essai 30 jours) | Ressources supprimées avant la fin de l'essai |
+| 09 | GCP (essai 90 jours) + Whisper local | Ressources supprimées avant la fin de l'essai |
+
+## Schéma global (réalisations AWS, en mode direct)
+
+Ce schéma décrit les réalisations AWS (01, 04, 05) quand elles sont déployées. Le site public, lui, ne fait que rejouer des enregistrements (voir plus haut).
 
 ```mermaid
 flowchart LR
@@ -25,16 +75,11 @@ flowchart LR
     end
     subgraph Donnees["Stockage"]
         SV[S3 Vectors]
-        PG[Aurora Serverless v2 pgvector<br/>via RDS Data API]
-        QD[Qdrant Cloud]
-        NJ[Neo4j AuraDB]
         AT[Athena + Glue Catalog]
         DDB[DynamoDB<br/>quotas, sessions, traces]
     end
     subgraph LLM["Modèles"]
-        BR[Bedrock : Claude, Titan, Cohere, Nova]
-        MI[Mistral API]
-        OA[OpenAI API]
+        BR[Bedrock : Claude, Titan, Cohere]
     end
     subgraph Ingestion["Pipelines d'ingestion (hors ligne)"]
         S3R[S3 brut] --> SF[Step Functions]
@@ -43,9 +88,9 @@ flowchart LR
         EB[EventBridge planifié] --> SF
     end
     B --> N --> G --> Q --> L
-    L --> SV & PG & QD & NJ & AT & DDB
-    L --> BR & MI & OA
-    EMB --> SV & PG & QD
+    L --> SV & AT & DDB
+    L --> BR
+    EMB --> SV
     TX --> AT
 ```
 
@@ -54,17 +99,19 @@ flowchart LR
 | Couche | Choix | Pourquoi |
 |---|---|---|
 | Front | **Next.js** (App Router, majoritairement statique), TypeScript, Tailwind, i18n `/fr` `/en`, hébergé sur **Netlify** | Choix de l'utilisateur ; offre gratuite, déploiement depuis GitHub, Netlify Forms pour le contact |
-| API | **Python 3.12**, **FastAPI** dans **Lambda** (image conteneur) avec **Lambda Web Adapter** | Le runtime Python managé de Lambda ne stream pas les réponses ; le Web Adapter le permet |
+| API | **Python 3.12**, **FastAPI** dans **Lambda** (zip arm64 + couche **Lambda Web Adapter**, D-017) | Le runtime Python managé de Lambda ne stream pas les réponses ; le Web Adapter le permet |
 | Exposition | Lambda Function URL (streaming), CORS limité au domaine du site | Pas de coût fixe ; API Gateway REST ne stream pas aussi bien |
 | Orchestration ingestion | **Step Functions** (+ Distributed Map pour le volume), **EventBridge Scheduler** | Visualisable, rejouable, cœur du programme DEA |
 | Transformation | Lambda, **Glue ETL** (PySpark) pour le tabulaire, Textract, Transcribe | Selon le type de document |
-| Stockage vectoriel | **S3 Vectors** (par défaut), **pgvector** sur Aurora Serverless v2 (démo 02), **Qdrant** (08), **Neo4j** (07) | Montrer qu'on sait choisir ; S3 Vectors = coût minimal |
+| Stockage vectoriel | **S3 Vectors** (01, 04, 05), **Weaviate** (02), **FAISS** (03), **Azure AI Search** (06), **Neo4j** (07), **Qdrant** (08), **pgvector** (09) | Montrer qu'on sait choisir (D-022) |
+| Clouds | **AWS** (01, 03, 04, 05), **Azure** (06), **GCP** (09), sur site / local (02, 03, 07, 08) | Couvrir les trois clouds demandés et le sur-site |
 | Métadonnées / état | **DynamoDB** à la demande | Quotas, sessions d'upload, traces, tickets |
 | Catalogue | **Glue Data Catalog** | Tables Athena (04, 07) + métadonnées documents |
-| LLM | **Bedrock** (Claude Haiku par défaut, Claude Sonnet pour les tâches difficiles, Amazon Nova pour le très bas coût), **Mistral** (08), **OpenAI** (06) | Bedrock principal, deux fournisseurs externes demandés par le marché |
-| Embeddings | Titan Text Embeddings v2 (par défaut), Cohere Embed multilingue (comparaison), Mistral Embed (08) | Coût très bas, multilingue |
-| Reranking | Cohere Rerank / Amazon Rerank via Bedrock | Démo 02, 03 |
-| Frameworks RAG | Code maison léger + **LangGraph** (06) + **LlamaIndex** (au moins une démo) | Les offres citent LangChain/LangGraph ; un code maison lisible montre qu'on comprend ce qu'il y a dessous |
+| LLM | **Claude** via Bedrock (01, 04, 05, comparaison en 03), **GPT** (02 via OpenAI, 06 via Azure OpenAI), **Llama** (03, 07, via Ollama), **Mistral** (07, 08, via Ollama), **Gemini** (09), **Granite / Granite Guardian** (02, 08) | Couvrir les familles de modèles demandées (D-022) |
+| Embeddings | Titan Text v2 et Cohere (AWS), modèles open-source en local (bge-m3 ou équivalent), Azure OpenAI (06), Vertex AI (09) | Selon la stack de chaque réalisation |
+| Reranking | Cross-encoder open-source en local (02), Cohere Rerank via Bedrock si besoin | Démo 02, 03 |
+| Frameworks RAG | **Haystack** (02, 09), **LlamaIndex** (03, 07), **LangChain / LangGraph** (06, 08), sans framework (01, 04, 05) | Les trois frameworks des offres ; le code sans framework montre qu'on comprend ce qu'il y a dessous |
+| Exécution locale | **Docker Compose**, **Ollama**, GPU RTX 2080 SUPER 8 Go | Gratuit ; argument « sur site » |
 | Observabilité | Traces maison dans DynamoDB + CloudWatch ; **Langfuse Cloud** (offre gratuite, UE) en option | Afficher les coulisses de chaque réponse sur le site |
 | Évaluation | Banc maison + **RAGAS** pour les métriques de génération | Les offres sérieuses exigent des jeux d'évaluation |
 | IaC | **Terraform** ≥ 1.10 (état dans S3 avec verrou natif `use_lockfile`) | Plus demandé que CDK dans les offres |
@@ -86,8 +133,9 @@ Préférence : **eu-west-3 (Paris)** pour l'argument « hébergé en France », 
 ├── docs/                      # ce plan
 ├── web/                       # site Next.js
 │   ├── app/[locale]/...       # pages FR/EN
-│   ├── components/demo/       # lecteur de démo commun (chat, citations, coulisses)
-│   └── content/demos/         # fiches de démo (MDX FR/EN)
+│   ├── components/demo/       # lecteur commun (rejeu des sessions, citations, coulisses)
+│   ├── content/demos/         # fiches des réalisations (MDX FR/EN)
+│   └── content/recordings/    # sessions enregistrées (JSON) et vidéos, par réalisation
 ├── packages/
 │   └── rag_core/              # bibliothèque Python partagée
 │       ├── api/               # contrat d'API, streaming, erreurs
@@ -99,10 +147,13 @@ Préférence : **eu-west-3 (Paris)** pour l'argument « hébergé en France », 
 │       └── eval/              # banc d'évaluation
 ├── demos/
 │   ├── 01-assistant-entrepreneurs/
-│   │   ├── ingestion/         # pipeline (Step Functions + Lambdas)
-│   │   ├── api/               # handler de la démo
+│   │   ├── src/assistant_entrepreneurs/
+│   │   │   ├── ingestion/     # conversion, synchronisation S3 (étape Lambda du pipeline)
+│   │   │   └── api/           # application FastAPI de la démo
+│   │   ├── tests/
 │   │   ├── eval/              # questions de référence + résultats
-│   │   ├── infra/             # module Terraform de la démo
+│   │   ├── infra/             # module Terraform de la démo (dont la machine à états)
+│   │   ├── scripts/           # construction du paquet Lambda
 │   │   └── README.md          # cas client, choix, résultats, coûts
 │   └── ... 02 à 09
 ├── infra/
@@ -127,7 +178,9 @@ Réponse en flux (Server-Sent Events) :
 | `trace` | chunks récupérés, scores, modèles, latences, tokens, **coût en €** |
 | `done` / `error` | fin ou erreur (dont `quota_exceeded`, `budget_paused`) |
 
-## Protection contre les abus et maîtrise des coûts
+## Protection contre les abus et maîtrise des coûts (mode direct uniquement)
+
+Depuis D-020, ces protections ne servent qu'au mode direct (rendez-vous ou déploiement temporaire). Le code existe dans `rag_core.guard` et reste utilisable.
 
 1. **Cloudflare Turnstile** (gratuit) vérifié côté serveur à l'ouverture de session.
 2. **Quotas** dans DynamoDB : par IP hachée et par jour (ex. 15 questions, moins sur la démo 06), par session, et taille max des questions.
@@ -137,28 +190,27 @@ Réponse en flux (Server-Sent Events) :
 6. **Cache** des questions d'exemple (réponses précalculées) : la plupart des visiteurs cliquent sur les exemples.
 7. Pas de WAF payant au départ (≥ 5 $/mois) ; à ajouter si abus constaté.
 
-## Budget mensuel estimé (fonctionnement)
+## Budget (D-020)
 
-| Poste | Estimation |
-|---|---|
-| Nom de domaine (amorti, DNS via Netlify) | ~1 € |
-| Hébergement du site (Netlify, offre gratuite) | 0 € |
-| Lambda, Step Functions, API | ~0 € (offre gratuite) |
-| DynamoDB à la demande | < 0,50 € |
-| S3 Vectors (toutes démos, ~5 Go) | ~1 € |
-| Aurora Serverless v2 en veille (stockage) | ~1 € |
-| Athena + Glue (mises à jour) | ~1 € |
-| CloudWatch Logs (rétention 14 jours) | ~1 € |
-| Appels LLM (plafonnés à ~0,80 €/jour) | ≤ 24 € (souvent bien moins) |
-| Qdrant, Neo4j, Langfuse, Turnstile | 0 € (offres gratuites) |
-| **Total** | **≈ 8 € en usage faible, ≤ 30 € au plafond** |
+**Récurrent : ≈ 1 €/mois** (nom de domaine). Netlify est gratuit, et aucun RAG ne tourne en permanence.
 
-Coûts ponctuels d'ingestion (une fois) : environ 70 à 120 € pour les 9 démos, dont l'essentiel sur 03, 05, 07 et 09. À réduire en limitant les corpus si nécessaire.
+**Ponctuel (construction, enregistrement, mesure)** :
+
+| Réalisation | Payé par | Estimation |
+|---|---|---|
+| 01, 04, 05 (AWS) | Crédits AWS | ≈ 25 € au total (dont ≈ 19 € pour la 05) |
+| 03 (Textract ponctuel) | Crédits AWS | ≈ 5 à 15 € |
+| 02 (GPT) | Carte bancaire, API OpenAI | quelques euros |
+| 06 (Azure) | Essai Azure (200 $, 30 jours) | 0 € si la fenêtre suffit |
+| 09 (GCP) | Essai GCP (300 $, 90 jours) | 0 € |
+| 07, 08 (local) | — | 0 € (électricité et temps de calcul) |
+
+L'ancien budget « ≤ 30 €/mois en ligne » reste la référence si une réalisation est un jour ouverte en direct au public.
 
 **Financement par les crédits AWS.** Les crédits Free Tier (100 $ à l'inscription + jusqu'à 100 $ en réalisant des activités : budget, Bedrock, Lambda, RDS, EC2) servent en priorité à payer ces ingestions. Règles :
 - Faire les ingestions coûteuses **avant l'expiration des crédits** (12 mois après l'ouverture du compte).
 - Les services AWS « maison » (Textract, Transcribe, Glue, Titan, Nova) sont les plus susceptibles d'être couverts ; pour Claude sur Bedrock (modèle tiers), vérifier sur la facture avant de lancer une grosse ingestion. Si Claude n'est pas couvert, utiliser **Amazon Nova** pour les tâches d'ingestion en masse (contextualisation, extraction de graphe, description d'images).
-- Le compte doit être en **Paid plan** avant la mise en ligne publique : un compte en Free plan est suspendu au bout de 6 mois ou dès que les crédits sont épuisés, ce qui couperait le site.
+- Passer en **Paid plan** avant les ingestions coûteuses (D-011) : un compte en Free plan est suspendu dès que les crédits sont épuisés. Depuis D-020, le site ne dépend plus d'AWS : une suspension ne le couperait pas.
 
 ## Pièges à éviter (coûts cachés)
 

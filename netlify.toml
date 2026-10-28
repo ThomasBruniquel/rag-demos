@@ -31,6 +31,32 @@
   status = 302
   force = true
 
+# --- Old URLs: "demos" became "realisations" (FR) / "projects" (EN) -------
+# D-021, 2026-10-28. Project slugs did not change, so the splat carries over.
+[[redirects]]
+  from = "/fr/demos"
+  to = "/fr/realisations"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/fr/demos/*"
+  to = "/fr/realisations/:splat"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/en/demos"
+  to = "/en/projects"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/en/demos/*"
+  to = "/en/projects/:splat"
+  status = 301
+  force = true
+
 # --- Security and cache headers ------------------------------------------
 [[headers]]
   for = "/*"

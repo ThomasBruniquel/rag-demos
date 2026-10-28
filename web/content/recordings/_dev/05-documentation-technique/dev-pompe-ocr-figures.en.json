@@ -1,0 +1,423 @@
+{
+ "version": 1,
+ "demo": "05",
+ "locale": "en",
+ "question_id": "dev-pompe-ocr-figures",
+ "question": "Show me a photo of the shaft and gears of the lubrication pump.",
+ "variant": "ocr_figures",
+ "recorded_at": "2026-10-28T10:00:00Z",
+ "stack": {
+  "models": [
+   "Claude Haiku 5.5"
+  ],
+  "cloud": [
+   "AWS"
+  ],
+  "framework": [],
+  "vector_store": [
+   "S3 Vectors"
+  ]
+ },
+ "duration_ms": 4350,
+ "cost_eur": 0.0011,
+ "events": [
+  {
+   "t": 0,
+   "type": "status",
+   "data": {
+    "step": "retrieving",
+    "route": "ocr_figures"
+   }
+  },
+  {
+   "t": 950,
+   "type": "citation",
+   "data": {
+    "id": 1,
+    "marker": "[1]",
+    "doc_title": "NASA TM-X (exemple / sample)",
+    "location": "p. 31",
+    "snippet": "Figure 7. Lubrication pump shaft and gears after 150-hour endurance run.",
+    "url": "https://ntrs.nasa.gov/",
+    "score": 0.74
+   }
+  },
+  {
+   "t": 1100,
+   "type": "artifact",
+   "data": {
+    "kind": "figure",
+    "title": "Figure 7",
+    "citation_id": 1,
+    "image_url": null,
+    "caption": "Pump shaft and gears (sample, no image)",
+    "location": "page 31"
+   }
+  },
+  {
+   "t": 1300,
+   "type": "status",
+   "data": {
+    "step": "generating",
+    "route": "ocr_figures"
+   }
+  },
+  {
+   "t": 1500,
+   "type": "token",
+   "data": {
+    "text": "Figure "
+   }
+  },
+  {
+   "t": 1559,
+   "type": "token",
+   "data": {
+    "text": "7 "
+   }
+  },
+  {
+   "t": 1617,
+   "type": "token",
+   "data": {
+    "text": "of "
+   }
+  },
+  {
+   "t": 1676,
+   "type": "token",
+   "data": {
+    "text": "the "
+   }
+  },
+  {
+   "t": 1735,
+   "type": "token",
+   "data": {
+    "text": "report "
+   }
+  },
+  {
+   "t": 1793,
+   "type": "token",
+   "data": {
+    "text": "[1] "
+   }
+  },
+  {
+   "t": 1852,
+   "type": "token",
+   "data": {
+    "text": "shows "
+   }
+  },
+  {
+   "t": 1911,
+   "type": "token",
+   "data": {
+    "text": "the "
+   }
+  },
+  {
+   "t": 1970,
+   "type": "token",
+   "data": {
+    "text": "lubrication "
+   }
+  },
+  {
+   "t": 2028,
+   "type": "token",
+   "data": {
+    "text": "pump "
+   }
+  },
+  {
+   "t": 2087,
+   "type": "token",
+   "data": {
+    "text": "shaft "
+   }
+  },
+  {
+   "t": 2146,
+   "type": "token",
+   "data": {
+    "text": "with "
+   }
+  },
+  {
+   "t": 2204,
+   "type": "token",
+   "data": {
+    "text": "its "
+   }
+  },
+  {
+   "t": 2263,
+   "type": "token",
+   "data": {
+    "text": "two "
+   }
+  },
+  {
+   "t": 2322,
+   "type": "token",
+   "data": {
+    "text": "spur "
+   }
+  },
+  {
+   "t": 2380,
+   "type": "token",
+   "data": {
+    "text": "gears. "
+   }
+  },
+  {
+   "t": 2439,
+   "type": "token",
+   "data": {
+    "text": "The "
+   }
+  },
+  {
+   "t": 2498,
+   "type": "token",
+   "data": {
+    "text": "caption "
+   }
+  },
+  {
+   "t": 2557,
+   "type": "token",
+   "data": {
+    "text": "says "
+   }
+  },
+  {
+   "t": 2615,
+   "type": "token",
+   "data": {
+    "text": "the "
+   }
+  },
+  {
+   "t": 2674,
+   "type": "token",
+   "data": {
+    "text": "gears "
+   }
+  },
+  {
+   "t": 2733,
+   "type": "token",
+   "data": {
+    "text": "were "
+   }
+  },
+  {
+   "t": 2791,
+   "type": "token",
+   "data": {
+    "text": "photographed "
+   }
+  },
+  {
+   "t": 2850,
+   "type": "token",
+   "data": {
+    "text": "after "
+   }
+  },
+  {
+   "t": 2909,
+   "type": "token",
+   "data": {
+    "text": "the "
+   }
+  },
+  {
+   "t": 2967,
+   "type": "token",
+   "data": {
+    "text": "endurance "
+   }
+  },
+  {
+   "t": 3026,
+   "type": "token",
+   "data": {
+    "text": "test, "
+   }
+  },
+  {
+   "t": 3085,
+   "type": "token",
+   "data": {
+    "text": "with "
+   }
+  },
+  {
+   "t": 3143,
+   "type": "token",
+   "data": {
+    "text": "no "
+   }
+  },
+  {
+   "t": 3202,
+   "type": "token",
+   "data": {
+    "text": "visible "
+   }
+  },
+  {
+   "t": 3261,
+   "type": "token",
+   "data": {
+    "text": "wear.\n\n"
+   }
+  },
+  {
+   "t": 3320,
+   "type": "token",
+   "data": {
+    "text": "- "
+   }
+  },
+  {
+   "t": 3378,
+   "type": "token",
+   "data": {
+    "text": "Shaft: "
+   }
+  },
+  {
+   "t": 3437,
+   "type": "token",
+   "data": {
+    "text": "heat-treated "
+   }
+  },
+  {
+   "t": 3496,
+   "type": "token",
+   "data": {
+    "text": "steel, "
+   }
+  },
+  {
+   "t": 3554,
+   "type": "token",
+   "data": {
+    "text": "on "
+   }
+  },
+  {
+   "t": 3613,
+   "type": "token",
+   "data": {
+    "text": "ball "
+   }
+  },
+  {
+   "t": 3672,
+   "type": "token",
+   "data": {
+    "text": "bearings\n"
+   }
+  },
+  {
+   "t": 3730,
+   "type": "token",
+   "data": {
+    "text": "- "
+   }
+  },
+  {
+   "t": 3789,
+   "type": "token",
+   "data": {
+    "text": "Gears: "
+   }
+  },
+  {
+   "t": 3848,
+   "type": "token",
+   "data": {
+    "text": "spur "
+   }
+  },
+  {
+   "t": 3907,
+   "type": "token",
+   "data": {
+    "text": "teeth, "
+   }
+  },
+  {
+   "t": 3965,
+   "type": "token",
+   "data": {
+    "text": "short "
+   }
+  },
+  {
+   "t": 4024,
+   "type": "token",
+   "data": {
+    "text": "centre "
+   }
+  },
+  {
+   "t": 4083,
+   "type": "token",
+   "data": {
+    "text": "distance "
+   }
+  },
+  {
+   "t": 4141,
+   "type": "token",
+   "data": {
+    "text": "[1]"
+   }
+  },
+  {
+   "t": 4300,
+   "type": "trace",
+   "data": {
+    "trace_id": "dev-sample",
+    "mode": "dev",
+    "model_id": "Claude Haiku 5.5",
+    "chunks": [
+     {
+      "rank": 1,
+      "doc_id": "ntrs-sample",
+      "doc_title": "NASA TM-X (sample)",
+      "score": 0.74,
+      "text": "Figure 7. Lubrication pump shaft and gears after 150-hour endurance run."
+     }
+    ],
+    "usage": {
+     "input_tokens": 3120,
+     "output_tokens": 210
+    },
+    "latency_ms": {
+     "retrieval": 940,
+     "generation": 3000
+    },
+    "cost_eur": 0.0011,
+    "notes": [
+     "development sample, not a real session"
+    ]
+   }
+  },
+  {
+   "t": 4350,
+   "type": "done",
+   "data": {}
+  }
+ ]
+}

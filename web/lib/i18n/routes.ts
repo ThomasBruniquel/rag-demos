@@ -8,7 +8,8 @@ import { locales, type Locale } from "./config";
  */
 export const routes = {
   home: { fr: "", en: "" },
-  demos: { fr: "demos", en: "demos" },
+  demos: { fr: "realisations", en: "projects" },
+  skills: { fr: "competences", en: "skills" },
   methods: { fr: "methodes", en: "methods" },
   whatIsRag: { fr: "qu-est-ce-qu-un-rag", en: "what-is-rag" },
   services: { fr: "offres", en: "services" },
@@ -22,7 +23,7 @@ export const routes = {
 
 export type RouteId = keyof typeof routes;
 
-/** Pages that take a slug after their segment (demo and article pages). */
+/** Pages that take a slug after their segment (project, method and article pages). */
 const pagesWithSlug: RouteId[] = ["demos", "methods", "articles"];
 
 /** Demo slugs are translated: { "02": { fr: "revue-de-contrats", en: "contract-review" } }. */

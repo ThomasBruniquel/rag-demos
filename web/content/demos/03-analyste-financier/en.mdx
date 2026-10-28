@@ -1,7 +1,7 @@
 ---
 title: Financial Analyst
 tagline: Accurate figures from annual reports packed with tables.
-problem: "Analysts, auditors and finance teams spend hours hunting for a figure in 300-page reports, then comparing it across years or companies. A standard assistant chops tables into pieces and reads the wrong row; here, a wrong figure is not an option."
+problem: "For analysts, auditors and finance teams who spend hours hunting for a figure in 300-page reports, then comparing it across years or companies. A standard assistant chops tables into pieces and reads the wrong row; here, a wrong figure is not an option."
 corpus:
   name: 10-K annual reports from FinanceBench (open subset)
   size: "~50 reports, ~10,000 pages, with reference questions and answers"
@@ -54,11 +54,11 @@ mission:
     - An ingestion pipeline for new reports
 limits:
   - It gives no investment advice.
-  - The demo reports are US filings (10-K format), in English.
+  - The reports are US filings (10-K format), in English.
   - Documents without a usable table of contents fall back to standard search.
 seo:
   title: RAG over financial PDF reports with tables
-  description: "Demo: find and compare figures in 300-page annual reports, with retrieval guided by the table of contents (STAIR method, IBM Research) and verified calculations."
+  description: "Project: find and compare figures in 300-page annual reports, with retrieval guided by the table of contents (STAIR method, IBM Research) and verified calculations."
 ---
 
-The demo compares approaches honestly: three PDF extractors, with and without structure-based navigation. Tables stay whole, the answer cites the section, and calculations are done by code, not by the model.
+The project compares approaches honestly: three PDF extractors, with and without structure-based navigation. Tables stay whole, the answer cites the section, and calculations are done by code, not by the model.

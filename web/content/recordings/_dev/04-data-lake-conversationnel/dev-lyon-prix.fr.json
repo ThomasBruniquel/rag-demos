@@ -1,0 +1,539 @@
+{
+ "version": 1,
+ "demo": "04",
+ "locale": "fr",
+ "question_id": "dev-lyon-prix",
+ "question": "Prix médian au m² des appartements à Lyon en 2024, par arrondissement ?",
+ "variant": null,
+ "recorded_at": "2026-10-28T10:00:00Z",
+ "stack": {
+  "models": [
+   "Claude Sonnet 5.5"
+  ],
+  "cloud": [
+   "AWS"
+  ],
+  "framework": [],
+  "vector_store": [
+   "S3 Vectors"
+  ]
+ },
+ "duration_ms": 6150,
+ "cost_eur": 0.0042,
+ "events": [
+  {
+   "t": 0,
+   "type": "status",
+   "data": {
+    "step": "retrieving"
+   }
+  },
+  {
+   "t": 700,
+   "type": "status",
+   "data": {
+    "step": "generating",
+    "candidates": 3
+   }
+  },
+  {
+   "t": 1600,
+   "type": "status",
+   "data": {
+    "step": "candidate",
+    "index": 1
+   }
+  },
+  {
+   "t": 2100,
+   "type": "status",
+   "data": {
+    "step": "candidate",
+    "index": 2
+   }
+  },
+  {
+   "t": 2500,
+   "type": "status",
+   "data": {
+    "step": "candidate",
+    "index": 3
+   }
+  },
+  {
+   "t": 2900,
+   "type": "status",
+   "data": {
+    "step": "selecting"
+   }
+  },
+  {
+   "t": 3300,
+   "type": "artifact",
+   "data": {
+    "kind": "sql",
+    "dialect": "athena",
+    "sql": "SELECT arrondissement, approx_percentile(prix_m2, 0.5) AS prix_median_m2\nFROM dvf.mutations_appartements\nWHERE commune = 'Lyon' AND annee = 2024\nGROUP BY arrondissement\nORDER BY arrondissement",
+    "bytes_scanned": 18400000,
+    "assumptions": [
+     "« appartement » = type_local 'Appartement'"
+    ]
+   }
+  },
+  {
+   "t": 3350,
+   "type": "artifact",
+   "data": {
+    "kind": "table",
+    "columns": [
+     "arrondissement",
+     "prix_median_m2"
+    ],
+    "types": [
+     "varchar",
+     "double"
+    ],
+    "rows": [
+     [
+      "Lyon 1er",
+      5480
+     ],
+     [
+      "Lyon 2e",
+      5910
+     ],
+     [
+      "Lyon 3e",
+      4620
+     ],
+     [
+      "Lyon 4e",
+      5300
+     ],
+     [
+      "Lyon 5e",
+      4390
+     ],
+     [
+      "Lyon 6e",
+      6120
+     ],
+     [
+      "Lyon 7e",
+      4710
+     ],
+     [
+      "Lyon 8e",
+      3880
+     ],
+     [
+      "Lyon 9e",
+      3950
+     ]
+    ],
+    "row_count": 9,
+    "truncated": false
+   }
+  },
+  {
+   "t": 3400,
+   "type": "artifact",
+   "data": {
+    "kind": "chart",
+    "type": "bar",
+    "x": "arrondissement",
+    "y": [
+     "prix_median_m2"
+    ],
+    "points": [
+     [
+      "Lyon 1er",
+      5480
+     ],
+     [
+      "Lyon 2e",
+      5910
+     ],
+     [
+      "Lyon 3e",
+      4620
+     ],
+     [
+      "Lyon 4e",
+      5300
+     ],
+     [
+      "Lyon 5e",
+      4390
+     ],
+     [
+      "Lyon 6e",
+      6120
+     ],
+     [
+      "Lyon 7e",
+      4710
+     ],
+     [
+      "Lyon 8e",
+      3880
+     ],
+     [
+      "Lyon 9e",
+      3950
+     ]
+    ]
+   }
+  },
+  {
+   "t": 3500,
+   "type": "status",
+   "data": {
+    "step": "writing"
+   }
+  },
+  {
+   "t": 3700,
+   "type": "token",
+   "data": {
+    "text": "En "
+   }
+  },
+  {
+   "t": 3751,
+   "type": "token",
+   "data": {
+    "text": "2024, "
+   }
+  },
+  {
+   "t": 3802,
+   "type": "token",
+   "data": {
+    "text": "le "
+   }
+  },
+  {
+   "t": 3853,
+   "type": "token",
+   "data": {
+    "text": "prix "
+   }
+  },
+  {
+   "t": 3904,
+   "type": "token",
+   "data": {
+    "text": "médian "
+   }
+  },
+  {
+   "t": 3956,
+   "type": "token",
+   "data": {
+    "text": "des "
+   }
+  },
+  {
+   "t": 4007,
+   "type": "token",
+   "data": {
+    "text": "appartements "
+   }
+  },
+  {
+   "t": 4058,
+   "type": "token",
+   "data": {
+    "text": "à "
+   }
+  },
+  {
+   "t": 4109,
+   "type": "token",
+   "data": {
+    "text": "Lyon "
+   }
+  },
+  {
+   "t": 4160,
+   "type": "token",
+   "data": {
+    "text": "va "
+   }
+  },
+  {
+   "t": 4211,
+   "type": "token",
+   "data": {
+    "text": "de "
+   }
+  },
+  {
+   "t": 4262,
+   "type": "token",
+   "data": {
+    "text": "3 "
+   }
+  },
+  {
+   "t": 4313,
+   "type": "token",
+   "data": {
+    "text": "880 "
+   }
+  },
+  {
+   "t": 4364,
+   "type": "token",
+   "data": {
+    "text": "€/m² "
+   }
+  },
+  {
+   "t": 4416,
+   "type": "token",
+   "data": {
+    "text": "(8e) "
+   }
+  },
+  {
+   "t": 4467,
+   "type": "token",
+   "data": {
+    "text": "à "
+   }
+  },
+  {
+   "t": 4518,
+   "type": "token",
+   "data": {
+    "text": "6 "
+   }
+  },
+  {
+   "t": 4569,
+   "type": "token",
+   "data": {
+    "text": "120 "
+   }
+  },
+  {
+   "t": 4620,
+   "type": "token",
+   "data": {
+    "text": "€/m² "
+   }
+  },
+  {
+   "t": 4671,
+   "type": "token",
+   "data": {
+    "text": "(6e). "
+   }
+  },
+  {
+   "t": 4722,
+   "type": "token",
+   "data": {
+    "text": "Le "
+   }
+  },
+  {
+   "t": 4773,
+   "type": "token",
+   "data": {
+    "text": "2e "
+   }
+  },
+  {
+   "t": 4824,
+   "type": "token",
+   "data": {
+    "text": "et "
+   }
+  },
+  {
+   "t": 4876,
+   "type": "token",
+   "data": {
+    "text": "le "
+   }
+  },
+  {
+   "t": 4927,
+   "type": "token",
+   "data": {
+    "text": "6e "
+   }
+  },
+  {
+   "t": 4978,
+   "type": "token",
+   "data": {
+    "text": "arrondissement "
+   }
+  },
+  {
+   "t": 5029,
+   "type": "token",
+   "data": {
+    "text": "sont "
+   }
+  },
+  {
+   "t": 5080,
+   "type": "token",
+   "data": {
+    "text": "les "
+   }
+  },
+  {
+   "t": 5131,
+   "type": "token",
+   "data": {
+    "text": "plus "
+   }
+  },
+  {
+   "t": 5182,
+   "type": "token",
+   "data": {
+    "text": "chers "
+   }
+  },
+  {
+   "t": 5233,
+   "type": "token",
+   "data": {
+    "text": "; "
+   }
+  },
+  {
+   "t": 5284,
+   "type": "token",
+   "data": {
+    "text": "le "
+   }
+  },
+  {
+   "t": 5336,
+   "type": "token",
+   "data": {
+    "text": "8e "
+   }
+  },
+  {
+   "t": 5387,
+   "type": "token",
+   "data": {
+    "text": "et "
+   }
+  },
+  {
+   "t": 5438,
+   "type": "token",
+   "data": {
+    "text": "le "
+   }
+  },
+  {
+   "t": 5489,
+   "type": "token",
+   "data": {
+    "text": "9e "
+   }
+  },
+  {
+   "t": 5540,
+   "type": "token",
+   "data": {
+    "text": "les "
+   }
+  },
+  {
+   "t": 5591,
+   "type": "token",
+   "data": {
+    "text": "plus "
+   }
+  },
+  {
+   "t": 5642,
+   "type": "token",
+   "data": {
+    "text": "abordables. "
+   }
+  },
+  {
+   "t": 5693,
+   "type": "token",
+   "data": {
+    "text": "(Chiffres "
+   }
+  },
+  {
+   "t": 5744,
+   "type": "token",
+   "data": {
+    "text": "inventés "
+   }
+  },
+  {
+   "t": 5796,
+   "type": "token",
+   "data": {
+    "text": ": "
+   }
+  },
+  {
+   "t": 5847,
+   "type": "token",
+   "data": {
+    "text": "exemple "
+   }
+  },
+  {
+   "t": 5898,
+   "type": "token",
+   "data": {
+    "text": "de "
+   }
+  },
+  {
+   "t": 5949,
+   "type": "token",
+   "data": {
+    "text": "développement.)"
+   }
+  },
+  {
+   "t": 6100,
+   "type": "trace",
+   "data": {
+    "trace_id": "dev-sample",
+    "mode": "dev",
+    "model_id": "Claude Sonnet 5.5",
+    "chunks": [],
+    "usage": {
+     "input_tokens": 3120,
+     "output_tokens": 210
+    },
+    "latency_ms": {
+     "sql": 2900,
+     "athena": 400,
+     "answer": 2600
+    },
+    "cost_eur": 0.0042,
+    "notes": [
+     "development sample, not a real session"
+    ]
+   }
+  },
+  {
+   "t": 6150,
+   "type": "done",
+   "data": {}
+  }
+ ]
+}

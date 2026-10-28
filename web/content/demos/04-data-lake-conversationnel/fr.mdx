@@ -1,15 +1,15 @@
 ---
 title: Data lake conversationnel
 tagline: Poser une question en français à 20 millions de lignes, et voir la requête SQL qui répond.
-problem: "Les données sont là, dans le data lake, mais chaque question métier passe par l'équipe data et attend son tour. Les directions veulent interroger les chiffres elles-mêmes, sans écrire de SQL, et sans risquer qu'un chiffre faux circule en réunion."
+problem: "Pour une entreprise dont les données sont déjà dans un data lake, mais où chaque question métier passe par l'équipe data et attend son tour. Les directions veulent interroger les chiffres elles-mêmes, sans écrire de SQL, et sans risquer qu'un chiffre faux circule en réunion."
 corpus:
   name: Demandes de valeurs foncières (DVF), data.gouv.fr
-  size: "~20 millions de transactions immobilières sur 5 ans"
+  size: "20,4 millions de lignes, soit 7,3 millions de ventes immobilières de 2021 à 2025"
   licence: Licence Ouverte 2.0
 examples:
   - Prix médian au m² des appartements à Lyon en 2024, par arrondissement ?
   - Combien de maisons vendues en Gironde en 2023, et à quel prix moyen ?
-  - Quelles communes de l'Ain ont connu la plus forte hausse des prix depuis 2020 ?
+  - Quelles communes de l'Ain ont connu la plus forte hausse des prix au m² depuis 2021 ?
   - "Evolution of the number of sales in Paris per year?"
 architecture:
   alt: "Architecture : la question déclenche une recherche des descriptions de tables et d'exemples validés, la génération de plusieurs requêtes SQL candidates, leur validation et leur exécution par Athena en lecture seule, puis le choix de la meilleure et la synthèse avec tableau et graphique."
@@ -19,35 +19,39 @@ architecture:
     - title: RAG sur le catalogue de données
       why: Le modèle ne voit que les tables, colonnes et exemples utiles à la question, pas tout le schéma.
     - title: Garde-fous SQL
-      why: "Rôle en lecture seule (Lake Formation), validation syntaxique, plafond de données lues par le workgroup Athena, deux corrections au plus."
+      why: "Le rôle de l'API ne peut que lire quatre tables (Lake Formation), chaque requête est contrôlée avant exécution, le workgroup Athena arrête toute requête qui lirait plus de 1 Go, deux corrections au plus."
     - title: Parquet partitionné par année et département
-      why: Une question typique lit quelques mégaoctets au lieu de plusieurs gigaoctets, ce qui garde le coût d'Athena autour d'un demi-centime.
+      why: Une question sur un département et une année lit quelques mégaoctets ; Athena coûte alors moins d'un dixième de centime par question.
+    - title: Une ligne par vente, préparée par le pipeline
+      why: "Dans les fichiers DVF, une vente occupe plusieurs lignes et un même bien peut être répété : compter les lignes surestime les ventes de près de trois fois. Le pipeline règle ce point une fois pour toutes, au lieu de laisser le modèle le réinventer à chaque question."
   discarded:
     - title: Donner tout le schéma au modèle
       why: Plus cher, et le modèle confond des colonnes au nom proche.
     - title: Une base de données toujours allumée
       why: Inutile pour un usage ponctuel ; Athena facture à la requête.
+    - title: Un Glue Crawler
+      why: "Le schéma est connu, et un crawler écraserait les descriptions écrites à la main. Les tables sont déclarées dans le code, et Athena calcule lui-même les partitions."
 pipeline:
-  alt: "Pipeline : CSV bruts DVF sur S3, nettoyage et typage par Glue ETL, écriture en Parquet partitionné, catalogage par Glue Crawler, interrogation par Athena ; les descriptions de tables et les exemples validés sont indexés dans S3 Vectors."
+  alt: "Pipeline : CSV bruts DVF copiés sur S3, nettoyage, typage et regroupement par vente par Glue ETL, écriture en Parquet partitionné, tables déclarées dans le Glue Data Catalog avec projection de partitions, contrôle des données par Athena ; les descriptions de tables, le glossaire et les exemples validés sont indexés dans S3 Vectors."
   facts:
     - label: Volume
-      value: "~20 millions de lignes"
+      value: "20,4 millions de lignes, 7,3 millions de ventes"
     - label: Durée d'ingestion
       value: "~15 min (Glue)"
     - label: Coût d'ingestion
-      value: "< 2 €"
+      value: "≈ 0,15 € (Glue Flex)"
     - label: Coût Athena par question
-      value: "~0,5 c€"
+      value: "< 0,1 c€"
     - label: Stockage Parquet
-      value: "< 0,10 € par mois"
+      value: "930 Mo, < 0,05 € par mois"
 evaluation:
   measured: false
-  caption: "~40 questions accompagnées de leur requête de référence ; on compare les résultats obtenus, pas le texte SQL."
-  columns: [Configuration, Résultat exact, Requêtes refusées, Données lues par question]
+  caption: "40 questions accompagnées de leur requête de référence, dont 4 auxquelles les données ne permettent pas de répondre ; on compare les résultats obtenus, pas le texte SQL."
+  columns: [Configuration, Résultat exact, Refus à tort, Coût par question]
   rows:
-    - ["Une requête, schéma complet", "61 %", "9 %", "120 Mo"]
-    - ["Une requête, catalogue ciblé", "72 %", "6 %", "95 Mo"]
-    - [Plusieurs candidates + sélection, "84 %", "3 %", "310 Mo"]
+    - ["Une requête, schéma complet", "à mesurer", "à mesurer", "à mesurer"]
+    - ["Une requête, catalogue ciblé", "à mesurer", "à mesurer", "à mesurer"]
+    - [Trois candidates + sélection, "à mesurer", "à mesurer", "à mesurer"]
 mission:
   duration: "POC en 2 semaines, mise en production en 4 à 6 semaines"
   scope:
@@ -61,7 +65,7 @@ limits:
   - Les données DVF excluent l'Alsace, la Moselle et Mayotte.
 seo:
   title: Text-to-SQL sur data lake AWS (Athena, Glue)
-  description: "Démo : interroger 20 millions de transactions immobilières en langage naturel. Plusieurs requêtes SQL candidates, garde-fous, requête affichée. Pipeline Glue, Parquet, Athena."
+  description: "Réalisation : interroger 20 millions de transactions immobilières en langage naturel. Plusieurs requêtes SQL candidates, garde-fous, requête affichée. Pipeline Glue, Parquet, Athena."
 ---
 
-C'est la démo la plus « data engineering » du site : la qualité des réponses dépend d'abord du pipeline (Parquet partitionné, catalogue documenté, droits en lecture seule), puis seulement du modèle qui écrit le SQL.
+C'est la réalisation la plus « data engineering » du site : la qualité des réponses dépend d'abord du pipeline (Parquet partitionné, catalogue documenté, droits en lecture seule), puis seulement du modèle qui écrit le SQL.

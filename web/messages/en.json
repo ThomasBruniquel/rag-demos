@@ -2,7 +2,7 @@
   "meta": {
     "titleTemplate": "%s · {brand}",
     "defaultTitle": "{brand} · AI assistants for your documents (RAG)",
-    "description": "AI assistants that answer from your documents and show their sources: nine live demos, each with its architecture, measured quality and cost."
+    "description": "AI assistants that answer from your documents and show their sources: nine projects to watch in action, each with its architecture, measured quality and cost."
   },
   "a11y": {
     "skipToContent": "Skip to content",
@@ -12,14 +12,15 @@
     "homeLink": "{brand}, back to home page"
   },
   "nav": {
-    "demos": "Demos",
+    "demos": "Projects",
     "methods": "Methods",
     "whatIsRag": "What is RAG?",
     "services": "Services",
     "dataEngineering": "Data engineering",
     "articles": "Articles",
     "about": "About",
-    "contact": "Contact"
+    "contact": "Contact",
+    "skills": "Skills"
   },
   "theme": {
     "toDark": "Switch to dark theme",
@@ -38,12 +39,12 @@
     "privacy": "Privacy",
     "commitmentsLabel": "Commitments",
     "commitments": [
-      "Quality measured on every demo",
-      "Cost shown for every question",
+      "Quality measured on every project",
+      "Measured cost for every question",
       "Public source code on GitHub",
-      "Your documents deleted within an hour"
+      "Real sessions, never edited"
     ],
-    "rights": "© {year} {owner}. Demo code released under an open-source licence."
+    "rights": "© {year} {owner}. Project code released under an open-source licence."
   },
   "marks": {
     "toMeasure": "Indicative values pending the evaluation bench: they will be replaced by real measurements."
@@ -53,7 +54,7 @@
     "titleTop": "State-of-the-art RAG,",
     "titleBottom": "to query your documents intelligently, within your constraints.",
     "lead": "RAG connects an AI model to your own documents: it finds the relevant passages, then writes an answer that cites them. Nothing made up, everything checkable.",
-    "primaryCta": "See the demos",
+    "primaryCta": "See the projects",
     "secondaryCta": "Discuss a project",
     "stepsLabel": "How it works",
     "steps": [
@@ -71,10 +72,10 @@
       }
     ],
     "demos": {
-      "eyebrow": "9 demos",
-      "title": "Try it on real cases",
-      "lead": "Nine real-world scenarios, each with its method, architecture, measured quality and cost. Built mostly on AWS (Bedrock, S3 Vectors), with Mistral or OpenAI where the case calls for it.",
-      "all": "All demos, with filters"
+      "eyebrow": "9 projects",
+      "title": "Watch them in action",
+      "lead": "Nine projects built end to end on public data, each with its method, its stack, its measured quality and its cost. The sessions you see are real: recorded on the running system, then replayed exactly as they happened.",
+      "all": "All projects, with filters"
     },
     "process": {
       "eyebrow": "How projects run",
@@ -107,32 +108,31 @@
     }
   },
   "catalog": {
-    "eyebrow": "9 demos · 9 client scenarios",
-    "filtersLabel": "Filter the demos",
+    "eyebrow": "9 projects · 6 method families",
+    "filtersLabel": "Filter the projects",
     "docTypes": "Kind of documents",
     "volume": "Volume",
     "constraints": "Constraint",
     "sectors": "Sector",
     "any": "Any",
     "reset": "Reset",
-    "countOne": "1 demo",
-    "countMany": "{n} demos",
-    "empty": "No demo matches all of these criteria. Remove a filter to widen the search.",
+    "countOne": "1 project",
+    "countMany": "{n} projects",
+    "empty": "No project matches all these criteria. Remove a filter to widen the search.",
     "status": {
-      "soon": "Coming soon",
-      "live": "Live"
+      "soon": "In progress",
+      "live": "Completed"
     },
-    "method": "Key method"
+    "method": "Key method",
+    "keywords": "Technology",
+    "skillsLink": "See every skill, keyword by keyword"
   },
   "demo": {
-    "back": "All demos",
-    "number": "Demo {id}",
-    "problem": "The problem",
-    "try": "Try it",
+    "back": "All projects",
+    "number": "Project {id}",
+    "problem": "The need",
+    "try": "In action",
     "examples": "Sample questions",
-    "playerSoon": "The interactive player arrives in the next iteration of the site. Here are the questions you'll be able to ask:",
-    "behind": "Behind the scenes",
-    "behindIntro": "For every answer: the passages retrieved and their scores, the models used, the latency and the exact cost of the question.",
     "built": "How it's built",
     "choices": "Technical choices, and why",
     "discarded": "What was ruled out",
@@ -141,19 +141,23 @@
     "project": "For your project",
     "duration": "Typical duration",
     "scope": "Usual scope",
-    "limits": "What this demo doesn't do",
+    "limits": "What this project does not do",
     "contactCta": "Discuss a similar project",
     "source": "Source code",
-    "sourceCta": "See the demo's code on GitHub",
+    "sourceCta": "See the code on GitHub",
     "corpus": "Corpus",
     "licence": "Licence",
-    "aws": "AWS services",
-    "vectorStore": "Vector store",
     "methodCard": "Key method",
     "seeMethod": "See the method's profile",
     "diagramPending": "Diagram being drawn.",
     "estimate": "estimate",
-    "facts": "In numbers"
+    "facts": "In numbers",
+    "personal": "Personal project — public data — open source",
+    "personalNote": "Built end to end on public data to show the method: this is not client work.",
+    "video": "Project video (no sound)",
+    "stack": "Tech stack",
+    "transcripts": "Read the recorded sessions as text",
+    "transcriptMeta": "Recorded on {date}"
   },
   "methods": {
     "eyebrow": "One character per method",
@@ -173,13 +177,13 @@
     "gaugeValue": "{label}: {value} out of 5",
     "choose": "When to choose it",
     "avoid": "When to avoid it",
-    "adaptation": "What the demo does",
+    "adaptation": "What the project does",
     "duel": "Duel against classic RAG",
     "criterion": "Criterion",
     "classic": "Classic RAG",
     "advantage": "Edge",
     "tie": "Tie",
-    "tryDemo": "Try the demo",
+    "tryDemo": "See the project",
     "allMethods": "All methods",
     "familiesTitle": "Six families of methods",
     "familyIntro": {
@@ -193,12 +197,13 @@
   },
   "pages": {
     "demos": {
-      "title": "Demos",
-      "lead": "Nine real-world scenarios, from an internal knowledge base to a 20-million-row data lake. Every demo runs live and comes with its architecture, data pipeline, evaluation results and running costs."
+      "title": "Projects",
+      "lead": "Projects built end to end on public data — open source.",
+      "description": "Nine RAG projects built end to end on public data: real recorded sessions, architecture, data pipeline, measured quality and cost. LangChain, LlamaIndex, Haystack, AWS, Azure, GCP."
     },
     "methods": {
       "title": "The methods",
-      "lead": "There is no single RAG, but families of methods, each suited to a problem. Every demo stars one of them, as a character, up against classic RAG."
+      "lead": "There is no single RAG, but families of methods, each suited to a problem. Every project stars one of them, as a character, up against classic RAG."
     },
     "whatIsRag": {
       "title": "What is RAG?",
@@ -214,7 +219,7 @@
     },
     "articles": {
       "title": "Articles",
-      "lead": "Technical write-ups for each demo: what worked, what was ruled out, and why."
+      "lead": "Technical write-ups for each project: what worked, what was ruled out, and why."
     },
     "about": {
       "title": "About",
@@ -231,11 +236,101 @@
     "privacy": {
       "title": "Privacy",
       "lead": "What data this site processes, why, and for how long."
+    },
+    "skills": {
+      "title": "Skills",
+      "lead": "Each keyword points to the projects that demonstrate it: clouds, frameworks, models, vector stores, integrations and compliance."
     }
   },
   "notFound": {
     "title": "Page not found",
     "body": "This address doesn't match any page. It may have moved.",
     "back": "Back to home page"
+  },
+  "skills": {
+    "keyword": "Keyword",
+    "projects": "Projects",
+    "catalogue": "Filter the catalogue"
+  },
+  "player": {
+    "mode": "Mode",
+    "recorded": "Recorded sessions",
+    "live": "Live",
+    "liveIntro": "Connected to the project's API, started for this meeting. Ask your own questions.",
+    "liveFooter": "Live answer, computed just now.",
+    "chooseQuestion": "Pick a question",
+    "pickPrompt": "Pick a question above: the real recorded session replays here.",
+    "variant": "Variant",
+    "speed": "Speed",
+    "speedInstant": "Instant",
+    "replay": "Replay",
+    "pending": "Sessions being recorded",
+    "pendingText": "This project's sessions have not been recorded yet. These are the questions that will be replayed here:",
+    "recordedLine": "Real session recorded on {date} — {models} — cost {cost}",
+    "modelOne": "model {names}",
+    "modelMany": "models {names}",
+    "devSample": "Development sample: this is not a real session. This file is never published.",
+    "liveCta": "See it live in a meeting",
+    "liveCtaText": "On your documents or on public ones, over a video call.",
+    "answer": "Answer",
+    "sources": "Sources",
+    "openSource": "Open the source",
+    "score": "score {score}",
+    "citeLabel": "See source {marker}",
+    "behind": "Behind the scenes",
+    "chunks": "Retrieved passages",
+    "rank": "Rank",
+    "document": "Document",
+    "scoreLabel": "Score",
+    "excerpt": "Excerpt",
+    "models": "Models",
+    "latency": "Latency",
+    "tokens": "Tokens",
+    "cost": "Cost of the question",
+    "notes": "Notes",
+    "tokenKinds": {
+      "input_tokens": "input",
+      "output_tokens": "output",
+      "cache_read_tokens": "read from cache",
+      "cache_write_tokens": "written to cache"
+    },
+    "ask": "Send",
+    "askPlaceholder": "Your question…",
+    "steps": {
+      "retrieving": "Searching the documents",
+      "searching": "Searching the documents",
+      "reranking": "Reranking the passages",
+      "reading_document": "Reading the document",
+      "generating": "Writing the answer",
+      "generatingCandidates": "Writing {n} candidate SQL queries",
+      "candidate": "Running a candidate query",
+      "selecting": "Choosing the best query",
+      "writing": "Writing the answer",
+      "verifying": "Checking the answer",
+      "waking": "Waking up the database (up to 15 seconds)…",
+      "default": "Working"
+    },
+    "errors": {
+      "quota_exceeded": "Question quota reached for today.",
+      "budget_paused": "Service paused: today's cost ceiling has been reached.",
+      "captcha_failed": "The bot check failed. Please reload the page.",
+      "invalid_captcha": "The bot check failed. Please reload the page.",
+      "invalid_session": "Session expired: please ask again.",
+      "network": "Could not reach the project's API.",
+      "internal": "Something went wrong while answering."
+    },
+    "artifacts": {
+      "sql": "SQL query",
+      "table": "Result",
+      "chart": "Chart",
+      "figure": "Cited figure",
+      "page": "Cited page",
+      "image": "Image",
+      "video": "Video passage",
+      "rows": "{n} rows",
+      "truncated": "First {shown} rows of {n}",
+      "scanned": "{mb} MB scanned",
+      "assumptions": "Assumptions made"
+    }
   }
 }

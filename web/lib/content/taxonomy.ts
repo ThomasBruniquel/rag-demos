@@ -61,4 +61,82 @@ export const sectors = {
 } as const satisfies Record<string, Labels>;
 export type Sector = keyof typeof sectors;
 
-export const keysOf = <T extends object>(o: T) => Object.keys(o) as [keyof T & string, ...(keyof T & string)[]];
+// --- Stack keywords (D-022): the badges shown on cards, project pages and the Skills page ---
+// Source of truth: the keyword matrix in docs/02-catalogue-rag.md. Each demo.yaml lists
+// keyword ids per category; labels are text only (no brand logos).
+
+export const stackCategories = {
+  cloud: { fr: "Cloud / exécution", en: "Cloud / runtime" },
+  framework: { fr: "Framework", en: "Framework" },
+  models: { fr: "Modèles", en: "Models" },
+  vectorStores: { fr: "Base vectorielle", en: "Vector store" },
+  integrations: { fr: "Intégrations", en: "Integrations" },
+  compliance: { fr: "Conformité", en: "Compliance" },
+} as const satisfies Record<string, Labels>;
+export type StackCategory = keyof typeof stackCategories;
+
+const same = (label: string): Labels => ({ fr: label, en: label });
+
+export const keywords = {
+  cloud: {
+    aws: same("AWS"),
+    azure: same("Azure"),
+    gcp: same("GCP"),
+    local: { fr: "Poste local (Docker, GPU)", en: "Local (Docker, GPU)" },
+    "on-premises": { fr: "Sur site", en: "On-premises" },
+  },
+  framework: {
+    langchain: same("LangChain"),
+    langgraph: same("LangGraph"),
+    llamaindex: same("LlamaIndex"),
+    haystack: same("Haystack"),
+    lightrag: same("LightRAG"),
+    "no-framework": { fr: "Sans framework (SDK natifs)", en: "No framework (native SDKs)" },
+  },
+  models: {
+    claude: same("Claude"),
+    gpt: same("GPT"),
+    mistral: same("Mistral"),
+    llama: same("Llama"),
+    gemini: same("Gemini"),
+    cohere: same("Cohere"),
+    granite: same("Granite"),
+    whisper: same("Whisper"),
+  },
+  vectorStores: {
+    "s3-vectors": same("S3 Vectors"),
+    weaviate: same("Weaviate"),
+    faiss: same("FAISS"),
+    pgvector: same("pgvector"),
+    qdrant: same("Qdrant"),
+    neo4j: same("Neo4j"),
+    "azure-ai-search": same("Azure AI Search"),
+  },
+  integrations: {
+    "web-pages": { fr: "Pages web publiques", en: "Public web pages" },
+    "pdf-upload": { fr: "Dépôt de PDF", en: "PDF upload" },
+    athena: same("Athena"),
+    glue: same("Glue"),
+    "lake-formation": same("Lake Formation"),
+    sharepoint: same("SharePoint / Microsoft 365"),
+    "google-drive": same("Google Drive"),
+  },
+  compliance: {
+    rgpd: { fr: "RGPD", en: "GDPR" },
+    "ai-act": same("AI Act"),
+    sovereignty: { fr: "Souveraineté", en: "Data sovereignty" },
+    "data-governance": { fr: "Gouvernance des données", en: "Data governance" },
+    guardrails: { fr: "Garde-fous, passage à un humain", en: "Guardrails, human handoff" },
+  },
+} as const satisfies Record<StackCategory, Record<string, Labels>>;
+
+export type Keyword = { [C in StackCategory]: keyof (typeof keywords)[C] & string }[StackCategory];
+
+/** Every keyword with its category, in display order. */
+export function allKeywords(): { id: Keyword; category: StackCategory; labels: Labels }[] {
+  return (Object.keys(keywords) as StackCategory[]).flatMap((category) =>
+    Object.entries(keywords[category]).map(([id, labels]) => ({ id: id as Keyword, category, labels: labels as Labels })),
+  );
+}
+
+export const keysOf =<T extends object>(o: T) => Object.keys(o) as [keyof T & string, ...(keyof T & string)[]];

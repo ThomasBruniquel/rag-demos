@@ -1,7 +1,7 @@
 ---
 title: Analyse d'incidents (GraphRAG)
 tagline: Les questions globales sur des milliers de rapports, comparées côte à côte avec un RAG classique.
-problem: "Un assureur, un service qualité ou une direction sécurité dispose de milliers de rapports d'incidents. Les questions utiles sont rarement « que dit ce rapport ? », mais plutôt « quels facteurs reviennent le plus ? » ou « quels incidents combinent tel équipement et tel défaut de maintenance ? ». Un RAG classique, qui ne lit que quelques extraits, ne sait pas y répondre."
+problem: "Pour un assureur, un service qualité ou une direction sécurité qui dispose de milliers de rapports d'incidents. Les questions utiles sont rarement « que dit ce rapport ? », mais plutôt « quels facteurs reviennent le plus ? » ou « quels incidents combinent tel équipement et tel défaut de maintenance ? ». Un RAG classique, qui ne lit que quelques extraits, ne sait pas y répondre."
 corpus:
   name: Base d'accidents aéronautiques du NTSB (National Transportation Safety Board)
   size: "~3 000 rapports : données structurées et récits d'enquête"
@@ -22,7 +22,7 @@ architecture:
     - title: Validation par les données structurées
       why: Les champs officiels du NTSB, interrogés par Athena, servent à contrôler les entités extraites par le modèle.
     - title: Trois variantes comparées
-      why: GraphRAG, LightRAG et RAPTOR ont des coûts et des forces différents ; la démo publie la comparaison.
+      why: GraphRAG, LightRAG et RAPTOR ont des coûts et des forces différents ; la réalisation publie la comparaison.
   discarded:
     - title: Neptune (base de graphe AWS)
       why: Coût fixe trop élevé pour le budget du site ; Neo4j AuraDB Free suffit pour 3 000 rapports.
@@ -61,7 +61,7 @@ limits:
   - Les questions factuelles simples ne gagnent rien au graphe.
 seo:
   title: GraphRAG contre RAG classique, côte à côte
-  description: "Démo GraphRAG sur 3 000 rapports d'accidents NTSB : questions globales et à plusieurs sauts, Neo4j, comparaison avec LightRAG, RAPTOR et un RAG classique."
+  description: "Réalisation GraphRAG sur 3 000 rapports d'accidents NTSB : questions globales et à plusieurs sauts, Neo4j, comparaison avec LightRAG, RAPTOR et un RAG classique."
 ---
 
-Le graphe n'est pas une fin en soi : il sert les questions de synthèse, et la démo montre aussi honnêtement où il n'apporte rien (les questions factuelles simples).
+Le graphe n'est pas une fin en soi : il sert les questions de synthèse, et la réalisation montre aussi honnêtement où il n'apporte rien (les questions factuelles simples).

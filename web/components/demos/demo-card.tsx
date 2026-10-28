@@ -1,8 +1,9 @@
 import Link from "next/link";
 import { Character } from "@/components/characters/character";
 import type { Family } from "@/lib/content/taxonomy";
+import { StackBadges, type StackGroup } from "./stack-badges";
 
-/** Everything a demo card needs; plain data so it can cross to the client. */
+/** Everything a project card needs; plain data so it can cross to the client. */
 export type DemoSummary = {
   id: string;
   href: string;
@@ -18,12 +19,30 @@ export type DemoSummary = {
   volume: string;
   constraints: string[];
   sectors: string[];
+  /** Keyword ids, for the catalogue filter. */
+  keywords: string[];
+  /** Badges shown on the card. */
+  stack: StackGroup[];
 };
 
-/** Card in the echic style: a 4:3 cover (here the method's character), then text. */
-export function DemoCard({ demo, eyebrow, compact = false }: { demo: DemoSummary; eyebrow: string; compact?: boolean }) {
+/**
+ * Card in the echic style: a 4:3 cover (the method's character), then text.
+ * The title link covers the whole card; the badges sit above it and lead to
+ * the Skills page (no link inside a link).
+ */
+export function DemoCard({
+  demo,
+  eyebrow,
+  stackLabel,
+  compact = false,
+}: {
+  demo: DemoSummary;
+  eyebrow: string;
+  stackLabel: string;
+  compact?: boolean;
+}) {
   return (
-    <Link href={demo.href} className="group flex h-full flex-col">
+    <article className="group relative flex h-full flex-col">
       <div
         className="relative flex aspect-[4/3] items-center justify-center overflow-hidden"
         style={{ background: `var(--fam-${demo.family}-soft)` }}
@@ -41,19 +60,25 @@ export function DemoCard({ demo, eyebrow, compact = false }: { demo: DemoSummary
         <p className="eyebrow mb-1.5 text-[10px]">
           {eyebrow} · {demo.familyLabel}
         </p>
-        <h3
-          className={`mb-1 font-bold group-hover:underline group-hover:decoration-gold group-hover:underline-offset-4 ${
-            compact ? "text-[15px] sm:text-lg" : "text-lg"
-          }`}
-        >
-          {demo.title}
+        <h3 className={`mb-1 font-bold ${compact ? "text-[15px] sm:text-lg" : "text-lg"}`}>
+          <Link
+            href={demo.href}
+            className="after:absolute after:inset-0 group-hover:underline group-hover:decoration-gold group-hover:underline-offset-4"
+          >
+            {demo.title}
+          </Link>
         </h3>
         <p className="mb-3 text-sm text-muted">{demo.tagline}</p>
+        {demo.stack.length ? (
+          <div className={`mb-3 ${compact ? "hidden sm:block" : ""}`}>
+            <StackBadges groups={demo.stack} label={stackLabel} />
+          </div>
+        ) : null}
         <p className="mt-auto flex flex-wrap items-center gap-x-3 gap-y-1.5 text-xs">
           <span className={`tag ${demo.live ? "text-[var(--fam-verification)]" : "text-gold-ink"}`}>{demo.statusLabel}</span>
           <span className="font-semibold text-muted">{demo.methodName}</span>
         </p>
       </div>
-    </Link>
+    </article>
   );
 }

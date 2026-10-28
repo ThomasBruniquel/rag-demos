@@ -7,6 +7,11 @@ docTypes: [media]
 volume: small
 constraints: [time, budget]
 sectors: [public, smb]
-aws: [Transcribe, Step Functions, S3 events, DynamoDB, Bedrock, S3 Vectors]
-vectorStore: S3 Vectors
+stack:
+  cloud: [gcp, local]
+  framework: [haystack]
+  models: [gemini, whisper]
+  vectorStores: [pgvector]
+  integrations: [google-drive]
+  compliance: [rgpd]
 sourcePath: demos/09-reunions-videos

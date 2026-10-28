@@ -32,6 +32,20 @@ export async function ContactPage() {
           </div>
 
           <div className="space-y-12">
+            {/* D-020: projects are shown live only by appointment. */}
+            <div id="live-demo" className="scroll-mt-28 border-l-4 border-gold bg-sunken px-6 py-5">
+              <h2 className="mb-2 text-[20px] font-bold">{c.live.title}</h2>
+              <p className="mb-2 text-[15px] leading-relaxed">{c.live.text}</p>
+              <p className="mb-4 text-sm text-muted">{c.live.note}</p>
+              <a
+                href={isPlaceholder(links.booking) ? `mailto:${owner.email}?subject=${encodeURIComponent(c.live.subject)}` : links.booking}
+                className="btn-primary"
+                {...(isPlaceholder(links.booking) ? {} : { rel: "noopener noreferrer" })}
+              >
+                {isPlaceholder(links.booking) ? c.live.email : c.live.booking}
+              </a>
+            </div>
+
             <div>
               <h2 className="mb-1 text-[22px] font-bold">{owner.name}</h2>
               <p className="mb-5 text-sm text-muted">{owner.jobTitle[locale]}</p>

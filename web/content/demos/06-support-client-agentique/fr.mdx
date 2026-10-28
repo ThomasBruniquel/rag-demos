@@ -1,11 +1,11 @@
 ---
 title: Support client agentique
 tagline: Un assistant qui consulte les commandes, refuse de deviner et passe la main à un humain.
-problem: "Une startup SaaS ou un e-commerçant veut répondre aux clients jour et nuit. Mais un chatbot qui invente une politique de remboursement fait plus de dégâts qu'il n'en évite. Il faut un assistant qui agit (suivre une commande), s'arrête quand il ne sait pas, et transmet proprement au support."
+problem: "Pour une startup SaaS ou un e-commerçant qui veut répondre aux clients jour et nuit. Un chatbot qui invente une politique de remboursement fait plus de dégâts qu'il n'en évite. Il faut un assistant qui agit (suivre une commande), s'arrête quand il ne sait pas, et transmet proprement au support."
 corpus:
   name: Entreprise fictive « Lumen Café », clairement signalée comme telle
   size: "~120 articles d'aide, un catalogue de 300 produits, des commandes et des tickets générés pour l'occasion"
-  licence: Données fictives créées pour la démo
+  licence: Données fictives créées pour la réalisation
 examples:
   - Où en est ma commande LC-10482 ?
   - Puis-je retourner un moulin à café ouvert ?
@@ -37,7 +37,7 @@ pipeline:
     - label: Réindexation d'un article modifié
       value: "Quelques secondes"
     - label: Quota de questions
-      value: Plus bas que les autres démos (plusieurs appels par question)
+      value: Plus bas que les autres réalisations (plusieurs appels par question)
 evaluation:
   measured: false
   caption: Scénarios de conversation écrits à l'avance ; chaque scénario précise l'action attendue.
@@ -58,7 +58,7 @@ limits:
   - Ne traite pas les paiements ni les remboursements eux-mêmes ; il crée un ticket.
 seo:
   title: Agent IA de support client avec escalade vers un humain
-  description: "Démo : un agent RAG (LangGraph, Bedrock) qui consulte commandes et catalogue, refuse de deviner et transmet au support humain. Scénarios de test et coûts publiés."
+  description: "Réalisation : un agent RAG (LangGraph, Bedrock) qui consulte commandes et catalogue, refuse de deviner et transmet au support humain. Scénarios de test et coûts publiés."
 ---
 
 L'enjeu n'est pas de répondre à tout, mais de savoir quand ne pas répondre. L'agent est construit comme un graphe explicite, testé sur des scénarios, avec un passage à l'humain prévu dès le départ.

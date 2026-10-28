@@ -1,0 +1,332 @@
+{
+ "version": 1,
+ "demo": "07",
+ "locale": "fr",
+ "question_id": "dev-approche-graphrag",
+ "question": "Quels facteurs reviennent le plus dans les accidents en phase d'approche ?",
+ "variant": "graphrag",
+ "recorded_at": "2026-10-28T10:00:00Z",
+ "stack": {
+  "models": [
+   "Llama 3.3 70B"
+  ],
+  "cloud": [
+   "local"
+  ],
+  "framework": [
+   "LlamaIndex"
+  ],
+  "vector_store": [
+   "Neo4j"
+  ]
+ },
+ "duration_ms": 5750,
+ "cost_eur": 0.0,
+ "events": [
+  {
+   "t": 0,
+   "type": "status",
+   "data": {
+    "step": "retrieving"
+   }
+  },
+  {
+   "t": 1500,
+   "type": "citation",
+   "data": {
+    "id": 1,
+    "marker": "[1]",
+    "doc_title": "Communauté « approche » / community summary (sample)",
+    "location": null,
+    "snippet": "Sample excerpt.",
+    "url": null,
+    "score": 0.69
+   }
+  },
+  {
+   "t": 1900,
+   "type": "status",
+   "data": {
+    "step": "generating"
+   }
+  },
+  {
+   "t": 2200,
+   "type": "token",
+   "data": {
+    "text": "Sur "
+   }
+  },
+  {
+   "t": 2294,
+   "type": "token",
+   "data": {
+    "text": "l'ensemble "
+   }
+  },
+  {
+   "t": 2389,
+   "type": "token",
+   "data": {
+    "text": "du "
+   }
+  },
+  {
+   "t": 2483,
+   "type": "token",
+   "data": {
+    "text": "graphe, "
+   }
+  },
+  {
+   "t": 2578,
+   "type": "token",
+   "data": {
+    "text": "trois "
+   }
+  },
+  {
+   "t": 2672,
+   "type": "token",
+   "data": {
+    "text": "facteurs "
+   }
+  },
+  {
+   "t": 2767,
+   "type": "token",
+   "data": {
+    "text": "dominent "
+   }
+  },
+  {
+   "t": 2861,
+   "type": "token",
+   "data": {
+    "text": "les "
+   }
+  },
+  {
+   "t": 2956,
+   "type": "token",
+   "data": {
+    "text": "accidents "
+   }
+  },
+  {
+   "t": 3050,
+   "type": "token",
+   "data": {
+    "text": "en "
+   }
+  },
+  {
+   "t": 3144,
+   "type": "token",
+   "data": {
+    "text": "approche "
+   }
+  },
+  {
+   "t": 3239,
+   "type": "token",
+   "data": {
+    "text": "[1] "
+   }
+  },
+  {
+   "t": 3333,
+   "type": "token",
+   "data": {
+    "text": ":\n\n"
+   }
+  },
+  {
+   "t": 3428,
+   "type": "token",
+   "data": {
+    "text": "- "
+   }
+  },
+  {
+   "t": 3522,
+   "type": "token",
+   "data": {
+    "text": "Gestion "
+   }
+  },
+  {
+   "t": 3617,
+   "type": "token",
+   "data": {
+    "text": "de "
+   }
+  },
+  {
+   "t": 3711,
+   "type": "token",
+   "data": {
+    "text": "l'énergie "
+   }
+  },
+  {
+   "t": 3806,
+   "type": "token",
+   "data": {
+    "text": "(vitesse, "
+   }
+  },
+  {
+   "t": 3900,
+   "type": "token",
+   "data": {
+    "text": "pente)\n"
+   }
+  },
+  {
+   "t": 3994,
+   "type": "token",
+   "data": {
+    "text": "- "
+   }
+  },
+  {
+   "t": 4089,
+   "type": "token",
+   "data": {
+    "text": "Conditions "
+   }
+  },
+  {
+   "t": 4183,
+   "type": "token",
+   "data": {
+    "text": "météo "
+   }
+  },
+  {
+   "t": 4278,
+   "type": "token",
+   "data": {
+    "text": "marginales\n"
+   }
+  },
+  {
+   "t": 4372,
+   "type": "token",
+   "data": {
+    "text": "- "
+   }
+  },
+  {
+   "t": 4467,
+   "type": "token",
+   "data": {
+    "text": "Décision "
+   }
+  },
+  {
+   "t": 4561,
+   "type": "token",
+   "data": {
+    "text": "tardive "
+   }
+  },
+  {
+   "t": 4656,
+   "type": "token",
+   "data": {
+    "text": "de "
+   }
+  },
+  {
+   "t": 4750,
+   "type": "token",
+   "data": {
+    "text": "remise "
+   }
+  },
+  {
+   "t": 4844,
+   "type": "token",
+   "data": {
+    "text": "de "
+   }
+  },
+  {
+   "t": 4939,
+   "type": "token",
+   "data": {
+    "text": "gaz\n\n"
+   }
+  },
+  {
+   "t": 5033,
+   "type": "token",
+   "data": {
+    "text": "(Exemple "
+   }
+  },
+  {
+   "t": 5128,
+   "type": "token",
+   "data": {
+    "text": "de "
+   }
+  },
+  {
+   "t": 5222,
+   "type": "token",
+   "data": {
+    "text": "développement "
+   }
+  },
+  {
+   "t": 5317,
+   "type": "token",
+   "data": {
+    "text": ": "
+   }
+  },
+  {
+   "t": 5411,
+   "type": "token",
+   "data": {
+    "text": "réponse "
+   }
+  },
+  {
+   "t": 5506,
+   "type": "token",
+   "data": {
+    "text": "inventée.)"
+   }
+  },
+  {
+   "t": 5700,
+   "type": "trace",
+   "data": {
+    "trace_id": "dev-sample",
+    "mode": "dev",
+    "model_id": "Llama 3.3 70B (Ollama)",
+    "chunks": [],
+    "usage": {
+     "input_tokens": 3120,
+     "output_tokens": 210
+    },
+    "latency_ms": {
+     "total": 5700
+    },
+    "cost_eur": 0.0,
+    "notes": [
+     "development sample, not a real session"
+    ]
+   }
+  },
+  {
+   "t": 5750,
+   "type": "done",
+   "data": {}
+  }
+ ]
+}

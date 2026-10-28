@@ -7,7 +7,15 @@ docTypes: [text, data]
 volume: small
 constraints: [reliability]
 sectors: [insurance, industry]
-aws: [Glue, Athena, Step Functions, Bedrock, Lambda]
-vectorStore: Neo4j AuraDB + index vectoriel
+stack:
+  cloud: [local]
+  framework: [llamaindex, lightrag]
+  models: [llama, mistral]
+  vectorStores: [neo4j]
 sourcePath: demos/07-analyse-incidents-graphrag
-player: { sideBySide: true }
+player:
+  sideBySide: true
+  variants:
+    classic: { fr: "RAG classique", en: "Classic RAG" }
+    graphrag: { fr: "GraphRAG", en: "GraphRAG" }
+    lightrag: { fr: "LightRAG", en: "LightRAG" }

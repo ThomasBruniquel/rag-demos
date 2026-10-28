@@ -38,3 +38,6 @@ Thumbs.db
 
 # Personal Claude Code settings
 .claude/settings.local.json
+
+# Terraform backend settings (bucket name of the account)
+backend.hcl

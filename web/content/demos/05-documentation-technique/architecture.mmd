@@ -1,11 +1,13 @@
 flowchart LR
   U(["<<Visiteur|Visitor>>"]):::user --> L["Lambda"]
   L --> O["<<Voie OCR : texte +<br/>descriptions de figures|OCR route: text +<br/>figure descriptions>>"]
-  L --> V["<<Voie visuelle :<br/>pages en images (ColPali)|Visual route:<br/>pages as images (ColPali)>>"]:::key
+  L --> V["<<Voie visuelle : pages en images<br/>(Cohere Embed v4)|Visual route: pages as images<br/>(Cohere Embed v4)>>"]:::key
+  L --> Q["<<ColQwen, calculé hors ligne<br/>(questions d'exemple)|ColQwen, computed offline<br/>(example questions)>>"]
   O --- SV[("S3 Vectors")]:::store
   V --- SV
-  O --> C["<<Comparaison<br/>sur la même question|Compared on<br/>the same question>>"]
+  O --> C["<<Claude lit les extraits<br/>ou les images des pages|Claude reads the extracts<br/>or the page images>>"]
   V --> C
+  Q --> C
   C -->|"<<réponse + figure citée|answer + cited figure>>"| U
 
   classDef user stroke-width:0

@@ -1,9 +1,9 @@
 flowchart LR
-  A[("S3<br/><<CSV DVF bruts|raw DVF CSV>>")]:::store --> G["Glue ETL<br/><<nettoyage, typage|cleaning, typing>>"]
+  A[("S3<br/><<CSV DVF bruts|raw DVF CSV>>")]:::store --> G["Glue ETL<br/><<typage, une ligne par vente|typing, one row per sale>>"]
   G --> P[("S3 Parquet<br/><<partitionné année / département|partitioned year / department>>")]:::store
-  P --> CR["Glue Crawler"] --> CAT[("Glue Data Catalog")]:::store --> ATH["Athena"]
+  P --> CAT[("Glue Data Catalog<br/><<projection de partitions|partition projection>>")]:::store --> ATH["Athena<br/><<contrôle des données|data check>>"]
   LF["Lake Formation<br/><<rôle en lecture seule|read-only role>>"] -.-> ATH
-  CAT --> DOC["<<Descriptions + exemples<br/>validés|Descriptions + validated<br/>examples>>"]:::key --> SV[("S3 Vectors")]:::store
+  CAT --> DOC["<<Descriptions, glossaire,<br/>exemples validés|Descriptions, glossary,<br/>validated examples>>"]:::key --> SV[("S3 Vectors")]:::store
 
   classDef user stroke-width:0
   classDef key stroke-width:2px

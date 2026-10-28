@@ -1,15 +1,15 @@
 ---
 title: Conversational Data Lake
 tagline: Ask 20 million rows a question in plain language, and see the SQL that answers it.
-problem: "The data is there, in the data lake, but every business question goes through the data team and waits its turn. Managers want to query the figures themselves, without writing SQL, and without the risk of a wrong number circulating in meetings."
+problem: "For a company whose data already sits in a data lake, but where every business question goes through the data team and waits its turn. Managers want to query the figures themselves, without writing SQL, and without the risk of a wrong number circulating in meetings."
 corpus:
   name: DVF property transactions (Demandes de valeurs foncières), data.gouv.fr
-  size: "~20 million French property sales over 5 years"
+  size: "20.4 million rows, i.e. 7.3 million French property sales from 2021 to 2025"
   licence: Etalab Open Licence 2.0
 examples:
   - Median price per m² for flats in Lyon in 2024, by district?
   - How many houses were sold in Gironde in 2023, and at what average price?
-  - Which towns in the Ain department saw the steepest price rise since 2020?
+  - Which towns in the Ain department saw the steepest rise in price per m² since 2021?
   - "Nombre de ventes à Paris par an ?"
 architecture:
   alt: "Architecture: the question triggers a search over table descriptions and validated examples, generation of several candidate SQL queries, their validation and read-only execution by Athena, then selection of the best one and a summary with a table and a chart."
@@ -19,35 +19,39 @@ architecture:
     - title: RAG over the data catalogue
       why: The model only sees the tables, columns and examples relevant to the question, not the whole schema.
     - title: SQL guardrails
-      why: "Read-only role (Lake Formation), syntax validation, a cap on data scanned by the Athena workgroup, at most two corrections."
+      why: "The API role can only read four tables (Lake Formation), every query is checked before it runs, the Athena workgroup stops any query that would scan more than 1 GB, at most two corrections."
     - title: Parquet partitioned by year and department
-      why: A typical question scans a few megabytes instead of several gigabytes, keeping Athena's cost around half a cent.
+      why: A question about one department and one year scans a few megabytes; Athena then costs less than a tenth of a cent per question.
+    - title: One row per sale, prepared by the pipeline
+      why: "In the DVF files, a sale spans several rows and the same property can be repeated: counting rows overstates sales almost threefold. The pipeline settles this once and for all, instead of leaving the model to reinvent it for every question."
   discarded:
     - title: Giving the model the whole schema
       why: More expensive, and the model mixes up similarly named columns.
     - title: An always-on database
       why: Pointless for occasional use; Athena bills per query.
+    - title: A Glue Crawler
+      why: "The schema is known, and a crawler would overwrite the hand-written descriptions. The tables are declared in code, and Athena works out the partitions itself."
 pipeline:
-  alt: "Pipeline: raw DVF CSV files on S3, cleaned and typed by Glue ETL, written as partitioned Parquet, catalogued by a Glue Crawler, queried by Athena; table descriptions and validated examples are indexed in S3 Vectors."
+  alt: "Pipeline: raw DVF CSV files copied to S3, cleaned, typed and grouped by sale by Glue ETL, written as partitioned Parquet, tables declared in the Glue Data Catalog with partition projection, data checked by Athena; table descriptions, the glossary and validated examples are indexed in S3 Vectors."
   facts:
     - label: Volume
-      value: "~20 million rows"
+      value: "20.4 million rows, 7.3 million sales"
     - label: Ingestion time
       value: "~15 min (Glue)"
     - label: Ingestion cost
-      value: "< €2"
+      value: "≈ €0.15 (Glue Flex)"
     - label: Athena cost per question
-      value: "~€0.005"
+      value: "< €0.001"
     - label: Parquet storage
-      value: "< €0.10 per month"
+      value: "930 MB, < €0.05 per month"
 evaluation:
   measured: false
-  caption: "~40 questions with their reference query; results are compared, not the SQL text."
-  columns: [Set-up, Exact result, Rejected queries, Data scanned per question]
+  caption: "40 questions with their reference query, 4 of which the data cannot answer; results are compared, not the SQL text."
+  columns: [Set-up, Exact result, Wrongly refused, Cost per question]
   rows:
-    - ["One query, full schema", "61%", "9%", "120 MB"]
-    - ["One query, targeted catalogue", "72%", "6%", "95 MB"]
-    - [Several candidates + selection, "84%", "3%", "310 MB"]
+    - ["One query, full schema", "to be measured", "to be measured", "to be measured"]
+    - ["One query, targeted catalogue", "to be measured", "to be measured", "to be measured"]
+    - [Three candidates + selection, "to be measured", "to be measured", "to be measured"]
 mission:
   duration: "Proof of concept in 2 weeks, production in 4 to 6 weeks"
   scope:
@@ -61,7 +65,7 @@ limits:
   - DVF data excludes Alsace, Moselle and Mayotte.
 seo:
   title: Text-to-SQL over an AWS data lake (Athena, Glue)
-  description: "Demo: query 20 million property transactions in plain language. Several candidate SQL queries, guardrails, query shown. Glue, Parquet and Athena pipeline."
+  description: "Project: query 20 million property transactions in plain language. Several candidate SQL queries, guardrails, query shown. Glue, Parquet and Athena pipeline."
 ---
 
-This is the most data-engineering-heavy demo on the site: answer quality depends first on the pipeline (partitioned Parquet, a documented catalogue, read-only permissions), and only then on the model that writes the SQL.
+This is the most data-engineering-heavy project on the site: answer quality depends first on the pipeline (partitioned Parquet, a documented catalogue, read-only permissions), and only then on the model that writes the SQL.

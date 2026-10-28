@@ -3,12 +3,13 @@
 import { useId, useMemo, useSyncExternalStore } from "react";
 import { DemoCard, type DemoSummary } from "./demo-card";
 
-type FacetKey = "docTypes" | "volume" | "constraints" | "sectors";
+type FacetKey = "docTypes" | "volume" | "constraints" | "sectors" | "keywords";
 type Filters = Record<FacetKey, string>;
 
-export type FacetOptions = { key: FacetKey; label: string; options: { value: string; label: string }[] }[];
+/** `group` puts an option under an <optgroup> (keywords are grouped by category). */
+export type FacetOptions = { key: FacetKey; label: string; options: { value: string; label: string; group?: string }[] }[];
 
-const empty: Filters = { docTypes: "", volume: "", constraints: "", sectors: "" };
+const empty: Filters = { docTypes: "", volume: "", constraints: "", sectors: "", keywords: "" };
 const keys = Object.keys(empty) as FacetKey[];
 
 const URL_EVENT = "demo-filters-change";
@@ -39,9 +40,10 @@ function matches(demo: DemoSummary, filters: Filters): boolean {
 }
 
 /**
- * Catalogue with four dropdown filters (as on echic's collection page).
- * Filters are mirrored in the URL (?docTypes=pdf&volume=large) so a filtered
- * view can be shared; the home page selector links here the same way.
+ * Catalogue with dropdown filters (as on echic's collection page): the visitor's
+ * situation (documents, volume, constraint, sector) and a technology keyword.
+ * Filters are mirrored in the URL (?docTypes=pdf&keywords=langchain) so a
+ * filtered view can be shared or linked to.
  */
 export function DemoCatalog({
   demos,
@@ -50,7 +52,16 @@ export function DemoCatalog({
 }: {
   demos: DemoSummary[];
   facets: FacetOptions;
-  labels: { any: string; reset: string; countOne: string; countMany: string; empty: string; eyebrow: string; filters: string };
+  labels: {
+    any: string;
+    reset: string;
+    countOne: string;
+    countMany: string;
+    empty: string;
+    eyebrow: string;
+    filters: string;
+    stack: string;
+  };
 }) {
   // The URL is the single source of truth for the filters.
   const search = useSyncExternalStore(subscribe, () => window.location.search, () => "");
@@ -72,9 +83,10 @@ export function DemoCatalog({
   return (
     <div>
       <form role="search" aria-label={labels.filters} onSubmit={(e) => e.preventDefault()}>
-        <div className="grid grid-cols-2 gap-3.5 lg:grid-cols-4">
+        <div className="grid grid-cols-2 gap-3.5 lg:grid-cols-5">
           {facets.map((facet) => (
-            <div key={facet.key}>
+            // Five filters on a two-column phone grid: the last one takes the full width.
+            <div key={facet.key} className={facet.key === "keywords" ? "col-span-2 lg:col-span-1" : ""}>
               <label htmlFor={`${idPrefix}-${facet.key}`} className="block text-xs font-bold">
                 {facet.label}
               </label>
@@ -85,11 +97,7 @@ export function DemoCatalog({
                 className="mt-1.5 w-full min-w-0 rounded border border-field bg-surface px-3 py-2.5 text-sm font-medium text-fg"
               >
                 <option value="">{labels.any}</option>
-                {facet.options.map((option) => (
-                  <option key={option.value} value={option.value}>
-                    {option.label}
-                  </option>
-                ))}
+                <FacetChoices options={facet.options} />
               </select>
             </div>
           ))}
@@ -111,7 +119,7 @@ export function DemoCatalog({
         <ul className="grid gap-x-7 gap-y-10 sm:grid-cols-2 lg:grid-cols-3">
           {visible.map((demo) => (
             <li key={demo.id}>
-              <DemoCard demo={demo} eyebrow={labels.eyebrow.replace("{id}", demo.id)} />
+              <DemoCard demo={demo} eyebrow={labels.eyebrow.replace("{id}", demo.id)} stackLabel={labels.stack} />
             </li>
           ))}
         </ul>
@@ -120,4 +128,26 @@ export function DemoCatalog({
       )}
     </div>
   );
+}
+
+function FacetChoices({ options }: { options: FacetOptions[number]["options"] }) {
+  const groups = [...new Set(options.map((o) => o.group))];
+  if (groups.length === 1 && groups[0] === undefined) {
+    return options.map((option) => (
+      <option key={option.value} value={option.value}>
+        {option.label}
+      </option>
+    ));
+  }
+  return groups.map((group) => (
+    <optgroup key={group} label={group}>
+      {options
+        .filter((o) => o.group === group)
+        .map((option) => (
+          <option key={option.value} value={option.value}>
+            {option.label}
+          </option>
+        ))}
+    </optgroup>
+  ));
 }

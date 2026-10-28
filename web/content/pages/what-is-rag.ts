@@ -2,7 +2,7 @@ import type { Source } from "@/components/pages/blocks";
 
 /*
  * "What is RAG?" page. Short texts, each claim backed by a numbered source.
- * Sources checked on 2026-10-26. `see` points to the demo or method page
+ * Sources checked on 2026-10-26. `see` points to the project (demo) or method page
  * where the idea is put to work.
  */
 
@@ -167,8 +167,8 @@ const fr = {
   sourcesTitle: "Sources",
   cta: {
     title: "Voir ces idées en action",
-    text: "Neuf démos, chacune centrée sur une méthode, comparée au RAG classique avec des scores mesurés.",
-    demos: "Tester les démos",
+    text: "Neuf réalisations, chacune centrée sur une méthode, comparée au RAG classique avec des scores mesurés.",
+    demos: "Voir les réalisations",
     methods: "Parcourir les méthodes",
   },
 };
@@ -287,8 +287,8 @@ const en: typeof fr = {
   sourcesTitle: "Sources",
   cta: {
     title: "See these ideas at work",
-    text: "Nine demos, each built around one method and compared with classic RAG on measured scores.",
-    demos: "Try the demos",
+    text: "Nine projects, each built around one method and compared with classic RAG on measured scores.",
+    demos: "See the projects",
     methods: "Browse the methods",
   },
 };

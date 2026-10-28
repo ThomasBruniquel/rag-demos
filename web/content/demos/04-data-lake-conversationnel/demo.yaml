@@ -7,6 +7,11 @@ docTypes: [data]
 volume: large
 constraints: [reliability, budget]
 sectors: [data, smb]
-aws: [Athena, Glue ETL, Glue Data Catalog, Lake Formation, S3, Bedrock, Lambda]
-vectorStore: S3 Vectors (schémas et exemples)
+stack:
+  cloud: [aws]
+  framework: [no-framework]
+  models: [claude]
+  vectorStores: [s3-vectors]
+  integrations: [athena, glue, lake-formation]
+  compliance: [data-governance]
 sourcePath: demos/04-data-lake-conversationnel

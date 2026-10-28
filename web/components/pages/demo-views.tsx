@@ -7,22 +7,34 @@ import { ToMeasure } from "@/components/content/to-complete";
 import { DemoCatalog, type FacetOptions } from "@/components/demos/demo-catalog";
 import type { DemoSummary } from "@/components/demos/demo-card";
 import { Diagram } from "@/components/demos/diagram";
+import { StackBadges, StackTable } from "@/components/demos/stack-badges";
 import { Section } from "@/components/layout/container";
 import { PageHeader } from "@/components/layout/page-header";
 import { MethodBadge } from "@/components/methods/method-bits";
-import { getDemoBySlug, getDemos, getDiagram, getMethodById, type Demo } from "@/lib/content/load";
-import { constraints, docTypes, families, sectors, volumes } from "@/lib/content/taxonomy";
+import { DemoPlayer } from "@/components/player/demo-player";
+import { getDemoBySlug, getDemos, getDemoVideo, getDiagram, getMethodById, type Demo } from "@/lib/content/load";
+import { stackGroups, stackKeywords } from "@/lib/content/stack";
+import { allKeywords, constraints, docTypes, families, sectors, stackCategories, volumes } from "@/lib/content/taxonomy";
 import type { Locale } from "@/lib/i18n/config";
-import { format } from "@/lib/i18n/messages";
+import { format, type Messages } from "@/lib/i18n/messages";
 import { href } from "@/lib/i18n/routes";
 import { getI18n } from "@/lib/i18n/server";
+import type { Recording } from "@/lib/player/types";
+import { getRecordings } from "@/lib/recordings/load";
 import { pageMetadata } from "@/lib/seo";
 import { siteConfig } from "@/site.config";
+
+// "Demo" stays the word in the code; visitors read "réalisation" / "project" (D-021).
 
 // ------------------------------------------------------------------ catalogue
 
 /** Plain data for a card (used by the catalogue and the home page). */
-export function toSummary(demo: Demo, locale: Locale, statusLabels: Record<"soon" | "live", string>): DemoSummary {
+export function toSummary(
+  demo: Demo,
+  locale: Locale,
+  statusLabels: Record<"soon" | "live", string>,
+  { compact = false }: { compact?: boolean } = {},
+): DemoSummary {
   const method = getMethodById(demo.meta.method);
   if (!method) throw new Error(`Unknown method ${demo.meta.method}`);
   return {
@@ -40,17 +52,29 @@ export function toSummary(demo: Demo, locale: Locale, statusLabels: Record<"soon
     volume: demo.meta.volume,
     constraints: demo.meta.constraints,
     sectors: demo.meta.sectors,
+    keywords: stackKeywords(demo.meta.stack),
+    // Home page cards are small: the three categories visitors scan first.
+    stack: stackGroups(demo.meta.stack, locale, compact ? ["cloud", "framework", "vectorStores"] : undefined),
   };
 }
 
-function facetOptions(locale: Locale, labels: { docTypes: string; volume: string; constraints: string; sectors: string }): FacetOptions {
+function facetOptions(locale: Locale, labels: Messages["catalog"]): FacetOptions {
   const options = (map: Record<string, Record<Locale, string>>) =>
     Object.entries(map).map(([value, l]) => ({ value, label: l[locale] }));
+  // Only keywords that at least one project demonstrates.
+  const used = new Set(getDemos().flatMap((d) => stackKeywords(d.meta.stack)));
   return [
     { key: "docTypes", label: labels.docTypes, options: options(docTypes) },
     { key: "volume", label: labels.volume, options: options(volumes) },
     { key: "constraints", label: labels.constraints, options: options(constraints) },
     { key: "sectors", label: labels.sectors, options: options(sectors) },
+    {
+      key: "keywords",
+      label: labels.keywords,
+      options: allKeywords()
+        .filter((k) => used.has(k.id))
+        .map((k) => ({ value: k.id, label: k.labels[locale], group: stackCategories[k.category][locale] })),
+    },
   ];
 }
 
@@ -72,8 +96,14 @@ export async function DemoCatalogPage() {
             empty: t.catalog.empty,
             eyebrow: t.demo.number,
             filters: t.catalog.filtersLabel,
+            stack: t.demo.stack,
           }}
         />
+        <p className="mt-14 text-sm">
+          <Link href={href(locale, "skills")} className="link">
+            {t.catalog.skillsLink} →
+          </Link>
+        </p>
       </div>
     </>
   );
@@ -81,10 +111,10 @@ export async function DemoCatalogPage() {
 
 export async function demoCatalogMetadata(): Promise<Metadata> {
   const { locale, t } = await getI18n();
-  return pageMetadata({ locale, id: "demos", title: t.pages.demos.title, description: t.pages.demos.lead });
+  return pageMetadata({ locale, id: "demos", title: t.pages.demos.title, description: t.pages.demos.description });
 }
 
-// ------------------------------------------------------------------ one demo
+// ------------------------------------------------------------------ one project
 
 export function demoStaticParams(locale: Locale) {
   return getDemos().map((d) => ({ slug: d.meta.slugs[locale] }));
@@ -103,6 +133,11 @@ async function loadBody(dir: string, locale: Locale): Promise<ComponentType> {
   return mod.default;
 }
 
+/** Base URL of the project's API, for live mode (meetings only). Read at build time. */
+function liveApiUrl(id: string): string | null {
+  return process.env[`NEXT_PUBLIC_DEMO_API_${id}`]?.trim() || null;
+}
+
 export async function DemoPage({ slug }: { slug: string }) {
   const { locale, t } = await getI18n();
   const demo = getDemoBySlug(locale, slug);
@@ -113,6 +148,10 @@ export async function DemoPage({ slug }: { slug: string }) {
   const text = demo.text[locale];
   const d = t.demo;
   const Body = await loadBody(demo.dir, locale);
+  const stack = stackGroups(meta.stack, locale);
+  const recordings = getRecordings(demo.dir, locale);
+  const video = getDemoVideo(demo.dir, locale);
+  const variantLabels = Object.fromEntries(Object.entries(meta.player.variants).map(([key, labels]) => [key, labels[locale]]));
 
   return (
     <>
@@ -132,6 +171,17 @@ export async function DemoPage({ slug }: { slug: string }) {
               </div>
               <h1 className="max-w-[820px] text-[34px] font-extrabold tracking-[-0.03em] sm:text-5xl lg:text-[54px]">{text.title}</h1>
               <p className="mt-4 max-w-[660px] text-lg font-medium text-muted">{text.tagline}</p>
+              {/* D-021: a personal project on public data, never presented as client work. */}
+              <p className="mt-5 inline-flex items-center gap-2 rounded-full border border-line-strong px-3.5 py-1 text-[12px] font-bold text-muted" title={d.personalNote}>
+                <svg aria-hidden="true" viewBox="0 0 24 24" className="size-4 shrink-0" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="m8 8-4 4 4 4M16 8l4 4-4 4" />
+                </svg>
+                {d.personal}
+                <span className="sr-only"> — {d.personalNote}</span>
+              </p>
+              <div className="mt-5 max-w-[820px]">
+                <StackBadges groups={stack} label={d.stack} />
+              </div>
             </div>
             <Character
               method={method.meta.id}
@@ -143,7 +193,7 @@ export async function DemoPage({ slug }: { slug: string }) {
         </div>
       </header>
 
-      {/* 1. The problem */}
+      {/* 1. The need */}
       <Section labelledBy="problem">
         <div className="grid gap-10 lg:grid-cols-[1.5fr_1fr]">
           <div>
@@ -168,21 +218,36 @@ export async function DemoPage({ slug }: { slug: string }) {
         </div>
       </Section>
 
-      {/* 2. Try it (the interactive player arrives in the next step) */}
+      {/* 2. In action: short video (once it exists), then the replay player */}
       <Section tone="light" labelledBy="try" id="try">
         <p className="eyebrow">02</p>
         <h2 id="try" className="mb-5 text-[26px] font-bold sm:text-[32px]">{d.try}</h2>
-        <div className="border border-line bg-surface p-6 sm:p-8">
-          <p className="mb-4 text-sm text-muted">{d.playerSoon}</p>
-          <h3 className="mb-3 text-[13px] font-bold uppercase tracking-[0.1em]">{d.examples}</h3>
-          <ul className="flex flex-wrap gap-2.5">
-            {text.examples.map((q) => (
-              <li key={q} className="rounded-full border border-line-strong px-4 py-2 text-sm font-medium">
-                {q}
-              </li>
-            ))}
-          </ul>
-        </div>
+        {video ? (
+          <figure className="mb-6 max-w-[900px]">
+            {/* Silent, never autoplayed: the visitor starts it. */}
+            <video controls muted playsInline preload="none" poster={video.poster ?? undefined} className="aspect-[16/10] w-full border border-line bg-black">
+              {video.sources.map((source) => (
+                <source key={source.src} src={source.src} type={source.type} />
+              ))}
+            </video>
+            <figcaption className="mt-2 text-[13px] text-muted">{d.video}</figcaption>
+          </figure>
+        ) : null}
+        <DemoPlayer
+          locale={locale}
+          method={method.meta.id}
+          family={method.meta.family}
+          characterName={method.text[locale].name}
+          recordings={recordings}
+          examples={text.examples}
+          variantLabels={variantLabels}
+          sideBySide={meta.player.sideBySide}
+          apiUrl={liveApiUrl(meta.id)}
+          variantField={meta.player.variantField}
+          contactHref={`${href(locale, "contact")}#live-demo`}
+          labels={t.player}
+        />
+        {recordings.length ? <Transcripts recordings={recordings} variantLabels={variantLabels} t={t} locale={locale} /> : null}
         <div className="mt-8">
           <h3 className="mb-3 text-[13px] font-bold uppercase tracking-[0.1em]">{d.limits}</h3>
           <ul className="space-y-2 text-[15px] text-muted">
@@ -196,23 +261,9 @@ export async function DemoPage({ slug }: { slug: string }) {
         </div>
       </Section>
 
-      {/* 3. Behind the scenes (collapsible) */}
-      <Section labelledBy="behind">
-        <details className="group border border-line">
-          <summary className="flex cursor-pointer list-none items-center justify-between gap-4 p-5 sm:px-7">
-            <span>
-              <span className="eyebrow">03</span>
-              <span id="behind" className="text-[22px] font-bold text-ink">{d.behind}</span>
-            </span>
-            <span aria-hidden="true" className="text-2xl text-gold-ink transition-transform group-open:rotate-45">+</span>
-          </summary>
-          <p className="border-t border-line px-5 py-5 text-[15px] text-muted sm:px-7">{d.behindIntro}</p>
-        </details>
-      </Section>
-
-      {/* 4. How it's built */}
-      <Section tone="light" labelledBy="built">
-        <p className="eyebrow">04</p>
+      {/* 3. How it's built */}
+      <Section labelledBy="built">
+        <p className="eyebrow">03</p>
         <h2 id="built" className="mb-5 text-[26px] font-bold sm:text-[32px]">{d.built}</h2>
         <div className="mb-8 max-w-[760px] text-[17px] leading-relaxed [&_p]:mb-4">
           <Body />
@@ -222,15 +273,13 @@ export async function DemoPage({ slug }: { slug: string }) {
           <ReasonList title={d.choices} items={text.architecture.choices} />
           <ReasonList title={d.discarded} items={text.architecture.discarded} muted />
         </div>
-        <dl className="mt-10 grid gap-x-8 sm:grid-cols-2">
-          <Detail label={d.vectorStore} value={meta.vectorStore} />
-          <Detail label={d.aws} value={meta.aws.join(", ")} />
-        </dl>
+        <h3 className="mt-10 mb-1 text-[13px] font-bold uppercase tracking-[0.1em]">{d.stack}</h3>
+        <StackTable groups={stack} label={d.stack} />
       </Section>
 
-      {/* 5. Data pipeline */}
-      <Section labelledBy="pipeline">
-        <p className="eyebrow">05</p>
+      {/* 4. Data pipeline */}
+      <Section tone="light" labelledBy="pipeline">
+        <p className="eyebrow">04</p>
         <h2 id="pipeline" className="mb-6 text-[26px] font-bold sm:text-[32px]">{d.pipeline}</h2>
         <Diagram svg={getDiagram("demos", demo.dir, "pipeline", locale)} alt={text.pipeline.alt} pending={d.diagramPending} />
         <div className="mt-10 grid gap-10 md:grid-cols-[1fr_1fr]">
@@ -253,9 +302,9 @@ export async function DemoPage({ slug }: { slug: string }) {
         </div>
       </Section>
 
-      {/* 6. Measured results */}
-      <Section tone="light" labelledBy="results">
-        <p className="eyebrow">06</p>
+      {/* 5. Measured results */}
+      <Section labelledBy="results">
+        <p className="eyebrow">05</p>
         <h2 id="results" className="mb-6 text-[26px] font-bold sm:text-[32px]">{d.results}</h2>
         <div className="overflow-x-auto bg-surface">
           <table className="w-full min-w-[620px] border-collapse text-left text-sm">
@@ -291,11 +340,11 @@ export async function DemoPage({ slug }: { slug: string }) {
         </div>
       </Section>
 
-      {/* 7. For your project: teal band, as echic's commitments */}
+      {/* 6. For your project: teal band, as echic's commitments */}
       <Section tone="brand" labelledBy="project">
         <div className="grid items-center gap-12 lg:grid-cols-2">
           <div>
-            <p className="eyebrow">07</p>
+            <p className="eyebrow">06</p>
             <h2 id="project" className="mb-4 text-[26px] font-bold sm:text-[38px]">{d.project}</h2>
             <p className="mb-1 text-[13px] font-bold uppercase tracking-[0.1em] text-on-brand-muted">{d.duration}</p>
             <p className="mb-7 text-[19px] font-semibold">{text.mission.duration}</p>
@@ -320,11 +369,11 @@ export async function DemoPage({ slug }: { slug: string }) {
         </div>
       </Section>
 
-      {/* 8. Source code */}
+      {/* 7. Source code */}
       <Section labelledBy="source">
         <div className="flex flex-wrap items-center justify-between gap-6">
           <div>
-            <p className="eyebrow">08</p>
+            <p className="eyebrow">07</p>
             <h2 id="source" className="text-[26px] font-bold sm:text-[32px]">{d.source}</h2>
             <p className="mt-2 font-mono text-sm text-muted">{meta.sourcePath}/</p>
           </div>
@@ -334,6 +383,60 @@ export async function DemoPage({ slug }: { slug: string }) {
         </div>
       </Section>
     </>
+  );
+}
+
+/**
+ * The recorded answers as plain text, in the HTML from the start: readable
+ * without JavaScript and indexable by search engines (docs/07, SEO).
+ */
+function Transcripts({
+  recordings,
+  variantLabels,
+  t,
+  locale,
+}: {
+  recordings: Recording[];
+  variantLabels: Record<string, string>;
+  t: Messages;
+  locale: Locale;
+}) {
+  const dateFormat = new Intl.DateTimeFormat(locale, { dateStyle: "long" });
+  return (
+    <details className="group mt-6 border border-line bg-surface">
+      <summary className="flex cursor-pointer list-none items-center justify-between gap-4 px-5 py-3.5 text-sm font-bold">
+        {t.demo.transcripts}
+        <span aria-hidden="true" className="text-xl text-gold-ink transition-transform group-open:rotate-45">+</span>
+      </summary>
+      <div className="space-y-6 border-t border-line px-5 py-5">
+        {recordings.map((r) => {
+          const answer = r.events.flatMap((e) => (e.type === "token" ? [e.data.text] : [])).join("");
+          const sources = r.events.flatMap((e) => (e.type === "citation" ? [e.data] : []));
+          return (
+            <article key={`${r.question_id}-${r.variant ?? ""}`} className="text-[15px]">
+              <h3 className="mb-1 text-[16px] font-bold">
+                {r.question}
+                {r.variant ? <span className="font-semibold text-muted"> — {variantLabels[r.variant] ?? r.variant}</span> : null}
+              </h3>
+              <p className="mb-2 text-[12px] text-muted">
+                {r.dev ? t.player.devSample : format(t.demo.transcriptMeta, { date: dateFormat.format(new Date(r.recorded_at)) })}
+              </p>
+              <p className="whitespace-pre-line text-muted">{answer}</p>
+              {sources.length ? (
+                <ul className="mt-2 text-[13px] text-muted">
+                  {sources.map((c) => (
+                    <li key={String(c.id)}>
+                      {c.marker ?? `[${c.id}]`} {c.doc_title}
+                      {c.location ? `, ${c.location}` : ""}
+                    </li>
+                  ))}
+                </ul>
+              ) : null}
+            </article>
+          );
+        })}
+      </div>
+    </details>
   );
 }
 

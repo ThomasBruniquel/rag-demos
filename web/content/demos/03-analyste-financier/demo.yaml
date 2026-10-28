@@ -7,6 +7,9 @@ docTypes: [pdf]
 volume: medium
 constraints: [reliability]
 sectors: [finance]
-aws: [Textract, Step Functions, Glue Data Catalog, Bedrock, Lambda, S3 Vectors]
-vectorStore: S3 Vectors
+stack:
+  cloud: [local, aws]
+  framework: [llamaindex]
+  models: [llama, claude]
+  vectorStores: [faiss]
 sourcePath: demos/03-analyste-financier

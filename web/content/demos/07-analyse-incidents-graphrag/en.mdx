@@ -1,7 +1,7 @@
 ---
 title: Incident Analysis (GraphRAG)
 tagline: Global questions over thousands of reports, compared side by side with classic RAG.
-problem: "An insurer, a quality department or a safety team holds thousands of incident reports. The useful questions are rarely \"what does this report say?\" but rather \"which factors come up most often?\" or \"which incidents combine this equipment with that maintenance issue?\". Classic RAG, which only reads a few passages, can't answer them."
+problem: "For an insurer, a quality department or a safety team holding thousands of incident reports. The useful questions are rarely \"what does this report say?\" but rather \"which factors come up most often?\" or \"which incidents combine this equipment with that maintenance issue?\". Classic RAG, which only reads a few passages, can't answer them."
 corpus:
   name: NTSB aviation accident database (National Transportation Safety Board)
   size: "~3,000 reports: structured data and investigation narratives"
@@ -22,7 +22,7 @@ architecture:
     - title: Validation against structured data
       why: The official NTSB fields, queried with Athena, are used to check the entities the model extracts.
     - title: Three variants compared
-      why: GraphRAG, LightRAG and RAPTOR have different costs and strengths; the demo publishes the comparison.
+      why: GraphRAG, LightRAG and RAPTOR have different costs and strengths; the project publishes the comparison.
   discarded:
     - title: Neptune (AWS graph database)
       why: Fixed cost too high for the site's budget; Neo4j AuraDB Free is enough for 3,000 reports.
@@ -61,7 +61,7 @@ limits:
   - Simple factual questions gain nothing from the graph.
 seo:
   title: GraphRAG versus classic RAG, side by side
-  description: "GraphRAG demo on 3,000 NTSB accident reports: global and multi-hop questions, Neo4j, compared with LightRAG, RAPTOR and classic RAG."
+  description: "GraphRAG project on 3,000 NTSB accident reports: global and multi-hop questions, Neo4j, compared with LightRAG, RAPTOR and classic RAG."
 ---
 
-The graph isn't an end in itself: it serves synthesis questions, and the demo is also honest about where it adds nothing (simple factual questions).
+The graph isn't an end in itself: it serves synthesis questions, and the project is also honest about where it adds nothing (simple factual questions).

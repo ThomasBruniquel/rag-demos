@@ -8,7 +8,16 @@ docTypes: [text, pdf]
 volume: small
 constraints: [time, budget]
 sectors: [smb, public]
-aws: [Bedrock Knowledge Bases, S3 Vectors, Lambda, DynamoDB, S3]
-vectorStore: S3 Vectors
+stack:
+  cloud: [aws]
+  framework: [no-framework]
+  models: [claude]
+  vectorStores: [s3-vectors]
+  integrations: [web-pages, pdf-upload]
+  compliance: [rgpd]
 sourcePath: demos/01-assistant-entrepreneurs
-player: { upload: true }
+player:
+  variants:
+    corpus: { fr: "Les 775 fiches", en: "The 775 help pages" }
+    document: { fr: "Un PDF public déposé", en: "An uploaded public PDF" }
+  variantField: mode

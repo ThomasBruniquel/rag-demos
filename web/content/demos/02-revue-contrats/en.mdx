@@ -1,7 +1,7 @@
 ---
 title: Contract Review
 tagline: Query a portfolio of contracts and get verified answers, with the clause highlighted.
-problem: "A legal team needs to find out quickly what hundreds of contracts say: non-compete clauses, termination terms, liability caps. A wrong answer can be expensive, so every claim has to point back to the exact clause."
+problem: "For a legal team that needs to find out quickly what hundreds of contracts say: non-compete clauses, termination terms, liability caps. A wrong answer can be expensive, so every claim has to point back to the exact clause."
 corpus:
   name: CUAD (Contract Understanding Atticus Dataset)
   size: 510 commercial contracts in English, annotated by lawyers across 41 clause types
@@ -57,11 +57,11 @@ mission:
     - An evaluation set built with your lawyers
 limits:
   - It gives no legal advice; it finds and cites.
-  - The demo contracts are in English (CUAD corpus).
+  - The contracts are in English (CUAD corpus).
   - "The first call after a pause can take around fifteen seconds (database wake-up)."
 seo:
   title: RAG for contract review, with verified answers
-  description: "Demo on 510 contracts: hybrid search, reranking and hallucination checking, with every answer pointing to the exact clause. Measured results and costs."
+  description: "Project on 510 contracts: hybrid search, reranking and hallucination checking, with every answer pointing to the exact clause. Measured results and costs."
 ---
 
 Quality comes from three complementary layers: hybrid search that doesn't miss exact terms, reranking that sorts the candidates, and a faithfulness check that won't let an unsupported claim through.

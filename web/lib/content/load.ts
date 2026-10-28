@@ -127,9 +127,30 @@ export function getDiagram(kind: "demos" | "methods", dir: string, name: string,
   return existsSync(file) ? readFileSync(file, "utf8") : null;
 }
 
+export type DemoVideo = { sources: { src: string; type: string }[]; poster: string | null };
+
+/**
+ * Short video of a project, made by scripts/record-video.mjs from the replay:
+ * public/videos/<NN-name>/<locale>.webm (and/or .mp4), poster <locale>.jpg.
+ * Null until the video exists, so the page shows no empty slot.
+ */
+export function getDemoVideo(dir: string, locale: Locale): DemoVideo | null {
+  const folder = path.join(process.cwd(), "public", "videos", dir);
+  const url = (file: string) => `/videos/${dir}/${file}`;
+  const sources = [
+    { file: `${locale}.webm`, type: "video/webm" },
+    { file: `${locale}.mp4`, type: "video/mp4" },
+  ]
+    .filter(({ file }) => existsSync(path.join(folder, file)))
+    .map(({ file, type }) => ({ src: url(file), type }));
+  if (!sources.length) return null;
+  const poster = existsSync(path.join(folder, `${locale}.jpg`)) ? url(`${locale}.jpg`) : null;
+  return { sources, poster };
+}
+
 /**
  * Translated slugs, so the language switcher can find the same demo in the
- * other language: { "/fr/demos/revue-de-contrats": "/en/demos/contract-review", ... }.
+ * other language: { "02": { fr: "revue-de-contrats", en: "contract-review" }, ... }.
  */
 export function getSlugPairs(): Record<string, Record<Locale, string>> {
   return Object.fromEntries(

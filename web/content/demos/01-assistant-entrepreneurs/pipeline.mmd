@@ -1,8 +1,9 @@
 flowchart LR
-  A["<<Archive DILA (XML)|DILA archive (XML)>>"] --> B["Lambda<br/><<XML → Markdown<br/>+ métadonnées|XML → Markdown<br/>+ metadata>>"]
+  M(["<<Chaque mois|Every month>><br/>EventBridge Scheduler"]) --> A
+  A["<<Archive DILA (XML)|DILA archive (XML)>>"] --> B["Step Functions · Lambda<br/><<XML → Markdown<br/>+ métadonnées|XML → Markdown<br/>+ metadata>>"]
   B --> C[("S3")]:::store --> D["<<Synchronisation<br/>Knowledge Base|Knowledge Base<br/>sync>>"]:::key --> E[("S3 Vectors")]:::store
-  V(["<<PDF du visiteur|Visitor's PDF>>"]):::user --> F[("S3<br/><<préfixe de session|session prefix>>")]:::store
-  F --> T["DynamoDB TTL + Lambda<br/><<suppression après 1 h|deleted after 1 h>>"]
+  V(["<<PDF du visiteur|Visitor's PDF>>"]):::user --> F[("S3<br/><<un dossier par document|one folder per document>>")]:::store
+  F --> T["EventBridge Scheduler<br/><<suppression après 1 h|deleted after 1 h>>"]
 
   classDef user stroke-width:0
   classDef key stroke-width:2px

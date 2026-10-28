@@ -15,6 +15,7 @@ export async function Footer() {
       title: t.footer.explore,
       links: [
         { href: href(locale, "demos"), label: t.nav.demos },
+        { href: href(locale, "skills"), label: t.nav.skills },
         { href: href(locale, "methods"), label: t.nav.methods },
         { href: href(locale, "whatIsRag"), label: t.nav.whatIsRag },
         { href: href(locale, "articles"), label: t.nav.articles },

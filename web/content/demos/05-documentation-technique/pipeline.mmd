@@ -1,11 +1,13 @@
 flowchart LR
-  A[("S3<br/><<rapports NASA|NASA reports>>")]:::store --> EV["<<Événement S3|S3 event>>"] --> SF["Step Functions"]
+  A[("S3<br/><<rapports NASA|NASA reports>>")]:::store --> EV["EventBridge"] --> SF["Step Functions<br/><<un rapport par exécution|one report per run>>"]
   SF --> D{"<<Scan ou natif ?|Scanned or<br/>born-digital?>>"}
-  D -->|scan| T["Textract<br/><<+ score de confiance|+ confidence score>>"]
-  D --> F["<<Extraction des figures|Figure extraction>>"]
-  T --> F
-  F --> TX["<<Représentation texte|Text representation>>"]
-  F --> IM["<<Représentation visuelle|Visual representation>>"]:::key
+  D -->|scan| T["<<Texte Textract<br/>+ confiance|Textract text<br/>+ confidence>>"]
+  D -->|"<<natif|born-digital>>"| N["<<Texte du PDF|PDF text layer>>"]
+  SF --> F["<<Figures (Textract LAYOUT)<br/>décrites par Claude|Figures (Textract LAYOUT)<br/>described by Claude>>"]
+  SF --> IM["<<Images des pages|Page images>>"]:::key
+  T --> TX["<<Index OCR|OCR index>>"]
+  N --> TX
+  F --> TX
   TX --> SV[("S3 Vectors")]:::store
   IM --> SV
 

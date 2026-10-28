@@ -29,14 +29,14 @@ C'est exactement le programme de la certification **AWS Certified Data Engineer 
 | Démo | Notions DEA travaillées |
 |---|---|
 | 01 | S3 (préfixes, lifecycle), DynamoDB TTL, ingestion événementielle |
-| 02 | Aurora Serverless v2, RDS Data API, Step Functions (Map), modélisation des métadonnées |
-| 03 | Textract asynchrone (SNS/SQS), Step Functions avec gestion d'erreurs, Glue Data Catalog |
-| 04 | **Glue ETL PySpark, Parquet, partitionnement, Glue Crawler, Athena (workgroups, coûts), Lake Formation** |
+| 02 | Hors AWS depuis D-022 (Haystack, Weaviate en local) : modélisation des métadonnées, recherche hybride |
+| 03 | Textract asynchrone (pages à tableaux) ; le reste en local (LlamaIndex, FAISS) depuis D-022 |
+| 04 | **Glue ETL PySpark (mode Flex), Parquet, partitionnement, projection de partitions (et pourquoi pas de Glue Crawler), Athena (workgroups, plafond de données lues, coûts), Lake Formation (enregistrement S3, autorisations par table, rôle sans accès S3), Step Functions (Map, intégrations .sync Glue et Athena, contrôle des données)** |
 | 05 | S3 Event Notifications, traitement asynchrone, contrôle qualité des données extraites |
-| 06 | DynamoDB Streams, synchronisation incrémentale |
-| 07 | Glue + Athena pour valider des données extraites, qualité de données |
-| 08 | IAM fin, KMS, CloudTrail, masquage PII, principes Lake Formation (droits par ligne/colonne transposés aux chunks) |
-| 09 | Transcribe asynchrone, pipelines multi-étapes |
+| 06 | Sur Azure depuis D-022 : synchronisation incrémentale (API delta de Microsoft Graph), notions transposables à AWS |
+| 07 | En local depuis D-022 : qualité de données (validation des entités extraites avec DuckDB, le même SQL qu'Athena) |
+| 08 | Sur site depuis D-022 : masquage PII, droits par rôle (principes de Lake Formation transposés aux chunks), journal d'audit |
+| 09 | Sur GCP depuis D-022 : pipelines multi-étapes, synchronisation depuis Google Drive |
 
 ## Comment le montrer sur le site
 

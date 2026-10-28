@@ -7,6 +7,10 @@ docTypes: [text]
 volume: small
 constraints: [reliability]
 sectors: [legal, finance]
-aws: [Aurora Serverless v2, RDS Data API, Step Functions, Bedrock, Lambda]
-vectorStore: pgvector (Aurora Serverless v2)
+stack:
+  cloud: [local]
+  framework: [haystack]
+  models: [gpt, granite]
+  vectorStores: [weaviate]
+  compliance: [ai-act]
 sourcePath: demos/02-revue-contrats

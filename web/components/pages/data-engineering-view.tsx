@@ -2,13 +2,15 @@ import Link from "next/link";
 import { Section } from "@/components/layout/container";
 import { PageHeader } from "@/components/layout/page-header";
 import { dataEngineering } from "@/content/pages/data-engineering";
+import { StackBadges } from "@/components/demos/stack-badges";
 import { getDemos } from "@/lib/content/load";
+import { stackGroups } from "@/lib/content/stack";
 import { format } from "@/lib/i18n/messages";
 import { href } from "@/lib/i18n/routes";
 import { getI18n } from "@/lib/i18n/server";
 import { Chip, CtaBand, demoLink, MarkList, SectionHeading } from "./blocks";
 
-/** Data engineering for AI: the seven pipeline stages, DEA domains, services per demo. */
+/** Data engineering for AI: the seven pipeline stages, DEA domains, the stack of each project. */
 export async function DataEngineeringPage() {
   const { locale, t } = await getI18n();
   const c = dataEngineering[locale];
@@ -85,7 +87,7 @@ export async function DataEngineeringPage() {
         </ul>
       </Section>
 
-      {/* Services per demo, read from content/demos/*\/demo.yaml */}
+      {/* Stack of each project, read from content/demos/*\/demo.yaml */}
       <Section tone="light" labelledBy="services">
         <SectionHeading id="services" title={c.servicesTitle} lead={c.servicesLead} />
         <ul className="border-t-2 border-ink">
@@ -97,11 +99,7 @@ export async function DataEngineeringPage() {
                   {demo.text[locale].title}
                 </span>
               </Link>
-              <p className="flex flex-wrap gap-1.5">
-                {demo.meta.aws.map((service) => (
-                  <Chip key={service}>{service}</Chip>
-                ))}
-              </p>
+              <StackBadges groups={stackGroups(demo.meta.stack, locale)} label={t.demo.stack} />
             </li>
           ))}
         </ul>

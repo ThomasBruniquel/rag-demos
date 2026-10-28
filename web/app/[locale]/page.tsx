@@ -16,13 +16,13 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 /*
- * Home page, in this order: hook (with RAG in three steps), the demos, how projects run.
+ * Home page, in this order: hook (with RAG in three steps), the projects, how missions run.
  * Short and impersonal: the visitor should understand the product at once.
  */
 export default async function HomePage() {
   const { locale, t } = await getI18n();
   const h = t.home;
-  const demos = getDemos().map((d) => toSummary(d, locale, t.catalog.status));
+  const demos = getDemos().map((d) => toSummary(d, locale, t.catalog.status, { compact: true }));
 
   return (
     <>
@@ -70,7 +70,7 @@ export default async function HomePage() {
         </div>
       </section>
 
-      {/* The demos */}
+      {/* The projects ("réalisations", D-021) */}
       <Section tone="light" id="demos" labelledBy="demos-title">
         <div className="mb-9 flex flex-wrap items-end justify-between gap-5">
           <div>
@@ -85,7 +85,7 @@ export default async function HomePage() {
         <ul className="grid grid-cols-2 gap-x-4 gap-y-8 sm:gap-x-6 sm:gap-y-10 lg:grid-cols-3 lg:gap-x-8">
           {demos.map((demo) => (
             <li key={demo.id}>
-              <DemoCard demo={demo} eyebrow={format(t.demo.number, { id: demo.id })} compact />
+              <DemoCard demo={demo} eyebrow={format(t.demo.number, { id: demo.id })} stackLabel={t.demo.stack} compact />
             </li>
           ))}
         </ul>

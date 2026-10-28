@@ -23,22 +23,22 @@ choose:
 avoid:
   - "Des documents nativement textuels et propres : un OCR ou l'extraction directe suffit."
   - Des millions de pages avec un budget très serré.
-adaptation: "La démo compare les deux voies sur les mêmes questions : OCR Textract suivi d'un RAG texte, et recherche visuelle de type ColPali. Le modèle exact et son hébergement seront précisés à la mise en ligne."
+adaptation: "La réalisation compare quatre voies sur les mêmes questions : OCR Textract suivi d'un RAG texte, avec ou sans descriptions des figures, et recherche visuelle par Cohere Embed v4 (un vecteur par page, en direct sur Bedrock) ou par ColQwen (famille ColPali, plusieurs vecteurs par page). ColQwen demande un processeur graphique pour encoder chaque question : il est calculé une fois, pour le banc d'évaluation et les questions d'exemple."
 duel:
   measured: false
   rows:
     - criterion: Réponses présentes uniquement dans une figure
-      classic: "23 %"
-      method: "71 %"
+      classic: "25 %"
+      method: "75 %"
       winner: method
     - criterion: Bonne page dans les 5 premiers résultats
       classic: "64 %"
       method: "86 %"
       winner: method
-    - criterion: Coût d'ingestion pour 4 000 pages
-      classic: "6 €"
-      method: "9 €"
-      winner: classic
+    - criterion: Coût d'ingestion pour 3 450 pages
+      classic: "13 €"
+      method: "6 €"
+      winner: method
     - criterion: Délai de réponse
       classic: "2,5 s"
       method: "3,4 s"

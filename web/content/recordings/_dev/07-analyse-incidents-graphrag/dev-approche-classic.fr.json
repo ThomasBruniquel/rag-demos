@@ -1,0 +1,297 @@
+{
+ "version": 1,
+ "demo": "07",
+ "locale": "fr",
+ "question_id": "dev-approche-classic",
+ "question": "Quels facteurs reviennent le plus dans les accidents en phase d'approche ?",
+ "variant": "classic",
+ "recorded_at": "2026-10-28T10:00:00Z",
+ "stack": {
+  "models": [
+   "Llama 3.3 70B"
+  ],
+  "cloud": [
+   "local"
+  ],
+  "framework": [
+   "LlamaIndex"
+  ],
+  "vector_store": [
+   "Neo4j"
+  ]
+ },
+ "duration_ms": 5750,
+ "cost_eur": 0.0,
+ "events": [
+  {
+   "t": 0,
+   "type": "status",
+   "data": {
+    "step": "retrieving"
+   }
+  },
+  {
+   "t": 800,
+   "type": "citation",
+   "data": {
+    "id": 1,
+    "marker": "[1]",
+    "doc_title": "NTSB (sample)",
+    "location": null,
+    "snippet": "Sample excerpt.",
+    "url": null,
+    "score": 0.69
+   }
+  },
+  {
+   "t": 1000,
+   "type": "status",
+   "data": {
+    "step": "generating"
+   }
+  },
+  {
+   "t": 1200,
+   "type": "token",
+   "data": {
+    "text": "D'après "
+   }
+  },
+  {
+   "t": 1277,
+   "type": "token",
+   "data": {
+    "text": "les "
+   }
+  },
+  {
+   "t": 1355,
+   "type": "token",
+   "data": {
+    "text": "trois "
+   }
+  },
+  {
+   "t": 1432,
+   "type": "token",
+   "data": {
+    "text": "extraits "
+   }
+  },
+  {
+   "t": 1510,
+   "type": "token",
+   "data": {
+    "text": "retrouvés "
+   }
+  },
+  {
+   "t": 1587,
+   "type": "token",
+   "data": {
+    "text": "[1], "
+   }
+  },
+  {
+   "t": 1665,
+   "type": "token",
+   "data": {
+    "text": "la "
+   }
+  },
+  {
+   "t": 1742,
+   "type": "token",
+   "data": {
+    "text": "perte "
+   }
+  },
+  {
+   "t": 1819,
+   "type": "token",
+   "data": {
+    "text": "de "
+   }
+  },
+  {
+   "t": 1897,
+   "type": "token",
+   "data": {
+    "text": "contrôle "
+   }
+  },
+  {
+   "t": 1974,
+   "type": "token",
+   "data": {
+    "text": "et "
+   }
+  },
+  {
+   "t": 2052,
+   "type": "token",
+   "data": {
+    "text": "une "
+   }
+  },
+  {
+   "t": 2129,
+   "type": "token",
+   "data": {
+    "text": "mauvaise "
+   }
+  },
+  {
+   "t": 2206,
+   "type": "token",
+   "data": {
+    "text": "gestion "
+   }
+  },
+  {
+   "t": 2284,
+   "type": "token",
+   "data": {
+    "text": "de "
+   }
+  },
+  {
+   "t": 2361,
+   "type": "token",
+   "data": {
+    "text": "la "
+   }
+  },
+  {
+   "t": 2439,
+   "type": "token",
+   "data": {
+    "text": "vitesse "
+   }
+  },
+  {
+   "t": 2516,
+   "type": "token",
+   "data": {
+    "text": "sont "
+   }
+  },
+  {
+   "t": 2594,
+   "type": "token",
+   "data": {
+    "text": "citées. "
+   }
+  },
+  {
+   "t": 2671,
+   "type": "token",
+   "data": {
+    "text": "Je "
+   }
+  },
+  {
+   "t": 2748,
+   "type": "token",
+   "data": {
+    "text": "ne "
+   }
+  },
+  {
+   "t": 2826,
+   "type": "token",
+   "data": {
+    "text": "peux "
+   }
+  },
+  {
+   "t": 2903,
+   "type": "token",
+   "data": {
+    "text": "pas "
+   }
+  },
+  {
+   "t": 2981,
+   "type": "token",
+   "data": {
+    "text": "dire "
+   }
+  },
+  {
+   "t": 3058,
+   "type": "token",
+   "data": {
+    "text": "quels "
+   }
+  },
+  {
+   "t": 3135,
+   "type": "token",
+   "data": {
+    "text": "facteurs "
+   }
+  },
+  {
+   "t": 3213,
+   "type": "token",
+   "data": {
+    "text": "dominent "
+   }
+  },
+  {
+   "t": 3290,
+   "type": "token",
+   "data": {
+    "text": "sur "
+   }
+  },
+  {
+   "t": 3368,
+   "type": "token",
+   "data": {
+    "text": "l'ensemble "
+   }
+  },
+  {
+   "t": 3445,
+   "type": "token",
+   "data": {
+    "text": "des "
+   }
+  },
+  {
+   "t": 3523,
+   "type": "token",
+   "data": {
+    "text": "rapports."
+   }
+  },
+  {
+   "t": 5700,
+   "type": "trace",
+   "data": {
+    "trace_id": "dev-sample",
+    "mode": "dev",
+    "model_id": "Llama 3.3 70B (Ollama)",
+    "chunks": [],
+    "usage": {
+     "input_tokens": 3120,
+     "output_tokens": 210
+    },
+    "latency_ms": {
+     "total": 5700
+    },
+    "cost_eur": 0.0,
+    "notes": [
+     "development sample, not a real session"
+    ]
+   }
+  },
+  {
+   "t": 5750,
+   "type": "done",
+   "data": {}
+  }
+ ]
+}

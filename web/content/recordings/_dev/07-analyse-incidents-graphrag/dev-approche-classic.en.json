@@ -1,0 +1,248 @@
+{
+ "version": 1,
+ "demo": "07",
+ "locale": "en",
+ "question_id": "dev-approche-classic",
+ "question": "Which factors come up most often in approach-phase accidents?",
+ "variant": "classic",
+ "recorded_at": "2026-10-28T10:00:00Z",
+ "stack": {
+  "models": [
+   "Llama 3.3 70B"
+  ],
+  "cloud": [
+   "local"
+  ],
+  "framework": [
+   "LlamaIndex"
+  ],
+  "vector_store": [
+   "Neo4j"
+  ]
+ },
+ "duration_ms": 5750,
+ "cost_eur": 0.0,
+ "events": [
+  {
+   "t": 0,
+   "type": "status",
+   "data": {
+    "step": "retrieving"
+   }
+  },
+  {
+   "t": 800,
+   "type": "citation",
+   "data": {
+    "id": 1,
+    "marker": "[1]",
+    "doc_title": "NTSB (sample)",
+    "location": null,
+    "snippet": "Sample excerpt.",
+    "url": null,
+    "score": 0.69
+   }
+  },
+  {
+   "t": 1000,
+   "type": "status",
+   "data": {
+    "step": "generating"
+   }
+  },
+  {
+   "t": 1200,
+   "type": "token",
+   "data": {
+    "text": "From "
+   }
+  },
+  {
+   "t": 1300,
+   "type": "token",
+   "data": {
+    "text": "the "
+   }
+  },
+  {
+   "t": 1400,
+   "type": "token",
+   "data": {
+    "text": "three "
+   }
+  },
+  {
+   "t": 1500,
+   "type": "token",
+   "data": {
+    "text": "passages "
+   }
+  },
+  {
+   "t": 1600,
+   "type": "token",
+   "data": {
+    "text": "retrieved "
+   }
+  },
+  {
+   "t": 1700,
+   "type": "token",
+   "data": {
+    "text": "[1], "
+   }
+  },
+  {
+   "t": 1800,
+   "type": "token",
+   "data": {
+    "text": "loss "
+   }
+  },
+  {
+   "t": 1900,
+   "type": "token",
+   "data": {
+    "text": "of "
+   }
+  },
+  {
+   "t": 2000,
+   "type": "token",
+   "data": {
+    "text": "control "
+   }
+  },
+  {
+   "t": 2100,
+   "type": "token",
+   "data": {
+    "text": "and "
+   }
+  },
+  {
+   "t": 2200,
+   "type": "token",
+   "data": {
+    "text": "poor "
+   }
+  },
+  {
+   "t": 2300,
+   "type": "token",
+   "data": {
+    "text": "speed "
+   }
+  },
+  {
+   "t": 2400,
+   "type": "token",
+   "data": {
+    "text": "management "
+   }
+  },
+  {
+   "t": 2500,
+   "type": "token",
+   "data": {
+    "text": "are "
+   }
+  },
+  {
+   "t": 2600,
+   "type": "token",
+   "data": {
+    "text": "mentioned. "
+   }
+  },
+  {
+   "t": 2700,
+   "type": "token",
+   "data": {
+    "text": "I "
+   }
+  },
+  {
+   "t": 2800,
+   "type": "token",
+   "data": {
+    "text": "cannot "
+   }
+  },
+  {
+   "t": 2900,
+   "type": "token",
+   "data": {
+    "text": "tell "
+   }
+  },
+  {
+   "t": 3000,
+   "type": "token",
+   "data": {
+    "text": "which "
+   }
+  },
+  {
+   "t": 3100,
+   "type": "token",
+   "data": {
+    "text": "factors "
+   }
+  },
+  {
+   "t": 3200,
+   "type": "token",
+   "data": {
+    "text": "dominate "
+   }
+  },
+  {
+   "t": 3300,
+   "type": "token",
+   "data": {
+    "text": "across "
+   }
+  },
+  {
+   "t": 3400,
+   "type": "token",
+   "data": {
+    "text": "all "
+   }
+  },
+  {
+   "t": 3500,
+   "type": "token",
+   "data": {
+    "text": "reports."
+   }
+  },
+  {
+   "t": 5700,
+   "type": "trace",
+   "data": {
+    "trace_id": "dev-sample",
+    "mode": "dev",
+    "model_id": "Llama 3.3 70B (Ollama)",
+    "chunks": [],
+    "usage": {
+     "input_tokens": 3120,
+     "output_tokens": 210
+    },
+    "latency_ms": {
+     "total": 5700
+    },
+    "cost_eur": 0.0,
+    "notes": [
+     "development sample, not a real session"
+    ]
+   }
+  },
+  {
+   "t": 5750,
+   "type": "done",
+   "data": {}
+  }
+ ]
+}

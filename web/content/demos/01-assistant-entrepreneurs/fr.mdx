@@ -1,17 +1,17 @@
 ---
 title: Assistant Entrepreneurs
-tagline: Un chatbot documentaire avec ses sources, livré en quelques jours, qui lit aussi vos PDF.
-problem: "Une entreprise veut un assistant qui réponde à partir de sa documentation, avec les sources, sans y passer des mois ni payer une infrastructure lourde. Ses équipes posent toujours les mêmes questions ; les réponses existent, mais dispersées dans des centaines de pages."
+tagline: Un chatbot documentaire avec ses sources, livré en quelques jours, qui sait aussi lire un PDF qu'on lui confie.
+problem: "Pour une PME qui veut un assistant capable de répondre à partir de sa documentation, avec les sources, sans y passer des mois ni payer une infrastructure lourde. Ses équipes posent toujours les mêmes questions ; les réponses existent, mais dispersées dans des centaines de pages."
 corpus:
   name: Fiches pratiques « Entreprendre » de Service-Public.fr (DILA)
-  size: "~3 000 fiches, en français"
+  size: "775 fiches, en français"
   licence: Licence Ouverte 2.0
   url: https://www.data.gouv.fr/datasets/fiches-pratiques-et-ressources-entreprendre-service-public-fr/
 examples:
   - Quelles démarches pour créer une micro-entreprise ?
   - À partir de quel chiffre d'affaires dois-je facturer la TVA ?
   - Quelles aides existent pour embaucher un premier salarié ?
-  - "Avec votre PDF : quelles sont les dates clés de ce document ?"
+  - "Avec un PDF déposé : quelles sont les dates clés de ce document ?"
 architecture:
   alt: "Architecture : le navigateur appelle une fonction Lambda, qui interroge Bedrock Knowledge Bases (index S3 Vectors) pour les fiches, ou lit directement le PDF du visiteur mis en cache, puis génère la réponse avec Claude sur Bedrock."
   choices:
@@ -23,14 +23,14 @@ architecture:
       why: Aucun coût fixe, quelques centimes de stockage par mois.
   discarded:
     - title: OpenSearch Serverless
-      why: Plusieurs centaines d'euros par mois au minimum, injustifiable pour 3 000 fiches.
+      why: Plusieurs centaines d'euros par mois au minimum, injustifiable pour 775 fiches.
     - title: Une chaîne de recherche sur mesure
       why: Plus de contrôle, mais des semaines de travail pour un gain de qualité faible sur des fiches simples.
 pipeline:
-  alt: "Pipeline : archive DILA téléchargée, conversion XML vers Markdown par une Lambda, dépôt sur S3, synchronisation de la Knowledge Base. Pour l'upload : dépôt dans un préfixe de session, suppression automatique au bout d'une heure."
+  alt: "Pipeline : chaque mois, une machine à états Step Functions télécharge l'archive DILA, une Lambda convertit le XML en Markdown et le dépose sur S3, puis la Knowledge Base se synchronise. Pour l'upload : un dossier S3 par document, supprimé au bout d'une heure par EventBridge Scheduler."
   facts:
     - label: Volume
-      value: "~3 000 fiches"
+      value: "775 fiches"
     - label: Durée d'ingestion
       value: "~20 min"
     - label: Coût d'ingestion
@@ -60,7 +60,7 @@ limits:
   - Les fiches sont mises à jour une fois par mois, pas en temps réel.
 seo:
   title: Chatbot RAG sur vos documents PDF, avec sources
-  description: "Démo testable : un assistant documentaire qui répond à partir de 3 000 fiches officielles et de votre propre PDF, avec citations. Architecture, coûts et qualité mesurée."
+  description: "Réalisation : un assistant documentaire qui répond à partir de 775 fiches officielles et d'un PDF déposé, avec citations. Architecture, coûts et qualité mesurée."
 ---
 
 L'architecture fait le choix inverse de la sophistication : un service managé pour la base de fiches, et le document du visiteur lu en entier. C'est ce qui permet de livrer en quelques jours un assistant fiable à une PME, puis de le faire tourner pour quelques euros par mois.

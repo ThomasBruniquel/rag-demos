@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { badges, constraints, docTypes, families, keysOf, sectors, volumes } from "./taxonomy";
+import { badges, constraints, docTypes, families, keysOf, keywords, sectors, volumes, type StackCategory } from "./taxonomy";
 
 /*
  * Content schemas, checked at build time: a typo in a YAML field or a missing
@@ -13,6 +13,7 @@ import { badges, constraints, docTypes, families, keysOf, sectors, volumes } fro
 
 const text = z.string().trim().min(1);
 const gauge = z.number().int().min(1).max(5);
+const keywordList = (category: StackCategory) => z.array(z.enum(keysOf(keywords[category])));
 
 // ---------------------------------------------------------------- methods
 
@@ -72,17 +73,27 @@ export const demoMetaSchema = z.object({
   volume: z.enum(keysOf(volumes)),
   constraints: z.array(z.enum(keysOf(constraints))).min(1),
   sectors: z.array(z.enum(keysOf(sectors))).min(1),
-  aws: z.array(text).min(1),
-  vectorStore: text,
+  /** Keyword badges per category (D-022), from the matrix in docs/02-catalogue-rag.md. */
+  stack: z.object({
+    cloud: keywordList("cloud").min(1),
+    framework: keywordList("framework").min(1),
+    models: keywordList("models").min(1),
+    vectorStores: keywordList("vectorStores").min(1),
+    integrations: keywordList("integrations").default([]),
+    compliance: keywordList("compliance").default([]),
+  }),
   /** Folder of the demo in the GitHub monorepo. */
   sourcePath: text,
   player: z
     .object({
-      upload: z.boolean().default(false),
-      roles: z.boolean().default(false),
+      /** Show the variants of one question next to each other (e.g. classic RAG vs GraphRAG). */
       sideBySide: z.boolean().default(false),
+      /** Labels of the `variant` values found in the recordings (route compared, role chosen…). */
+      variants: z.record(z.string(), z.object({ fr: text, en: text })).default({}),
+      /** Live mode only: name of the /ask body field that carries the variant (e.g. "route"). */
+      variantField: z.string().regex(/^[a-z_]+$/).optional(),
     })
-    .default({ upload: false, roles: false, sideBySide: false }),
+    .default({ sideBySide: false, variants: {} }),
 });
 
 const fact = z.object({ label: text, value: text, measured: z.boolean().default(false) });

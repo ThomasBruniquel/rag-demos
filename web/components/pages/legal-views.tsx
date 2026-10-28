@@ -132,7 +132,12 @@ export async function PrivacyPage() {
               </tbody>
             </table>
           </div>
-          <p className="mt-3 text-sm text-muted">{c.demosNote}</p>
+          <H2>{c.liveTitle}</H2>
+          <div className="max-w-[760px] space-y-3 text-[15px] leading-relaxed">
+            {c.live.map((paragraph) => (
+              <p key={paragraph}>{paragraph}</p>
+            ))}
+          </div>
 
           <aside className="mt-10 border-l-4 border-gold bg-sunken px-6 py-5">
             <h2 className="mb-1 text-[13px] font-bold uppercase tracking-[0.1em]">{c.adviceTitle}</h2>

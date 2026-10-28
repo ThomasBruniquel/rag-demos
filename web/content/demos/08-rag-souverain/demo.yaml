@@ -7,7 +7,16 @@ docTypes: [text]
 volume: small
 constraints: [confidentiality]
 sectors: [regulated]
-aws: [KMS, CloudTrail, Lambda, S3]
-vectorStore: Qdrant Cloud (région Europe)
+stack:
+  cloud: [on-premises]
+  framework: [langchain]
+  models: [mistral, granite]
+  vectorStores: [qdrant]
+  compliance: [rgpd, sovereignty, ai-act]
 sourcePath: demos/08-rag-souverain
-player: { roles: true }
+player:
+  variants:
+    employee: { fr: "Rôle : employé", en: "Role: employee" }
+    manager: { fr: "Rôle : manager", en: "Role: manager" }
+    hr: { fr: "Rôle : RH", en: "Role: HR" }
+  variantField: role

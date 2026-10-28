@@ -7,6 +7,16 @@ docTypes: [pdf]
 volume: medium
 constraints: [reliability]
 sectors: [industry]
-aws: [Textract, Step Functions, S3 events, Lambda, Bedrock, S3 Vectors]
-vectorStore: S3 Vectors
+stack:
+  cloud: [aws, local]
+  framework: [no-framework]
+  models: [claude, cohere]
+  vectorStores: [s3-vectors]
 sourcePath: demos/05-documentation-technique
+player:
+  variants:
+    ocr_text: { fr: "OCR, texte seul", en: "OCR, text only" }
+    ocr_figures: { fr: "OCR + figures décrites", en: "OCR + described figures" }
+    visual: { fr: "Recherche visuelle (Cohere)", en: "Visual retrieval (Cohere)" }
+    colqwen: { fr: "Recherche visuelle (ColQwen)", en: "Visual retrieval (ColQwen)" }
+  variantField: route

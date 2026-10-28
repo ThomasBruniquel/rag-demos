@@ -1,7 +1,7 @@
 ---
 title: Revue de contrats
 tagline: Interroger un fonds de contrats et obtenir des réponses vérifiées, clause surlignée à l'appui.
-problem: "Une direction juridique doit retrouver vite ce que disent des centaines de contrats : clauses de non-concurrence, conditions de résiliation, plafonds de responsabilité. Une réponse fausse peut coûter cher ; chaque affirmation doit donc renvoyer à la clause exacte."
+problem: "Pour une direction juridique qui doit retrouver vite ce que disent des centaines de contrats : clauses de non-concurrence, conditions de résiliation, plafonds de responsabilité. Une réponse fausse peut coûter cher ; chaque affirmation doit donc renvoyer à la clause exacte."
 corpus:
   name: CUAD (Contract Understanding Atticus Dataset)
   size: 510 contrats commerciaux en anglais, annotés par des juristes sur 41 types de clauses
@@ -61,7 +61,7 @@ limits:
   - "Le premier appel après une pause peut prendre une quinzaine de secondes (réveil de la base)."
 seo:
   title: RAG pour la revue de contrats, avec réponses vérifiées
-  description: "Démo sur 510 contrats : recherche hybride, reclassement et vérification anti-hallucination, chaque réponse renvoyant à la clause exacte. Résultats mesurés et coûts."
+  description: "Réalisation sur 510 contrats : recherche hybride, reclassement et vérification anti-hallucination, chaque réponse renvoyant à la clause exacte. Résultats mesurés et coûts."
 ---
 
 La qualité vient de trois étages complémentaires : une recherche hybride qui ne rate pas les termes exacts, un reclassement qui trie les candidats, et un contrôle de fidélité qui refuse de laisser passer une affirmation non sourcée.

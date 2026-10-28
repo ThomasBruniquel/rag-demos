@@ -2,7 +2,7 @@
   "meta": {
     "titleTemplate": "%s · {brand}",
     "defaultTitle": "{brand} · Assistants IA sur vos documents (RAG)",
-    "description": "Des assistants IA qui répondent à partir de vos documents, sources à l'appui : neuf démos testables en ligne, avec leur architecture, leur qualité mesurée et leur coût."
+    "description": "Des assistants IA qui répondent à partir de vos documents, sources à l'appui : neuf réalisations à voir en action, avec leur architecture, leur qualité mesurée et leur coût."
   },
   "a11y": {
     "skipToContent": "Aller au contenu",
@@ -12,14 +12,15 @@
     "homeLink": "{brand}, retour à l'accueil"
   },
   "nav": {
-    "demos": "Démos",
+    "demos": "Réalisations",
     "methods": "Méthodes",
     "whatIsRag": "Comprendre le RAG",
     "services": "Offres",
     "dataEngineering": "Data engineering",
     "articles": "Articles",
     "about": "À propos",
-    "contact": "Contact"
+    "contact": "Contact",
+    "skills": "Compétences"
   },
   "theme": {
     "toDark": "Passer au thème sombre",
@@ -38,12 +39,12 @@
     "privacy": "Confidentialité",
     "commitmentsLabel": "Engagements",
     "commitments": [
-      "Qualité mesurée sur chaque démo",
-      "Coût affiché pour chaque question",
+      "Qualité mesurée sur chaque réalisation",
+      "Coût mesuré pour chaque question",
       "Code source public sur GitHub",
-      "Vos documents supprimés sous une heure"
+      "Sessions réelles, jamais retouchées"
     ],
-    "rights": "© {year} {owner}. Code des démos sous licence libre."
+    "rights": "© {year} {owner}. Code des réalisations sous licence libre."
   },
   "marks": {
     "toMeasure": "Valeurs indicatives, en attente du banc d'évaluation : elles seront remplacées par les mesures réelles."
@@ -53,7 +54,7 @@
     "titleTop": "RAG à l'état de l'art,",
     "titleBottom": "pour interroger intelligemment vos documents, selon vos contraintes.",
     "lead": "Un RAG relie un modèle d'IA à vos propres documents : il retrouve les passages utiles, puis rédige une réponse qui les cite. Rien n'est inventé, tout se vérifie.",
-    "primaryCta": "Voir les démos",
+    "primaryCta": "Voir les réalisations",
     "secondaryCta": "Discuter d'un projet",
     "stepsLabel": "Comment ça marche",
     "steps": [
@@ -71,10 +72,10 @@
       }
     ],
     "demos": {
-      "eyebrow": "9 démos",
-      "title": "Testez sur des cas concrets",
-      "lead": "Neuf situations réelles, chacune avec sa méthode, son architecture, sa qualité mesurée et son coût. Construites principalement sur AWS (Bedrock, S3 Vectors), avec Mistral ou OpenAI quand le cas l'exige.",
-      "all": "Toutes les démos, avec filtres"
+      "eyebrow": "9 réalisations",
+      "title": "Voyez-les en action",
+      "lead": "Neuf projets construits de bout en bout sur données publiques, chacun avec sa méthode, sa stack, sa qualité mesurée et son coût. Les sessions affichées sont réelles : enregistrées sur le système en fonctionnement, puis rejouées telles quelles.",
+      "all": "Toutes les réalisations, avec filtres"
     },
     "process": {
       "eyebrow": "Accompagnement",
@@ -107,32 +108,31 @@
     }
   },
   "catalog": {
-    "eyebrow": "9 démos · 9 cas clients",
-    "filtersLabel": "Filtrer les démos",
+    "eyebrow": "9 réalisations · 6 familles de méthodes",
+    "filtersLabel": "Filtrer les réalisations",
     "docTypes": "Type de documents",
     "volume": "Volume",
     "constraints": "Contrainte",
     "sectors": "Secteur",
     "any": "Tous",
     "reset": "Réinitialiser",
-    "countOne": "1 démo",
-    "countMany": "{n} démos",
-    "empty": "Aucune démo ne réunit tous ces critères. Retirez un filtre pour élargir la recherche.",
+    "countOne": "1 réalisation",
+    "countMany": "{n} réalisations",
+    "empty": "Aucune réalisation ne réunit tous ces critères. Retirez un filtre pour élargir la recherche.",
     "status": {
-      "soon": "Bientôt disponible",
-      "live": "En ligne"
+      "soon": "En cours",
+      "live": "Terminée"
     },
-    "method": "Méthode phare"
+    "method": "Méthode phare",
+    "keywords": "Technologie",
+    "skillsLink": "Voir toutes les compétences, mot-clé par mot-clé"
   },
   "demo": {
-    "back": "Toutes les démos",
-    "number": "Démo {id}",
-    "problem": "Le problème",
-    "try": "Essayer",
+    "back": "Toutes les réalisations",
+    "number": "Réalisation {id}",
+    "problem": "Le besoin traité",
+    "try": "En action",
     "examples": "Questions d'exemple",
-    "playerSoon": "Le lecteur interactif arrive à la prochaine étape du site. Voici les questions que vous pourrez poser :",
-    "behind": "Coulisses",
-    "behindIntro": "Pour chaque réponse : les extraits retrouvés et leur score, les modèles utilisés, la latence et le coût exact de la question.",
     "built": "Comment c'est construit",
     "choices": "Choix techniques, et pourquoi",
     "discarded": "Ce qui a été écarté",
@@ -141,19 +141,23 @@
     "project": "Pour votre projet",
     "duration": "Durée typique",
     "scope": "Périmètre habituel",
-    "limits": "Ce que cette démo ne fait pas",
+    "limits": "Ce que cette réalisation ne fait pas",
     "contactCta": "Parler d'un projet similaire",
     "source": "Code source",
-    "sourceCta": "Voir le code de la démo sur GitHub",
+    "sourceCta": "Voir le code sur GitHub",
     "corpus": "Corpus",
     "licence": "Licence",
-    "aws": "Services AWS",
-    "vectorStore": "Stockage vectoriel",
     "methodCard": "Méthode phare",
     "seeMethod": "Voir la fiche de la méthode",
     "diagramPending": "Schéma en cours de dessin.",
     "estimate": "estimation",
-    "facts": "En chiffres"
+    "facts": "En chiffres",
+    "personal": "Projet personnel — données publiques — code ouvert",
+    "personalNote": "Construit de bout en bout sur des données publiques pour montrer la méthode : ce n'est pas une mission client.",
+    "video": "Vidéo de la réalisation (sans son)",
+    "stack": "Stack technique",
+    "transcripts": "Lire les sessions enregistrées en texte",
+    "transcriptMeta": "Enregistrée le {date}"
   },
   "methods": {
     "eyebrow": "Un personnage par méthode",
@@ -173,13 +177,13 @@
     "gaugeValue": "{label} : {value} sur 5",
     "choose": "Quand la choisir",
     "avoid": "Quand l'éviter",
-    "adaptation": "Ce que fait la démo",
+    "adaptation": "Ce que fait la réalisation",
     "duel": "Duel contre le RAG classique",
     "criterion": "Critère",
     "classic": "RAG classique",
     "advantage": "Avantage",
     "tie": "Égalité",
-    "tryDemo": "Essayer la démo",
+    "tryDemo": "Voir la réalisation",
     "allMethods": "Toutes les méthodes",
     "familiesTitle": "Six familles de méthodes",
     "familyIntro": {
@@ -193,12 +197,13 @@
   },
   "pages": {
     "demos": {
-      "title": "Démos",
-      "lead": "Neuf situations réelles, d'une base documentaire interne à un data lake de 20 millions de lignes. Chaque démo se teste en ligne et s'accompagne de son architecture, de son pipeline de données, de ses résultats d'évaluation et de son coût."
+      "title": "Réalisations",
+      "lead": "Projets construits de bout en bout sur données publiques — code ouvert.",
+      "description": "Neuf réalisations RAG construites de bout en bout sur données publiques : sessions réelles rejouées, architecture, pipeline de données, qualité mesurée et coût. LangChain, LlamaIndex, Haystack, AWS, Azure, GCP."
     },
     "methods": {
       "title": "Les méthodes",
-      "lead": "Il n'existe pas un RAG, mais des familles de méthodes, chacune adaptée à un problème. Chaque démo en met une en scène, sous les traits d'un personnage, face au RAG classique."
+      "lead": "Il n'existe pas un RAG, mais des familles de méthodes, chacune adaptée à un problème. Chaque réalisation en met une en scène, sous les traits d'un personnage, face au RAG classique."
     },
     "whatIsRag": {
       "title": "Qu'est-ce qu'un RAG ?",
@@ -214,7 +219,7 @@
     },
     "articles": {
       "title": "Articles",
-      "lead": "Retours d'expérience techniques sur chaque démo : ce qui a marché, ce qui a été écarté, et pourquoi."
+      "lead": "Retours d'expérience techniques sur chaque réalisation : ce qui a marché, ce qui a été écarté, et pourquoi."
     },
     "about": {
       "title": "À propos",
@@ -231,11 +236,101 @@
     "privacy": {
       "title": "Confidentialité",
       "lead": "Quelles données ce site traite, pourquoi, et pendant combien de temps."
+    },
+    "skills": {
+      "title": "Compétences",
+      "lead": "Chaque mot-clé renvoie aux réalisations qui le démontrent : clouds, frameworks, modèles, bases vectorielles, intégrations et conformité."
     }
   },
   "notFound": {
     "title": "Page introuvable",
     "body": "Cette adresse ne correspond à aucune page. Elle a peut-être été déplacée.",
     "back": "Retour à l'accueil"
+  },
+  "skills": {
+    "keyword": "Mot-clé",
+    "projects": "Réalisations",
+    "catalogue": "Filtrer le catalogue"
+  },
+  "player": {
+    "mode": "Mode",
+    "recorded": "Sessions enregistrées",
+    "live": "En direct",
+    "liveIntro": "Connecté à l'API de la réalisation, lancée pour ce rendez-vous. Posez vos propres questions.",
+    "liveFooter": "Réponse en direct, calculée à l'instant.",
+    "chooseQuestion": "Choisissez une question",
+    "pickPrompt": "Choisissez une question ci-dessus : la session réelle enregistrée se rejoue ici.",
+    "variant": "Variante",
+    "speed": "Vitesse",
+    "speedInstant": "Instantané",
+    "replay": "Rejouer",
+    "pending": "Sessions en cours d'enregistrement",
+    "pendingText": "Les sessions de cette réalisation n'ont pas encore été enregistrées. Voici les questions qui seront rejouées ici :",
+    "recordedLine": "Session réelle enregistrée le {date} — {models} — coût {cost}",
+    "modelOne": "modèle {names}",
+    "modelMany": "modèles {names}",
+    "devSample": "Exemple de développement : ce n'est pas une session réelle. Ce fichier n'est jamais publié.",
+    "liveCta": "Voir en direct sur rendez-vous",
+    "liveCtaText": "Sur vos documents ou sur des documents publics, en visio.",
+    "answer": "Réponse",
+    "sources": "Sources",
+    "openSource": "Ouvrir la source",
+    "score": "score {score}",
+    "citeLabel": "Voir la source {marker}",
+    "behind": "Coulisses",
+    "chunks": "Extraits retrouvés",
+    "rank": "Rang",
+    "document": "Document",
+    "scoreLabel": "Score",
+    "excerpt": "Extrait",
+    "models": "Modèles",
+    "latency": "Latence",
+    "tokens": "Tokens",
+    "cost": "Coût de la question",
+    "notes": "Notes",
+    "tokenKinds": {
+      "input_tokens": "en entrée",
+      "output_tokens": "en sortie",
+      "cache_read_tokens": "lus en cache",
+      "cache_write_tokens": "écrits en cache"
+    },
+    "ask": "Envoyer",
+    "askPlaceholder": "Votre question…",
+    "steps": {
+      "retrieving": "Recherche dans les documents",
+      "searching": "Recherche dans les documents",
+      "reranking": "Reclassement des passages",
+      "reading_document": "Lecture du document",
+      "generating": "Rédaction de la réponse",
+      "generatingCandidates": "Écriture de {n} requêtes SQL candidates",
+      "candidate": "Exécution d'une requête candidate",
+      "selecting": "Choix de la meilleure requête",
+      "writing": "Rédaction de la réponse",
+      "verifying": "Vérification de la réponse",
+      "waking": "Réveil de la base (jusqu'à 15 secondes)…",
+      "default": "Traitement en cours"
+    },
+    "errors": {
+      "quota_exceeded": "Quota de questions atteint pour aujourd'hui.",
+      "budget_paused": "Service en pause : le plafond de coût du jour est atteint.",
+      "captcha_failed": "La vérification anti-robot a échoué. Rechargez la page.",
+      "invalid_captcha": "La vérification anti-robot a échoué. Rechargez la page.",
+      "invalid_session": "Session expirée : posez la question à nouveau.",
+      "network": "Impossible de joindre l'API de la réalisation.",
+      "internal": "Une erreur est survenue pendant la réponse."
+    },
+    "artifacts": {
+      "sql": "Requête SQL",
+      "table": "Résultat",
+      "chart": "Graphique",
+      "figure": "Figure citée",
+      "page": "Page citée",
+      "image": "Image",
+      "video": "Passage vidéo",
+      "rows": "{n} lignes",
+      "truncated": "{shown} premières lignes sur {n}",
+      "scanned": "{mb} Mo lus",
+      "assumptions": "Hypothèses retenues"
+    }
   }
 }

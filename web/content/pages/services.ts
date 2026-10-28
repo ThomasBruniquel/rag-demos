@@ -69,15 +69,15 @@ const fr = {
   faq: [
     {
       q: "Mes documents quittent-ils mon entreprise ?",
-      a: "Avec AWS Bedrock, vos documents et vos questions restent dans la région AWS choisie (Paris par exemple) et ne servent pas à entraîner les modèles. Pour les données les plus sensibles, des modèles ouverts peuvent tourner entièrement chez vous : c'est le sujet de la démo 08.",
+      a: "Avec AWS Bedrock, vos documents et vos questions restent dans la région AWS choisie (Paris par exemple) et ne servent pas à entraîner les modèles. Pour les données les plus sensibles, des modèles ouverts peuvent tourner entièrement chez vous : c'est le sujet de la réalisation 08.",
     },
     {
       q: "Faut-il être sur AWS ?",
-      a: "AWS est ma spécialité et le choix par défaut de ces démos. Les méthodes, elles, se transposent à d'autres clouds ou à une installation sur vos serveurs. Le cadrage le précise.",
+      a: "AWS est mon cloud principal (certification Data Engineer en cours). Les réalisations couvrent aussi Azure, GCP et l'installation sur vos serveurs, avec ou sans framework (LangChain, LlamaIndex, Haystack). Le cadrage choisit selon votre existant.",
     },
     {
       q: "Combien coûte un RAG à faire tourner ?",
-      a: "De quelques euros à quelques centaines d'euros par mois, selon le volume de documents et de questions. Chaque démo de ce site affiche son coût réel ; le cadrage chiffre le vôtre.",
+      a: "De quelques euros à quelques centaines d'euros par mois, selon le volume de documents et de questions. Chaque réalisation de ce site affiche son coût mesuré ; le cadrage chiffre le vôtre.",
     },
     {
       q: "Combien de temps avant un premier résultat ?",
@@ -88,7 +88,7 @@ const fr = {
       a: "Oui. Les missions se font à distance, en français ou en anglais.",
     },
   ],
-  cta: { title: "Un projet en tête ?", text: "Décrivez vos documents et vos contraintes en quelques lignes.", contact: "Discuter d'un projet", demos: "Voir les démos" },
+  cta: { title: "Un projet en tête ?", text: "Décrivez vos documents et vos contraintes en quelques lignes.", contact: "Discuter d'un projet", demos: "Voir les réalisations" },
 };
 
 const en: typeof fr = {
@@ -156,15 +156,15 @@ const en: typeof fr = {
   faq: [
     {
       q: "Do my documents leave my company?",
-      a: "With AWS Bedrock, your documents and questions stay in the AWS region you choose (Paris, for example) and are not used to train the models. For the most sensitive data, open models can run entirely on your side: that is what demo 08 shows.",
+      a: "With AWS Bedrock, your documents and questions stay in the AWS region you choose (Paris, for example) and are not used to train the models. For the most sensitive data, open models can run entirely on your side: that is what project 08 shows.",
     },
     {
       q: "Do I need to be on AWS?",
-      a: "AWS is my speciality and the default for these demos. The methods themselves carry over to other clouds or to your own servers. Scoping settles it.",
+      a: "AWS is my main cloud (Data Engineer certification in progress). The projects also cover Azure, GCP and running on your own servers, with or without a framework (LangChain, LlamaIndex, Haystack). Scoping picks what fits your existing setup.",
     },
     {
       q: "How much does a RAG system cost to run?",
-      a: "From a few euros to a few hundred euros a month, depending on how many documents and questions. Every demo on this site shows its real cost; scoping puts a figure on yours.",
+      a: "From a few euros to a few hundred euros a month, depending on how many documents and questions. Every project on this site shows its measured cost; scoping puts a figure on yours.",
     },
     {
       q: "How soon is there a first result?",
@@ -175,7 +175,7 @@ const en: typeof fr = {
       a: "Yes. Missions are carried out remotely, in French or English.",
     },
   ],
-  cta: { title: "Have a project in mind?", text: "Describe your documents and constraints in a few lines.", contact: "Discuss a project", demos: "See the demos" },
+  cta: { title: "Have a project in mind?", text: "Describe your documents and constraints in a few lines.", contact: "Discuss a project", demos: "See the projects" },
 };
 
 export const services = { fr, en };

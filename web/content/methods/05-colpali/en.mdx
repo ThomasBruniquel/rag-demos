@@ -23,22 +23,22 @@ choose:
 avoid:
   - "Clean, born-digital documents: OCR or direct extraction is enough."
   - Millions of pages on a very tight budget.
-adaptation: "The demo compares both routes on the same questions: Textract OCR followed by text RAG, and ColPali-style visual retrieval. The exact model and its hosting will be stated at launch."
+adaptation: "The project compares four routes on the same questions: Textract OCR followed by text RAG, with or without figure descriptions, and visual retrieval with Cohere Embed v4 (one vector per page, live on Bedrock) or with ColQwen (ColPali family, many vectors per page). ColQwen needs a GPU to encode every question: it is computed once, for the evaluation and the example questions."
 duel:
   measured: false
   rows:
     - criterion: Answers found only in a figure
-      classic: "23%"
-      method: "71%"
+      classic: "25%"
+      method: "75%"
       winner: method
     - criterion: Right page in the top 5 results
       classic: "64%"
       method: "86%"
       winner: method
-    - criterion: Ingestion cost for 4,000 pages
-      classic: "€6"
-      method: "€9"
-      winner: classic
+    - criterion: Ingestion cost for 3,450 pages
+      classic: "€13"
+      method: "€6"
+      winner: method
     - criterion: Response time
       classic: "2.5 s"
       method: "3.4 s"

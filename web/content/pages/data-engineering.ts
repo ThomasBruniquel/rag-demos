@@ -28,18 +28,18 @@ const fr = {
     { name: "Opérations et support", share: "22 %", text: "Superviser les pipelines, gérer les erreurs, suivre qualité et coûts.", demos: ["04", "07"] },
     { name: "Sécurité et gouvernance", share: "18 %", text: "Qui voit quel document, masquage des données personnelles, chiffrement, traçabilité.", demos: ["04", "08"] },
   ],
-  domainsDemos: "Démos :",
-  servicesTitle: "Les services AWS de chaque démo",
-  servicesLead: "Chaque démo justifie ses services : rien n'est ajouté pour la vitrine.",
+  domainsDemos: "Réalisations :",
+  servicesTitle: "La stack de chaque réalisation",
+  servicesLead: "Chaque réalisation justifie ses choix : rien n'est ajouté pour la vitrine. Le détail des services (Glue, Athena, Step Functions…) est sur la page de chacune.",
   principlesTitle: "Règles suivies dans tous les pipelines",
   principles: [
     "Rejouable : relancer une ingestion donne le même résultat, sans doublon.",
     "Incrémental : seuls les documents nouveaux ou modifiés sont retraités.",
-    "Mesuré : volumes, durées et coût de chaque étape sont publiés sur la page de la démo.",
+    "Mesuré : volumes, durées et coût de chaque étape sont publiés sur la page de la réalisation.",
     "Économe : services sans coût fixe, journaux à durée de conservation limitée.",
     "Décrit en code : toute l'infrastructure est en Terraform, dans le dépôt public.",
   ],
-  cta: { title: "Vos données ne sont pas prêtes pour l'IA ?", text: "C'est souvent là que tout se joue. Parlons de vos sources et de leur mise à jour.", contact: "Discuter d'un projet", demos: "Voir les démos" },
+  cta: { title: "Vos données ne sont pas prêtes pour l'IA ?", text: "C'est souvent là que tout se joue. Parlons de vos sources et de leur mise à jour.", contact: "Discuter d'un projet", demos: "Voir les réalisations" },
 };
 
 const en: typeof fr = {
@@ -66,18 +66,18 @@ const en: typeof fr = {
     { name: "Operations and support", share: "22%", text: "Monitor pipelines, handle errors, track quality and costs.", demos: ["04", "07"] },
     { name: "Security and governance", share: "18%", text: "Who sees which document, masking personal data, encryption, audit trail.", demos: ["04", "08"] },
   ],
-  domainsDemos: "Demos:",
-  servicesTitle: "The AWS services behind each demo",
-  servicesLead: "Every demo justifies its services: nothing is added for show.",
+  domainsDemos: "Projects:",
+  servicesTitle: "The stack behind each project",
+  servicesLead: "Every project justifies its choices: nothing is added for show. The detailed services (Glue, Athena, Step Functions…) are on each project's page.",
   principlesTitle: "Rules followed in every pipeline",
   principles: [
     "Replayable: rerunning an ingestion gives the same result, with no duplicates.",
     "Incremental: only new or changed documents are processed again.",
-    "Measured: volumes, durations and the cost of each stage are published on the demo page.",
+    "Measured: volumes, durations and the cost of each stage are published on the project page.",
     "Frugal: no fixed-cost services, logs with limited retention.",
     "Written as code: all infrastructure is Terraform, in the public repository.",
   ],
-  cta: { title: "Is your data not ready for AI?", text: "That is often where it all happens. Let's talk about your sources and how they change.", contact: "Discuss a project", demos: "See the demos" },
+  cta: { title: "Is your data not ready for AI?", text: "That is often where it all happens. Let's talk about your sources and how they change.", contact: "Discuss a project", demos: "See the projects" },
 };
 
 export const dataEngineering = { fr, en };

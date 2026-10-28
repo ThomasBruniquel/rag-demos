@@ -1,50 +1,53 @@
 ---
 title: Technical Documentation
 tagline: Find a procedure or a diagram in scanned reports, and see the figure it comes from.
-problem: "A manufacturer holds decades of manuals and technical reports, often scanned, full of diagrams and tables. The answer to a maintenance question sometimes lives only in a figure, which text extraction ignores."
+problem: "For a manufacturer with decades of manuals and technical reports, often scanned, full of diagrams and tables. The answer to a maintenance question sometimes lives only in a figure, which text extraction ignores."
 corpus:
   name: NASA Technical Reports Server (NTRS)
-  size: "~100 reports, ~4,000 pages, including scans from the 1960s to the 1980s"
-  licence: Public domain (NASA documents, United States)
+  size: "70 reports, 3,450 pages, including 37 scans from 1963 to 1985"
+  licence: "U.S. Government works, public use permitted (NTRS)"
   url: https://ntrs.nasa.gov/
 examples:
-  - Show me the diagram of the fuel system test rig.
-  - What is the procedure for inspecting the turbine blades?
-  - Which report describes the wind tunnel set-up, and what does the figure show?
-  - What was the maximum temperature measured during the test?
+  - "Show me the hydraulic circuit of the antenna drive: at what pressure are the relief valves set?"
+  - Which component rejects heat in the Stirling convertor tested in thermal vacuum?
+  - What were the operating conditions of the mainshaft seals during the 150-hour endurance run?
+  - Show me a photo of the lubrication pump shaft and gear assemblies.
 architecture:
-  alt: "Architecture: two pipelines compared on the same questions. OCR route: Textract, text and figure descriptions indexed in S3 Vectors. Visual route: pages handled as images by a ColPali-style model. The answer shows the cited page and figure."
+  alt: "Architecture: two families of routes compared on the same questions. OCR route: text read by Textract and figure descriptions, indexed in S3 Vectors. Visual route: pages indexed as images, by Cohere Embed v4 live and by ColQwen (ColPali-style) computed offline. The answer shows the cited page and figure."
   choices:
     - title: Compare OCR and visual retrieval
-      why: Depending on the document, either one wins; the demo shows it on the same questions instead of claiming it.
+      why: Depending on the document, either one wins; the project shows it on the same questions instead of claiming it.
     - title: Show the cited figure
       why: For a maintenance question, seeing the diagram beats reading a description.
     - title: OCR quality control
       why: Pages with low Textract confidence are flagged for review.
+    - title: One embedding model for text and images
+      why: "Between the OCR route and the visual route only the input changes: the comparison is about the method, not about two models."
   discarded:
     - title: OCR only
       why: Loses the information in diagrams, which is often what people are looking for.
-    - title: Describing every figure with a vision model, without visual retrieval
-      why: Expensive at ingestion and descriptions miss details; kept as a comparison variant.
+    - title: A ColPali-style model queried live
+      why: It needs a GPU to encode every question, beyond the budget; ColQwen is computed once, for the evaluation and the example questions.
 pipeline:
-  alt: "Pipeline: upload to S3, S3 event, Step Functions: scanned or born-digital detection, Textract when scanned, figure extraction, text and visual representations computed, S3 Vectors index."
+  alt: "Pipeline: upload to S3, EventBridge, one Step Functions run per report: scanned or born-digital detection, text from Textract (scans) or from the PDF (born-digital), figures found by Textract and described by Claude, embeddings of the text and of the page images, S3 Vectors index."
   facts:
     - label: Volume
-      value: "~100 reports, ~4,000 pages"
+      value: "70 reports, 3,450 pages"
     - label: Ingestion time
       value: "~2 h"
     - label: Ingestion cost
-      value: "€15 to €35"
+      value: "≈ €19"
     - label: Pages flagged for review
       value: OCR confidence below 80%
 evaluation:
   measured: false
-  caption: Questions whose answer is only in a figure or a scanned table, and questions about the text.
-  columns: [Set-up, Answers in a figure, Right page (top 5), Cost per question]
+  caption: Hand-checked questions whose answer is in a figure, a table or the text, over old scans and recent reports.
+  columns: [Route, "Figures (right page, top 5)", "Scans (right page, top 5)", Cost per question]
   rows:
-    - [OCR + text RAG, "23%", "64%", "€0.004"]
-    - [OCR + figure descriptions, "52%", "75%", "€0.005"]
-    - [Visual retrieval (ColPali-style), "71%", "86%", "€0.006"]
+    - ["OCR, text only", "25%", "60%", "€0.0003"]
+    - [OCR + figure descriptions, "50%", "65%", "€0.0003"]
+    - [Page images (Cohere Embed v4), "65%", "60%", "€0.0005"]
+    - ["Page images (ColQwen, offline)", "75%", "65%", "€0.0005"]
 mission:
   duration: "Proof of concept in 2 weeks, production in 4 to 6 weeks"
   scope:
@@ -54,10 +57,12 @@ mission:
     - Quality control and a review queue
 limits:
   - It doesn't read CAD drawings, only PDF documents and images.
-  - Badly degraded scans remain hard for both approaches.
+  - Badly degraded scans remain hard for every approach.
+  - The ColQwen route is only available for the example questions.
+  - The reports are in English; questions can be asked in French.
 seo:
   title: Multimodal RAG over scanned technical documents
-  description: "Demo: search 4,000 pages of scanned reports with diagrams. Textract OCR versus ColPali visual retrieval, with figures shown in the answer."
+  description: "Project: search 3,450 pages of NASA reports, scanned and recent, with diagrams. Textract OCR versus visual retrieval (Cohere Embed v4, ColQwen), with figures shown in the answer."
 ---
 
-Rather than choosing blindly between OCR and visual retrieval, the demo puts them head to head on the same questions, and shows the figure that backs up the answer.
+Rather than choosing blindly between OCR and visual retrieval, the project puts them head to head on the same questions, and shows the figure that backs up the answer.

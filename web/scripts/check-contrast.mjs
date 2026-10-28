@@ -34,6 +34,9 @@ const pairs = [
   ["on-brand", "brand", 4.5], ["on-brand-muted", "brand", 4.5], ["gold", "brand", 4.5],
   ["warn", "warn-soft", 4.5], ["danger", "danger-soft", 4.5], ["danger", "paper", 4.5],
   ["field", "paper", 3],
+  // Keyword badges, citation markers, player panes, highlighted Skills row.
+  ["ink", "surface", 4.5], ["ink", "accent-soft", 4.5], ["gold-ink", "surface", 4.5],
+  ["danger", "surface", 4.5], ["fg", "warn-soft", 4.5], ["muted", "warn-soft", 4.5],
   ["fam-search", "paper", 3], ["fam-structure", "paper", 3], ["fam-verification", "paper", 3],
   ["fam-agents", "paper", 2], ["fam-sovereignty", "paper", 3], ["fam-multimodal", "paper", 1.5],
 ];

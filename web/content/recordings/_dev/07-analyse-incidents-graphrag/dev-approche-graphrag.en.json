@@ -1,0 +1,269 @@
+{
+ "version": 1,
+ "demo": "07",
+ "locale": "en",
+ "question_id": "dev-approche-graphrag",
+ "question": "Which factors come up most often in approach-phase accidents?",
+ "variant": "graphrag",
+ "recorded_at": "2026-10-28T10:00:00Z",
+ "stack": {
+  "models": [
+   "Llama 3.3 70B"
+  ],
+  "cloud": [
+   "local"
+  ],
+  "framework": [
+   "LlamaIndex"
+  ],
+  "vector_store": [
+   "Neo4j"
+  ]
+ },
+ "duration_ms": 5750,
+ "cost_eur": 0.0,
+ "events": [
+  {
+   "t": 0,
+   "type": "status",
+   "data": {
+    "step": "retrieving"
+   }
+  },
+  {
+   "t": 1500,
+   "type": "citation",
+   "data": {
+    "id": 1,
+    "marker": "[1]",
+    "doc_title": "Communauté « approche » / community summary (sample)",
+    "location": null,
+    "snippet": "Sample excerpt.",
+    "url": null,
+    "score": 0.69
+   }
+  },
+  {
+   "t": 1900,
+   "type": "status",
+   "data": {
+    "step": "generating"
+   }
+  },
+  {
+   "t": 2200,
+   "type": "token",
+   "data": {
+    "text": "Across "
+   }
+  },
+  {
+   "t": 2326,
+   "type": "token",
+   "data": {
+    "text": "the "
+   }
+  },
+  {
+   "t": 2452,
+   "type": "token",
+   "data": {
+    "text": "whole "
+   }
+  },
+  {
+   "t": 2578,
+   "type": "token",
+   "data": {
+    "text": "graph, "
+   }
+  },
+  {
+   "t": 2704,
+   "type": "token",
+   "data": {
+    "text": "three "
+   }
+  },
+  {
+   "t": 2830,
+   "type": "token",
+   "data": {
+    "text": "factors "
+   }
+  },
+  {
+   "t": 2956,
+   "type": "token",
+   "data": {
+    "text": "dominate "
+   }
+  },
+  {
+   "t": 3081,
+   "type": "token",
+   "data": {
+    "text": "approach "
+   }
+  },
+  {
+   "t": 3207,
+   "type": "token",
+   "data": {
+    "text": "accidents "
+   }
+  },
+  {
+   "t": 3333,
+   "type": "token",
+   "data": {
+    "text": "[1]:\n\n"
+   }
+  },
+  {
+   "t": 3459,
+   "type": "token",
+   "data": {
+    "text": "- "
+   }
+  },
+  {
+   "t": 3585,
+   "type": "token",
+   "data": {
+    "text": "Energy "
+   }
+  },
+  {
+   "t": 3711,
+   "type": "token",
+   "data": {
+    "text": "management "
+   }
+  },
+  {
+   "t": 3837,
+   "type": "token",
+   "data": {
+    "text": "(speed, "
+   }
+  },
+  {
+   "t": 3963,
+   "type": "token",
+   "data": {
+    "text": "glide "
+   }
+  },
+  {
+   "t": 4089,
+   "type": "token",
+   "data": {
+    "text": "path)\n"
+   }
+  },
+  {
+   "t": 4215,
+   "type": "token",
+   "data": {
+    "text": "- "
+   }
+  },
+  {
+   "t": 4341,
+   "type": "token",
+   "data": {
+    "text": "Marginal "
+   }
+  },
+  {
+   "t": 4467,
+   "type": "token",
+   "data": {
+    "text": "weather\n"
+   }
+  },
+  {
+   "t": 4593,
+   "type": "token",
+   "data": {
+    "text": "- "
+   }
+  },
+  {
+   "t": 4719,
+   "type": "token",
+   "data": {
+    "text": "Late "
+   }
+  },
+  {
+   "t": 4844,
+   "type": "token",
+   "data": {
+    "text": "go-around "
+   }
+  },
+  {
+   "t": 4970,
+   "type": "token",
+   "data": {
+    "text": "decision\n\n"
+   }
+  },
+  {
+   "t": 5096,
+   "type": "token",
+   "data": {
+    "text": "(Development "
+   }
+  },
+  {
+   "t": 5222,
+   "type": "token",
+   "data": {
+    "text": "sample: "
+   }
+  },
+  {
+   "t": 5348,
+   "type": "token",
+   "data": {
+    "text": "made-up "
+   }
+  },
+  {
+   "t": 5474,
+   "type": "token",
+   "data": {
+    "text": "answer.)"
+   }
+  },
+  {
+   "t": 5700,
+   "type": "trace",
+   "data": {
+    "trace_id": "dev-sample",
+    "mode": "dev",
+    "model_id": "Llama 3.3 70B (Ollama)",
+    "chunks": [],
+    "usage": {
+     "input_tokens": 3120,
+     "output_tokens": 210
+    },
+    "latency_ms": {
+     "total": 5700
+    },
+    "cost_eur": 0.0,
+    "notes": [
+     "development sample, not a real session"
+    ]
+   }
+  },
+  {
+   "t": 5750,
+   "type": "done",
+   "data": {}
+  }
+ ]
+}

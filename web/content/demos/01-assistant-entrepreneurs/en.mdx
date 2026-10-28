@@ -1,17 +1,17 @@
 ---
 title: Small Business Assistant
-tagline: A document chatbot that shows its sources, ships in days, and reads your PDFs too.
-problem: "A small company wants an assistant that answers from its own documentation, with sources, without spending months on it or paying for heavy infrastructure. Staff keep asking the same questions; the answers exist, but they are scattered across hundreds of pages."
+tagline: A document chatbot that shows its sources, ships in days, and can also read a PDF you hand it.
+problem: "For a small business that wants an assistant answering from its own documentation, with sources, without spending months on it or paying for heavy infrastructure. Staff keep asking the same questions; the answers exist, but they are scattered across hundreds of pages."
 corpus:
   name: "\"Entreprendre\" (business) help pages from Service-Public.fr, the French government portal (DILA)"
-  size: "~3,000 pages, in French"
+  size: "775 pages, in French"
   licence: Etalab Open Licence 2.0
   url: https://www.data.gouv.fr/datasets/fiches-pratiques-et-ressources-entreprendre-service-public-fr/
 examples:
   - How do I register as a sole trader (micro-entreprise)?
   - At what turnover do I have to charge VAT?
   - What support is there for hiring a first employee?
-  - "With your PDF: what are the key dates in this document?"
+  - "With an uploaded PDF: what are the key dates in this document?"
 architecture:
   alt: "Architecture: the browser calls a Lambda function, which queries Bedrock Knowledge Bases (S3 Vectors index) for the help pages, or reads the visitor's cached PDF directly, then generates the answer with Claude on Bedrock."
   choices:
@@ -23,14 +23,14 @@ architecture:
       why: No fixed cost, a few cents of storage per month.
   discarded:
     - title: OpenSearch Serverless
-      why: Several hundred euros a month at minimum, impossible to justify for 3,000 pages.
+      why: Several hundred euros a month at minimum, impossible to justify for 775 pages.
     - title: A custom retrieval pipeline
       why: More control, but weeks of work for little quality gain on simple pages.
 pipeline:
-  alt: "Pipeline: DILA archive downloaded, XML converted to Markdown by a Lambda function, stored on S3, Knowledge Base synchronised. For uploads: stored under a session prefix, deleted automatically after one hour."
+  alt: "Pipeline: every month, a Step Functions state machine downloads the DILA archive, a Lambda function converts the XML to Markdown and stores it on S3, then the Knowledge Base syncs. For uploads: one S3 folder per document, deleted after one hour by EventBridge Scheduler."
   facts:
     - label: Volume
-      value: "~3,000 pages"
+      value: "775 pages"
     - label: Ingestion time
       value: "~20 min"
     - label: Ingestion cost
@@ -60,7 +60,7 @@ limits:
   - Help pages are refreshed monthly, not in real time.
 seo:
   title: RAG chatbot over your PDF documents, with sources
-  description: "Live demo: a document assistant that answers from 3,000 official help pages and from your own PDF, with citations. Architecture, costs and measured quality."
+  description: "Project: a document assistant that answers from 775 official help pages and from an uploaded PDF, with citations. Architecture, costs and measured quality."
 ---
 
 The architecture deliberately avoids sophistication: a managed service for the knowledge base, and the visitor's document read in full. That is what makes it possible to ship a reliable assistant to a small company within days, then run it for a few euros a month.

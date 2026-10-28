@@ -7,6 +7,11 @@ docTypes: [text, data]
 volume: small
 constraints: [time, reliability]
 sectors: [saas]
-aws: [Bedrock, Bedrock Guardrails, Lambda, DynamoDB Streams, EventBridge, S3 Vectors]
-vectorStore: S3 Vectors + DynamoDB
+stack:
+  cloud: [azure]
+  framework: [langchain, langgraph]
+  models: [gpt]
+  vectorStores: [azure-ai-search]
+  integrations: [sharepoint]
+  compliance: [guardrails]
 sourcePath: demos/06-support-client-agentique

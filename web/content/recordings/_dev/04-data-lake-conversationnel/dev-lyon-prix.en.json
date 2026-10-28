@@ -1,0 +1,469 @@
+{
+ "version": 1,
+ "demo": "04",
+ "locale": "en",
+ "question_id": "dev-lyon-prix",
+ "question": "Median price per m² of flats in Lyon in 2024, by district?",
+ "variant": null,
+ "recorded_at": "2026-10-28T10:00:00Z",
+ "stack": {
+  "models": [
+   "Claude Sonnet 5.5"
+  ],
+  "cloud": [
+   "AWS"
+  ],
+  "framework": [],
+  "vector_store": [
+   "S3 Vectors"
+  ]
+ },
+ "duration_ms": 6150,
+ "cost_eur": 0.0042,
+ "events": [
+  {
+   "t": 0,
+   "type": "status",
+   "data": {
+    "step": "retrieving"
+   }
+  },
+  {
+   "t": 700,
+   "type": "status",
+   "data": {
+    "step": "generating",
+    "candidates": 3
+   }
+  },
+  {
+   "t": 1600,
+   "type": "status",
+   "data": {
+    "step": "candidate",
+    "index": 1
+   }
+  },
+  {
+   "t": 2100,
+   "type": "status",
+   "data": {
+    "step": "candidate",
+    "index": 2
+   }
+  },
+  {
+   "t": 2500,
+   "type": "status",
+   "data": {
+    "step": "candidate",
+    "index": 3
+   }
+  },
+  {
+   "t": 2900,
+   "type": "status",
+   "data": {
+    "step": "selecting"
+   }
+  },
+  {
+   "t": 3300,
+   "type": "artifact",
+   "data": {
+    "kind": "sql",
+    "dialect": "athena",
+    "sql": "SELECT arrondissement, approx_percentile(prix_m2, 0.5) AS prix_median_m2\nFROM dvf.mutations_appartements\nWHERE commune = 'Lyon' AND annee = 2024\nGROUP BY arrondissement\nORDER BY arrondissement",
+    "bytes_scanned": 18400000,
+    "assumptions": [
+     "\"flat\" = type_local 'Appartement'"
+    ]
+   }
+  },
+  {
+   "t": 3350,
+   "type": "artifact",
+   "data": {
+    "kind": "table",
+    "columns": [
+     "arrondissement",
+     "prix_median_m2"
+    ],
+    "types": [
+     "varchar",
+     "double"
+    ],
+    "rows": [
+     [
+      "Lyon 1er",
+      5480
+     ],
+     [
+      "Lyon 2e",
+      5910
+     ],
+     [
+      "Lyon 3e",
+      4620
+     ],
+     [
+      "Lyon 4e",
+      5300
+     ],
+     [
+      "Lyon 5e",
+      4390
+     ],
+     [
+      "Lyon 6e",
+      6120
+     ],
+     [
+      "Lyon 7e",
+      4710
+     ],
+     [
+      "Lyon 8e",
+      3880
+     ],
+     [
+      "Lyon 9e",
+      3950
+     ]
+    ],
+    "row_count": 9,
+    "truncated": false
+   }
+  },
+  {
+   "t": 3400,
+   "type": "artifact",
+   "data": {
+    "kind": "chart",
+    "type": "bar",
+    "x": "arrondissement",
+    "y": [
+     "prix_median_m2"
+    ],
+    "points": [
+     [
+      "Lyon 1er",
+      5480
+     ],
+     [
+      "Lyon 2e",
+      5910
+     ],
+     [
+      "Lyon 3e",
+      4620
+     ],
+     [
+      "Lyon 4e",
+      5300
+     ],
+     [
+      "Lyon 5e",
+      4390
+     ],
+     [
+      "Lyon 6e",
+      6120
+     ],
+     [
+      "Lyon 7e",
+      4710
+     ],
+     [
+      "Lyon 8e",
+      3880
+     ],
+     [
+      "Lyon 9e",
+      3950
+     ]
+    ]
+   }
+  },
+  {
+   "t": 3500,
+   "type": "status",
+   "data": {
+    "step": "writing"
+   }
+  },
+  {
+   "t": 3700,
+   "type": "token",
+   "data": {
+    "text": "In "
+   }
+  },
+  {
+   "t": 3766,
+   "type": "token",
+   "data": {
+    "text": "2024, "
+   }
+  },
+  {
+   "t": 3831,
+   "type": "token",
+   "data": {
+    "text": "the "
+   }
+  },
+  {
+   "t": 3897,
+   "type": "token",
+   "data": {
+    "text": "median "
+   }
+  },
+  {
+   "t": 3963,
+   "type": "token",
+   "data": {
+    "text": "flat "
+   }
+  },
+  {
+   "t": 4029,
+   "type": "token",
+   "data": {
+    "text": "price "
+   }
+  },
+  {
+   "t": 4094,
+   "type": "token",
+   "data": {
+    "text": "in "
+   }
+  },
+  {
+   "t": 4160,
+   "type": "token",
+   "data": {
+    "text": "Lyon "
+   }
+  },
+  {
+   "t": 4226,
+   "type": "token",
+   "data": {
+    "text": "ranges "
+   }
+  },
+  {
+   "t": 4291,
+   "type": "token",
+   "data": {
+    "text": "from "
+   }
+  },
+  {
+   "t": 4357,
+   "type": "token",
+   "data": {
+    "text": "€3,880/m² "
+   }
+  },
+  {
+   "t": 4423,
+   "type": "token",
+   "data": {
+    "text": "(8th) "
+   }
+  },
+  {
+   "t": 4489,
+   "type": "token",
+   "data": {
+    "text": "to "
+   }
+  },
+  {
+   "t": 4554,
+   "type": "token",
+   "data": {
+    "text": "€6,120/m² "
+   }
+  },
+  {
+   "t": 4620,
+   "type": "token",
+   "data": {
+    "text": "(6th). "
+   }
+  },
+  {
+   "t": 4686,
+   "type": "token",
+   "data": {
+    "text": "The "
+   }
+  },
+  {
+   "t": 4751,
+   "type": "token",
+   "data": {
+    "text": "2nd "
+   }
+  },
+  {
+   "t": 4817,
+   "type": "token",
+   "data": {
+    "text": "and "
+   }
+  },
+  {
+   "t": 4883,
+   "type": "token",
+   "data": {
+    "text": "6th "
+   }
+  },
+  {
+   "t": 4949,
+   "type": "token",
+   "data": {
+    "text": "districts "
+   }
+  },
+  {
+   "t": 5014,
+   "type": "token",
+   "data": {
+    "text": "are "
+   }
+  },
+  {
+   "t": 5080,
+   "type": "token",
+   "data": {
+    "text": "the "
+   }
+  },
+  {
+   "t": 5146,
+   "type": "token",
+   "data": {
+    "text": "most "
+   }
+  },
+  {
+   "t": 5211,
+   "type": "token",
+   "data": {
+    "text": "expensive; "
+   }
+  },
+  {
+   "t": 5277,
+   "type": "token",
+   "data": {
+    "text": "the "
+   }
+  },
+  {
+   "t": 5343,
+   "type": "token",
+   "data": {
+    "text": "8th "
+   }
+  },
+  {
+   "t": 5409,
+   "type": "token",
+   "data": {
+    "text": "and "
+   }
+  },
+  {
+   "t": 5474,
+   "type": "token",
+   "data": {
+    "text": "9th "
+   }
+  },
+  {
+   "t": 5540,
+   "type": "token",
+   "data": {
+    "text": "the "
+   }
+  },
+  {
+   "t": 5606,
+   "type": "token",
+   "data": {
+    "text": "most "
+   }
+  },
+  {
+   "t": 5671,
+   "type": "token",
+   "data": {
+    "text": "affordable. "
+   }
+  },
+  {
+   "t": 5737,
+   "type": "token",
+   "data": {
+    "text": "(Made-up "
+   }
+  },
+  {
+   "t": 5803,
+   "type": "token",
+   "data": {
+    "text": "figures: "
+   }
+  },
+  {
+   "t": 5869,
+   "type": "token",
+   "data": {
+    "text": "development "
+   }
+  },
+  {
+   "t": 5934,
+   "type": "token",
+   "data": {
+    "text": "sample.)"
+   }
+  },
+  {
+   "t": 6100,
+   "type": "trace",
+   "data": {
+    "trace_id": "dev-sample",
+    "mode": "dev",
+    "model_id": "Claude Sonnet 5.5",
+    "chunks": [],
+    "usage": {
+     "input_tokens": 3120,
+     "output_tokens": 210
+    },
+    "latency_ms": {
+     "sql": 2900,
+     "athena": 400,
+     "answer": 2600
+    },
+    "cost_eur": 0.0042,
+    "notes": [
+     "development sample, not a real session"
+    ]
+   }
+  },
+  {
+   "t": 6150,
+   "type": "done",
+   "data": {}
+  }
+ ]
+}
