@@ -167,6 +167,7 @@ export function Character({
   family,
   mood = "idle",
   label,
+  accessory = true,
   className = "",
 }: {
   method: string;
@@ -174,6 +175,8 @@ export function Character({
   mood?: Mood;
   /** Accessible name; without it the drawing is decorative. */
   label?: string;
+  /** False draws the plain silhouette, without the method's accessory. */
+  accessory?: boolean;
   className?: string;
 }) {
   const body = bodies(`var(--fam-${family})`)[family];
@@ -192,7 +195,7 @@ export function Character({
         <rect x="36" y={body.bottom - 4} width="8" height={88 - body.bottom + 4} rx="3" fill={LINE} />
         <rect x="52" y={body.bottom - 4} width="8" height={88 - body.bottom + 4} rx="3" fill={LINE} />
         {body.shape}
-        <g className="char-accessory">{accessories[method]}</g>
+        <g className="char-accessory">{accessory ? accessories[method] : null}</g>
         <g className="char-eyes">
           <circle cx={leftEye} cy={eyeY} r="3.6" fill={FACE} />
           <circle cx={rightEye} cy={eyeY} r="3.6" fill={FACE} />

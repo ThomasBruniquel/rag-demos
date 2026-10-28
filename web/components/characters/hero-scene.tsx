@@ -16,10 +16,11 @@ import { Character } from "./character";
  */
 
 const cast = [
-  { method: "groundedness", family: "verification", size: 88, left: 20, top: 83, mood: "idle" },
-  { method: "stair", family: "structure", size: 104, left: 98, top: 71, mood: "idle" },
-  { method: "cag", family: "search", size: 118, left: 192, top: 60, mood: "idle" },
-  { method: "colpali", family: "multimodal", size: 100, left: 318, top: 74, mood: "idle" },
+  // Plain silhouettes for green and yellow: their page already tells their story.
+  { method: "groundedness", family: "verification", size: 88, left: 20, top: 83, mood: "idle", accessory: false },
+  { method: "stair", family: "structure", size: 104, left: 98, top: 71, mood: "idle", accessory: true },
+  { method: "cag", family: "search", size: 118, left: 192, top: 60, mood: "idle", accessory: true },
+  { method: "colpali", family: "multimodal", size: 100, left: 318, top: 74, mood: "idle", accessory: false },
 ] as const;
 
 const W = 440;
@@ -45,7 +46,7 @@ export function HeroScene({ className = "" }: { className?: string }) {
           className="absolute"
           style={{ left: pct(c.left, W), top: pct(c.top, H), width: pct(c.size, W), height: pct(c.size, H) }}
         >
-          <Character method={c.method} family={c.family} mood={c.mood} className="size-full" />
+          <Character method={c.method} family={c.family} mood={c.mood} accessory={c.accessory} className="size-full" />
         </div>
       ))}
 
