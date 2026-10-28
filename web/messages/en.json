@@ -37,13 +37,6 @@
     "legalTitle": "Legal",
     "legal": "Legal notice",
     "privacy": "Privacy",
-    "commitmentsLabel": "Commitments",
-    "commitments": [
-      "Quality measured on every project",
-      "Measured cost for every question",
-      "Public source code on GitHub",
-      "Real sessions, never edited"
-    ],
     "rights": "© {year} {owner}. Project code released under an open-source licence."
   },
   "marks": {

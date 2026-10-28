@@ -37,13 +37,6 @@
     "legalTitle": "Légal",
     "legal": "Mentions légales",
     "privacy": "Confidentialité",
-    "commitmentsLabel": "Engagements",
-    "commitments": [
-      "Qualité mesurée sur chaque réalisation",
-      "Coût mesuré pour chaque question",
-      "Code source public sur GitHub",
-      "Sessions réelles, jamais retouchées"
-    ],
     "rights": "© {year} {owner}. Code des réalisations sous licence libre."
   },
   "marks": {

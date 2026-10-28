@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { Character } from "@/components/characters/character";
+import { HeroScene } from "@/components/characters/hero-scene";
 import { Section } from "@/components/layout/container";
 import { ProjectList } from "@/components/pages/demo-views";
 import { href, projectsAnchor } from "@/lib/i18n/routes";
@@ -40,12 +40,8 @@ export default async function HomePage() {
               </Link>
             </div>
           </div>
-          {/* Three characters, like the chess pieces of echic's hero. */}
-          <div aria-hidden="true" className="hidden items-end gap-1 lg:flex">
-            <Character method="groundedness" family="verification" className="size-20" />
-            <Character method="stair" family="structure" className="size-28" />
-            <Character method="cag" family="search" className="size-36" />
-          </div>
+          {/* The method characters around a desk, going through documents. */}
+          <HeroScene className="hidden lg:block" />
         </div>
       </section>
 
