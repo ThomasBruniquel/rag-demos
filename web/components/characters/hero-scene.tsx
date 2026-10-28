@@ -16,10 +16,10 @@ import { Character } from "./character";
  */
 
 const cast = [
-  // Plain silhouettes for green and yellow: their page already tells their story.
+  // Plain silhouettes except purple's stairs: each page already tells the story.
   { method: "groundedness", family: "verification", size: 88, left: 20, top: 83, mood: "idle", accessory: false },
   { method: "stair", family: "structure", size: 104, left: 98, top: 71, mood: "idle", accessory: true },
-  { method: "cag", family: "search", size: 118, left: 192, top: 60, mood: "idle", accessory: true },
+  { method: "cag", family: "search", size: 118, left: 192, top: 60, mood: "idle", accessory: false },
   { method: "colpali", family: "multimodal", size: 100, left: 318, top: 74, mood: "idle", accessory: false },
 ] as const;
 
