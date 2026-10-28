@@ -4,8 +4,8 @@ import { Character } from "./character";
 /*
  * Home page scene: four method characters behind a desk, going through
  * documents, each one its own: verification (green) a page of text, structure
- * (purple) a table of contents, retrieval (blue) a page under a magnifying
- * glass, multimodal (yellow) a tablet showing images. Decorative only
+ * (purple) a table of contents, retrieval (blue) a page with the passage
+ * found highlighted, multimodal (yellow) a page with a picture. Decorative only
  * (aria-hidden); the only motion is the characters' blinking. The desk legs
  * reach the bottom of the stage, so the desk stands on the line below it.
  *
@@ -25,8 +25,6 @@ const cast = [
 const W = 440;
 const H = 200;
 const pct = (value: number, total: number) => `${(value / total) * 100}%`;
-
-const line = "var(--char-line)";
 
 /** A sheet lying on the desk, seen in perspective (a parallelogram) with text lines. */
 function Sheet({ x, tilt = 0, children }: { x: number; tilt?: number; children?: ReactNode }) {
@@ -71,34 +69,22 @@ export function HeroScene({ className = "" }: { className?: string }) {
           <path d="M11 153h22M13.5 156.5h18M8.5 160h24" stroke="var(--line-strong)" strokeWidth="1.2" strokeLinecap="round" />
           <path d="M40 153h4M42 156.5h4M43 160h4" stroke="var(--fam-structure)" strokeWidth="1.2" strokeLinecap="round" />
         </Sheet>
-        {/* Retrieval: the page being searched, one line highlighted under the glass. */}
+        {/* Retrieval: the page being searched, the passage found highlighted. */}
         <Sheet x={226} tilt={-1}>
           <path d="M8 153h34M6 160h28" stroke="var(--line-strong)" strokeWidth="1.2" strokeLinecap="round" />
           <path d="M7 156.5h40" stroke="var(--gold)" strokeWidth="2.4" strokeLinecap="round" />
         </Sheet>
-        {/* Multimodal: a tablet showing a page of images. */}
-        <g transform="translate(336 0) rotate(3 32 158)">
-          <path d="M3 147h56l7 17H-4Z" fill={line} strokeLinejoin="round" />
-          <path d="M6 149.5h50l5 12H1Z" fill="var(--paper)" />
-          {[6, 22, 38].map((x) => (
-            <g key={x} transform={`translate(${x} 0)`}>
-              <path d="M2 151h12l1.5 8H.5Z" fill="var(--fam-multimodal-soft)" stroke="var(--fam-multimodal)" strokeWidth="0.9" strokeLinejoin="round" />
-              <path d="m2 158.3 4-3.6 3 2.4 2.2-1.6 3.6 2.8" fill="none" stroke="var(--fam-multimodal)" strokeWidth="1" strokeLinejoin="round" />
-            </g>
-          ))}
-        </g>
+        {/* Multimodal: a page of text with a picture in the middle. */}
+        <Sheet x={340} tilt={3}>
+          <path d="M8 152.5h34M5.5 161h30" stroke="var(--line-strong)" strokeWidth="1.2" strokeLinecap="round" />
+          <path d="M17 154.5h17l.8 4.5H16.2Z" fill="var(--fam-multimodal-soft)" stroke="var(--fam-multimodal)" strokeWidth="1" strokeLinejoin="round" />
+        </Sheet>
         {/* A small stack of files at the end of the desk. */}
         <g>
           <path d="M408 146h20l3 6h-26Z" fill="var(--fam-structure-soft)" stroke="var(--line-strong)" strokeWidth="1.2" />
           <path d="M406 140h20l3 6h-26Z" fill="var(--fam-search-soft)" stroke="var(--line-strong)" strokeWidth="1.2" />
         </g>
 
-        {/* The magnifying glass, resting over the highlighted line. */}
-        <g>
-          <path d="m272 162 15 13" stroke={line} strokeWidth="5" strokeLinecap="round" />
-          <circle cx="262" cy="153" r="12" fill="var(--accent-soft)" fillOpacity="0.6" stroke={line} strokeWidth="3.5" />
-          <path d="M256 148a7 7 0 0 1 6-2.5" stroke="var(--paper)" strokeWidth="2" strokeLinecap="round" fill="none" />
-        </g>
       </svg>
     </div>
   );
