@@ -15,7 +15,6 @@ export async function Header() {
   const other = locale === "fr" ? "en" : "fr";
 
   const items: NavItem[] = [
-    { href: href(locale, "demos"), label: t.nav.demos },
     { href: href(locale, "methods"), label: t.nav.methods },
     { href: href(locale, "whatIsRag"), label: t.nav.whatIsRag },
     { href: href(locale, "services"), label: t.nav.services },

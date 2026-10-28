@@ -51,31 +51,15 @@
   },
   "home": {
     "eyebrow": "AI assistants · RAG",
-    "titleTop": "State-of-the-art RAG,",
-    "titleBottom": "to query your documents intelligently, within your constraints.",
+    "titleTop": "Sourced answers,",
+    "titleBottom": "drawn from your own documents.",
     "lead": "RAG connects an AI model to your own documents: it finds the relevant passages, then writes an answer that cites them. Nothing made up, everything checkable.",
     "primaryCta": "See the projects",
     "secondaryCta": "Discuss a project",
-    "stepsLabel": "How it works",
-    "steps": [
-      {
-        "title": "A question",
-        "text": "Asked in plain language, as you would ask a colleague."
-      },
-      {
-        "title": "A search",
-        "text": "The relevant passages, found among thousands of pages."
-      },
-      {
-        "title": "An answer with sources",
-        "text": "Every claim points back to its original document."
-      }
-    ],
     "demos": {
-      "eyebrow": "9 projects",
-      "title": "Watch them in action",
-      "lead": "Nine projects built end to end on public data, each with its method, its stack, its measured quality and its cost. The sessions you see are real: recorded on the running system, then replayed exactly as they happened.",
-      "all": "All projects, with filters"
+      "eyebrow": "9 projects · public data · open source",
+      "title": "Projects built",
+      "lead": "Nine projects built end to end on public data, each with its method, its stack, its measured quality and its cost. The sessions you see are real: recorded on the running system, then replayed exactly as they happened."
     },
     "process": {
       "eyebrow": "How projects run",
@@ -108,7 +92,6 @@
     }
   },
   "catalog": {
-    "eyebrow": "9 projects · 6 method families",
     "filtersLabel": "Filter the projects",
     "docTypes": "Kind of documents",
     "volume": "Volume",
@@ -196,11 +179,6 @@
     }
   },
   "pages": {
-    "demos": {
-      "title": "Projects",
-      "lead": "Projects built end to end on public data — open source.",
-      "description": "Nine RAG projects built end to end on public data: real recorded sessions, architecture, data pipeline, measured quality and cost. LangChain, LlamaIndex, Haystack, AWS, Azure, GCP."
-    },
     "methods": {
       "title": "The methods",
       "lead": "There is no single RAG, but families of methods, each suited to a problem. Every project stars one of them, as a character, up against classic RAG."

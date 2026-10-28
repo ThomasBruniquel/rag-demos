@@ -34,12 +34,10 @@ export function DemoCard({
   demo,
   eyebrow,
   stackLabel,
-  compact = false,
 }: {
   demo: DemoSummary;
   eyebrow: string;
   stackLabel: string;
-  compact?: boolean;
 }) {
   return (
     <article className="group relative flex h-full flex-col">
@@ -47,20 +45,20 @@ export function DemoCard({
         className="relative flex aspect-[4/3] items-center justify-center overflow-hidden"
         style={{ background: `var(--fam-${demo.family}-soft)` }}
       >
-        <span className={`absolute top-3 left-4 font-extrabold text-ink/15 tabular-nums dark:text-ink/25 ${compact ? "text-2xl sm:text-4xl" : "text-4xl"}`}>
+        <span className={`absolute top-3 left-4 font-extrabold text-ink/15 tabular-nums dark:text-ink/25 text-4xl`}>
           {demo.id}
         </span>
         <Character
           method={demo.methodId}
           family={demo.family}
-          className={`${compact ? "size-24" : "size-32"} transition-transform duration-500 group-hover:-translate-y-1 group-hover:scale-105`}
+          className={`size-32 transition-transform duration-500 group-hover:-translate-y-1 group-hover:scale-105`}
         />
       </div>
       <div className="flex flex-1 flex-col pt-4">
         <p className="eyebrow mb-1.5 text-[10px]">
           {eyebrow} · {demo.familyLabel}
         </p>
-        <h3 className={`mb-1 font-bold ${compact ? "text-[15px] sm:text-lg" : "text-lg"}`}>
+        <h3 className="mb-1 text-lg font-bold">
           <Link
             href={demo.href}
             className="after:absolute after:inset-0 group-hover:underline group-hover:decoration-gold group-hover:underline-offset-4"
@@ -70,7 +68,7 @@ export function DemoCard({
         </h3>
         <p className="mb-3 text-sm text-muted">{demo.tagline}</p>
         {demo.stack.length ? (
-          <div className={`mb-4 ${compact ? "hidden sm:block" : ""}`}>
+          <div className="mb-4">
             <StackRows groups={demo.stack} label={stackLabel} />
           </div>
         ) : null}

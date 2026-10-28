@@ -1,7 +1,7 @@
 import Link from "next/link";
 import type { ReactNode } from "react";
 import { format } from "@/lib/i18n/messages";
-import { href } from "@/lib/i18n/routes";
+import { href, projectsHref } from "@/lib/i18n/routes";
 import { getI18n } from "@/lib/i18n/server";
 import { siteConfig } from "@/site.config";
 import { Wordmark } from "./wordmark";
@@ -14,7 +14,7 @@ export async function Footer() {
     {
       title: t.footer.explore,
       links: [
-        { href: href(locale, "demos"), label: t.nav.demos },
+        { href: projectsHref(locale), label: t.nav.demos },
         { href: href(locale, "skills"), label: t.nav.skills },
         { href: href(locale, "methods"), label: t.nav.methods },
         { href: href(locale, "whatIsRag"), label: t.nav.whatIsRag },

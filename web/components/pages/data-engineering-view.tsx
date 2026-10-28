@@ -6,7 +6,7 @@ import { StackRows } from "@/components/demos/stack-badges";
 import { getDemos } from "@/lib/content/load";
 import { stackGroups } from "@/lib/content/stack";
 import { format } from "@/lib/i18n/messages";
-import { href } from "@/lib/i18n/routes";
+import { href, projectsHref } from "@/lib/i18n/routes";
 import { getI18n } from "@/lib/i18n/server";
 import { Chip, CtaBand, demoLink, MarkList, SectionHeading } from "./blocks";
 
@@ -118,7 +118,7 @@ export async function DataEngineeringPage() {
         title={c.cta.title}
         text={c.cta.text}
         primary={{ href: href(locale, "contact"), label: c.cta.contact }}
-        secondary={{ href: href(locale, "demos"), label: c.cta.demos }}
+        secondary={{ href: projectsHref(locale), label: c.cta.demos }}
       />
     </>
   );

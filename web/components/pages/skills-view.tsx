@@ -7,7 +7,7 @@ import { getDemos } from "@/lib/content/load";
 import { keywordAnchor, stackKeywords } from "@/lib/content/stack";
 import { allKeywords, stackCategories, type StackCategory } from "@/lib/content/taxonomy";
 import { format } from "@/lib/i18n/messages";
-import { href } from "@/lib/i18n/routes";
+import { href, projectsAnchor } from "@/lib/i18n/routes";
 import { getI18n } from "@/lib/i18n/server";
 import { pageMetadata } from "@/lib/seo";
 
@@ -22,7 +22,6 @@ export async function SkillsPage() {
   const keywords = allKeywords()
     .map((k) => ({ ...k, demos: demos.filter((d) => stackKeywords(d.meta.stack).includes(k.id)) }))
     .filter((k) => k.demos.length > 0);
-  const catalogue = href(locale, "demos");
 
   return (
     <>
@@ -54,7 +53,7 @@ export async function SkillsPage() {
                       >
                         <th scope="row" className="w-[34%] py-3.5 pr-4 pl-2 font-bold">
                           {k.labels[locale]}
-                          <Link href={`${catalogue}?keywords=${k.id}`} className="mt-1 block text-[12px] font-semibold text-muted hover:text-ink hover:underline">
+                          <Link href={`${href(locale, "home")}?keywords=${k.id}#${projectsAnchor(locale)}`} className="mt-1 block text-[12px] font-semibold text-muted hover:text-ink hover:underline">
                             {t.skills.catalogue} →
                           </Link>
                         </th>

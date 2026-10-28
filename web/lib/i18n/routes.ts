@@ -36,6 +36,20 @@ export function href(locale: Locale, id: RouteId, slug?: string): string {
   return `/${parts.join("/")}`;
 }
 
+/**
+ * The projects ("réalisations") are listed on the home page, with their
+ * filters; there is no separate catalogue page. The `demos` segment only
+ * prefixes the project pages (/fr/realisations/<slug>).
+ */
+export function projectsAnchor(locale: Locale): string {
+  return routes.demos[locale];
+}
+
+/** Link to the project list on the home page, e.g. "/fr#realisations". */
+export function projectsHref(locale: Locale): string {
+  return `${href(locale, "home")}#${projectsAnchor(locale)}`;
+}
+
 /** Same page in every language, used for hreflang and the language switcher. */
 export function alternates(id: RouteId, slug?: string | Record<Locale, string>): Record<Locale, string> {
   return Object.fromEntries(

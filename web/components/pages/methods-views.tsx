@@ -8,7 +8,7 @@ import { DuelTable, FamilyLabel, Gauges, MethodBadge, MiniSchema } from "@/compo
 import { getDemoById, getMethodBySlug, getMethods, type Method } from "@/lib/content/load";
 import { families, type Family } from "@/lib/content/taxonomy";
 import { format } from "@/lib/i18n/messages";
-import { href } from "@/lib/i18n/routes";
+import { href, projectsHref } from "@/lib/i18n/routes";
 import { getI18n } from "@/lib/i18n/server";
 import { pageMetadata } from "@/lib/seo";
 
@@ -210,7 +210,7 @@ export async function MethodPage({ slug }: { slug: string }) {
               </Link>
             </>
           ) : (
-            <Link href={href(locale, "demos")} className="btn-primary">
+            <Link href={projectsHref(locale)} className="btn-primary">
               {t.home.primaryCta}
             </Link>
           )}

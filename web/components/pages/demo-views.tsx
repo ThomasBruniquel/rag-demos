@@ -9,7 +9,6 @@ import type { DemoSummary } from "@/components/demos/demo-card";
 import { Diagram } from "@/components/demos/diagram";
 import { StackGrid } from "@/components/demos/stack-badges";
 import { Section } from "@/components/layout/container";
-import { PageHeader } from "@/components/layout/page-header";
 import { MethodBadge } from "@/components/methods/method-bits";
 import { DemoPlayer } from "@/components/player/demo-player";
 import { getDemoBySlug, getDemos, getDemoVideo, getDiagram, getMethodById, type Demo } from "@/lib/content/load";
@@ -17,7 +16,7 @@ import { stackGroups, stackKeywords } from "@/lib/content/stack";
 import { allKeywords, constraints, docTypes, families, sectors, stackCategories, volumes } from "@/lib/content/taxonomy";
 import type { Locale } from "@/lib/i18n/config";
 import { format, type Messages } from "@/lib/i18n/messages";
-import { href } from "@/lib/i18n/routes";
+import { href, projectsHref } from "@/lib/i18n/routes";
 import { getI18n } from "@/lib/i18n/server";
 import type { Recording } from "@/lib/player/types";
 import { getRecordings } from "@/lib/recordings/load";
@@ -29,12 +28,7 @@ import { siteConfig } from "@/site.config";
 // ------------------------------------------------------------------ catalogue
 
 /** Plain data for a card (used by the catalogue and the home page). */
-export function toSummary(
-  demo: Demo,
-  locale: Locale,
-  statusLabels: Record<"soon" | "live", string>,
-  { compact = false }: { compact?: boolean } = {},
-): DemoSummary {
+export function toSummary(demo: Demo, locale: Locale, statusLabels: Record<"soon" | "live", string>): DemoSummary {
   const method = getMethodById(demo.meta.method);
   if (!method) throw new Error(`Unknown method ${demo.meta.method}`);
   return {
@@ -53,8 +47,7 @@ export function toSummary(
     constraints: demo.meta.constraints,
     sectors: demo.meta.sectors,
     keywords: stackKeywords(demo.meta.stack),
-    // Home page cards are small: the three categories visitors scan first.
-    stack: stackGroups(demo.meta.stack, locale, compact ? ["cloud", "framework", "vectorStores"] : undefined),
+    stack: stackGroups(demo.meta.stack, locale),
   };
 }
 
@@ -78,40 +71,36 @@ function facetOptions(locale: Locale, labels: Messages["catalog"]): FacetOptions
   ];
 }
 
-export async function DemoCatalogPage() {
+/**
+ * The project list with its filters (situation and technology keyword). It
+ * lives on the home page: there is no separate catalogue page.
+ */
+export async function ProjectList() {
   const { locale, t } = await getI18n();
   const demos = getDemos().map((d) => toSummary(d, locale, t.catalog.status));
   return (
     <>
-      <PageHeader eyebrow={t.catalog.eyebrow} title={t.pages.demos.title} lead={t.pages.demos.lead} />
-      <div className="mx-auto max-w-[1240px] px-4 pt-10 pb-20 sm:px-6">
-        <DemoCatalog
-          demos={demos}
-          facets={facetOptions(locale, t.catalog)}
-          labels={{
-            any: t.catalog.any,
-            reset: t.catalog.reset,
-            countOne: t.catalog.countOne,
-            countMany: t.catalog.countMany,
-            empty: t.catalog.empty,
-            eyebrow: t.demo.number,
-            filters: t.catalog.filtersLabel,
-            stack: t.demo.stack,
-          }}
-        />
-        <p className="mt-14 text-sm">
-          <Link href={href(locale, "skills")} className="link">
-            {t.catalog.skillsLink} →
-          </Link>
-        </p>
-      </div>
+      <DemoCatalog
+        demos={demos}
+        facets={facetOptions(locale, t.catalog)}
+        labels={{
+          any: t.catalog.any,
+          reset: t.catalog.reset,
+          countOne: t.catalog.countOne,
+          countMany: t.catalog.countMany,
+          empty: t.catalog.empty,
+          eyebrow: t.demo.number,
+          filters: t.catalog.filtersLabel,
+          stack: t.demo.stack,
+        }}
+      />
+      <p className="mt-12 text-sm">
+        <Link href={href(locale, "skills")} className="link">
+          {t.catalog.skillsLink} →
+        </Link>
+      </p>
     </>
   );
-}
-
-export async function demoCatalogMetadata(): Promise<Metadata> {
-  const { locale, t } = await getI18n();
-  return pageMetadata({ locale, id: "demos", title: t.pages.demos.title, description: t.pages.demos.description });
 }
 
 // ------------------------------------------------------------------ one project
@@ -158,7 +147,7 @@ export async function DemoPage({ slug }: { slug: string }) {
       {/* Title band */}
       <header className="border-b border-line bg-sunken px-4 pt-10 pb-12 sm:px-6 sm:pt-12">
         <div className="mx-auto max-w-[1240px]">
-          <Link href={href(locale, "demos")} className="mb-6 inline-block text-[13px] font-bold text-muted hover:text-ink">
+          <Link href={projectsHref(locale)} className="mb-6 inline-block text-[13px] font-bold text-muted hover:text-ink">
             ← {d.back}
           </Link>
           <div className="grid items-center gap-8 md:grid-cols-[1fr_auto]">

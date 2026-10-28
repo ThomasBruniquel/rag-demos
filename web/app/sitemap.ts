@@ -10,7 +10,8 @@ export const dynamic = "force-static";
 /** One entry per page and language, each listing its other-language twin. */
 export default function sitemap(): MetadataRoute.Sitemap {
   const pages: { id: RouteId; slug?: string | Record<"fr" | "en", string> }[] = [
-    ...(Object.keys(routes) as RouteId[]).map((id) => ({ id })),
+    // "demos" only prefixes the project pages: the list itself is on the home page.
+    ...(Object.keys(routes) as RouteId[]).filter((id) => id !== "demos").map((id) => ({ id })),
     ...getDemos().map((d) => ({ id: "demos" as const, slug: d.meta.slugs })),
     ...getMethods().map((m) => ({ id: "methods" as const, slug: m.meta.slug })),
   ];

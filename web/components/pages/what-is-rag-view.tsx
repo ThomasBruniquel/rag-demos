@@ -5,7 +5,7 @@ import { PageHeader } from "@/components/layout/page-header";
 import { whatIsRag, type See } from "@/content/pages/what-is-rag";
 import { getMethodBySlug } from "@/lib/content/load";
 import { format } from "@/lib/i18n/messages";
-import { href } from "@/lib/i18n/routes";
+import { href, projectsHref } from "@/lib/i18n/routes";
 import { getI18n } from "@/lib/i18n/server";
 import { Cite, CtaBand, demoLink, Flow, MarkList, SectionHeading, SourceList } from "./blocks";
 
@@ -24,7 +24,7 @@ export async function WhatIsRagPage() {
       const method = getMethodBySlug(see.method);
       return method ? { href: href(locale, "methods", see.method), label: method.text[locale].name } : null;
     }
-    return { href: href(locale, "demos"), label: t.demo.back };
+    return { href: projectsHref(locale), label: t.demo.back };
   }
 
   return (
@@ -167,7 +167,7 @@ export async function WhatIsRagPage() {
       <CtaBand
         title={c.cta.title}
         text={c.cta.text}
-        primary={{ href: href(locale, "demos"), label: c.cta.demos }}
+        primary={{ href: projectsHref(locale), label: c.cta.demos }}
         secondary={{ href: href(locale, "methods"), label: c.cta.methods }}
       />
     </>

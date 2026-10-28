@@ -1,7 +1,7 @@
 import { Section } from "@/components/layout/container";
 import { PageHeader } from "@/components/layout/page-header";
 import { services } from "@/content/pages/services";
-import { href } from "@/lib/i18n/routes";
+import { href, projectsHref } from "@/lib/i18n/routes";
 import { getI18n } from "@/lib/i18n/server";
 import { CtaBand, Faq, SectionHeading } from "./blocks";
 
@@ -75,7 +75,7 @@ export async function ServicesPage() {
         title={c.cta.title}
         text={c.cta.text}
         primary={{ href: href(locale, "contact"), label: c.cta.contact }}
-        secondary={{ href: href(locale, "demos"), label: c.cta.demos }}
+        secondary={{ href: projectsHref(locale), label: c.cta.demos }}
       />
     </>
   );

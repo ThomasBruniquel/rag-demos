@@ -55,7 +55,7 @@ stack:
   compliance: [guardrails]     # facultatif
 ```
 
-Les libellés FR/EN de chaque identifiant sont dans `keywords` (`lib/content/taxonomy.ts`). Un nouveau mot-clé s'y ajoute d'abord ; une faute de frappe arrête le build. Les badges apparaissent sur les cartes, en tête de fiche et dans « Comment c'est construit ». Ils mènent à la page Compétences (`/fr/competences#kw-<id>`), qui liste chaque mot-clé avec les réalisations qui le démontrent. Le catalogue se filtre aussi par mot-clé (`?keywords=<id>`).
+Les libellés FR/EN de chaque identifiant sont dans `keywords` (`lib/content/taxonomy.ts`). Un nouveau mot-clé s'y ajoute d'abord ; une faute de frappe arrête le build. Les badges apparaissent sur les cartes, en tête de fiche et dans « Comment c'est construit ». Ils mènent à la page Compétences (`/fr/competences#kw-<id>`), qui liste chaque mot-clé avec les réalisations qui le démontrent. La liste des réalisations, avec ses filtres (situation et mot-clé), est sur l'accueil : il n'y a plus de page catalogue séparée. Un lien filtré a la forme `/fr?keywords=<id>#realisations`.
 
 ## Le lecteur de rejeu (D-020)
 
@@ -102,5 +102,5 @@ Le script (`scripts/record-video.mjs`) ouvre la fiche, lance le rejeu, suit la r
 
 ## Déploiement
 
-Netlify construit le site à chaque push sur `main` (`netlify.toml` à la racine : `base = "web"`, `pnpm build`, publication de `out/`). Les anciennes URL `/fr/demos/…` et `/en/demos/…` redirigent en 301 vers `/fr/realisations/…` et `/en/projects/…`. Variables d'environnement : voir `.env.example`.
+Netlify construit le site à chaque push sur `main` (`netlify.toml` à la racine : `base = "web"`, `pnpm build`, publication de `out/`). Les anciennes URL `/fr/demos/…` et `/en/demos/…` redirigent en 301 vers `/fr/realisations/…` et `/en/projects/…` ; les anciennes pages catalogue (`/fr/demos`, `/fr/realisations` et leurs équivalents anglais) redirigent vers l'accueil. Variables d'environnement : voir `.env.example`.
 

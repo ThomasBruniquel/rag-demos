@@ -1,7 +1,7 @@
 import { Character } from "@/components/characters/character";
 import { Section } from "@/components/layout/container";
 import { about } from "@/content/pages/about";
-import { href } from "@/lib/i18n/routes";
+import { href, projectsHref } from "@/lib/i18n/routes";
 import { getI18n } from "@/lib/i18n/server";
 import { siteConfig } from "@/site.config";
 import { Chip, CtaBand, SectionHeading } from "./blocks";
@@ -11,7 +11,7 @@ export async function AboutPage() {
   const { locale } = await getI18n();
   const c = about[locale];
   const { owner, links } = siteConfig;
-  const targets = { github: links.github, linkedin: links.linkedin, demos: href(locale, "demos") };
+  const targets = { github: links.github, linkedin: links.linkedin, demos: projectsHref(locale) };
 
   return (
     <>

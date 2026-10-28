@@ -51,31 +51,15 @@
   },
   "home": {
     "eyebrow": "Assistants IA · RAG",
-    "titleTop": "RAG à l'état de l'art,",
-    "titleBottom": "pour interroger intelligemment vos documents, selon vos contraintes.",
+    "titleTop": "Des réponses sourcées,",
+    "titleBottom": "tirées de vos documents.",
     "lead": "Un RAG relie un modèle d'IA à vos propres documents : il retrouve les passages utiles, puis rédige une réponse qui les cite. Rien n'est inventé, tout se vérifie.",
     "primaryCta": "Voir les réalisations",
     "secondaryCta": "Discuter d'un projet",
-    "stepsLabel": "Comment ça marche",
-    "steps": [
-      {
-        "title": "Une question",
-        "text": "Posée en langage courant, comme à un collègue."
-      },
-      {
-        "title": "Une recherche",
-        "text": "Les passages utiles, retrouvés parmi des milliers de pages."
-      },
-      {
-        "title": "Une réponse sourcée",
-        "text": "Chaque affirmation renvoie à son document d'origine."
-      }
-    ],
     "demos": {
-      "eyebrow": "9 réalisations",
-      "title": "Voyez-les en action",
-      "lead": "Neuf projets construits de bout en bout sur données publiques, chacun avec sa méthode, sa stack, sa qualité mesurée et son coût. Les sessions affichées sont réelles : enregistrées sur le système en fonctionnement, puis rejouées telles quelles.",
-      "all": "Toutes les réalisations, avec filtres"
+      "eyebrow": "9 projets · données publiques · code ouvert",
+      "title": "Projets réalisés",
+      "lead": "Neuf projets construits de bout en bout sur données publiques, chacun avec sa méthode, sa stack, sa qualité mesurée et son coût. Les sessions affichées sont réelles : enregistrées sur le système en fonctionnement, puis rejouées telles quelles."
     },
     "process": {
       "eyebrow": "Accompagnement",
@@ -108,7 +92,6 @@
     }
   },
   "catalog": {
-    "eyebrow": "9 réalisations · 6 familles de méthodes",
     "filtersLabel": "Filtrer les réalisations",
     "docTypes": "Type de documents",
     "volume": "Volume",
@@ -196,11 +179,6 @@
     }
   },
   "pages": {
-    "demos": {
-      "title": "Réalisations",
-      "lead": "Projets construits de bout en bout sur données publiques — code ouvert.",
-      "description": "Neuf réalisations RAG construites de bout en bout sur données publiques : sessions réelles rejouées, architecture, pipeline de données, qualité mesurée et coût. LangChain, LlamaIndex, Haystack, AWS, Azure, GCP."
-    },
     "methods": {
       "title": "Les méthodes",
       "lead": "Il n'existe pas un RAG, mais des familles de méthodes, chacune adaptée à un problème. Chaque réalisation en met une en scène, sous les traits d'un personnage, face au RAG classique."

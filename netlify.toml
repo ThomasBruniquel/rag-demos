@@ -31,23 +31,38 @@
   status = 302
   force = true
 
-# --- Old URLs: "demos" became "realisations" (FR) / "projects" (EN) -------
-# D-021, 2026-10-28. Project slugs did not change, so the splat carries over.
+# --- Project list: on the home page since 2026-10-28 -----------------------
+# The old catalogue pages (/fr/demos, /fr/realisations and their English
+# twins) go to the home page; project pages keep /fr/realisations/<slug>.
 [[redirects]]
-  from = "/fr/demos"
-  to = "/fr/realisations"
+  from = "/fr/realisations"
+  to = "/fr"
   status = 301
   force = true
 
 [[redirects]]
-  from = "/fr/demos/*"
-  to = "/fr/realisations/:splat"
+  from = "/en/projects"
+  to = "/en"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/fr/demos"
+  to = "/fr"
   status = 301
   force = true
 
 [[redirects]]
   from = "/en/demos"
-  to = "/en/projects"
+  to = "/en"
+  status = 301
+  force = true
+
+# Old project pages: "demos" became "realisations" (FR) / "projects" (EN), D-021.
+# Project slugs did not change, so the splat carries over.
+[[redirects]]
+  from = "/fr/demos/*"
+  to = "/fr/realisations/:splat"
   status = 301
   force = true
 
